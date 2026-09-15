@@ -1,6 +1,6 @@
 /* Cache-Name bei jedem Update hochzählen, sonst bleibt die alte Version im Gerät. */
-var CACHE = 'training-v4-2026-09-15';
-var DATEIEN = ['./', './index.html', './sessions.js', './theorie.js', './manifest.json', './icon-192.png', './icon-512.png'];
+var CACHE = 'training-v2-2026-09-14';
+var DATEIEN = ['./', './index.html', './theorie.js', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function(e){
   self.skipWaiting();

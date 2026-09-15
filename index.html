@@ -90,12 +90,6 @@ svg text{fill:var(--muted);font-size:9px}
 .legende{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
 .legende span{font-size:.76rem;color:var(--muted)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:99px;margin-right:4px}
-.gwahl{display:flex;gap:14px;min-width:max-content;padding-bottom:2px}
-.gblock{flex:0 0 auto}
-.glabel{font-size:.64rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.sbtn{background:var(--surface);border:1px solid var(--line);border-radius:9px;
-  padding:8px 12px;font-size:.85rem;font-weight:650;color:var(--text);cursor:pointer;min-width:46px}
-.sbtn.on{background:var(--accent);border-color:var(--accent);color:#06251b}
 details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom:8px}
 </style>
 </head>
@@ -127,14 +121,12 @@ details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom
 
 <div class="toast" id="toast"></div>
 
-<script src="./sessions.js"></script>
 <script src="./theorie.js"></script>
 <script>
 /* ════════════════ Speicher ════════════════ */
 var K = {
   plaene:'tp_plaene_v1', aktiv:'tp_plan_aktiv_v1', runs:'tp_runs_v1',
-  kraftlog:'tp_kraftlog_v1', sessions:'tp_sessions_v1', tab:'tp_tab',
-  sessver:'tp_sess_ver', asess:'tp_session_aktiv'
+  kraftlog:'tp_kraftlog_v1', sessions:'tp_sessions_v1', tab:'tp_tab'
 };
 var ram = {};
 function load(k, fb){
@@ -169,18 +161,18 @@ var PLAN_HALLWILERSEE = {
   regeln: [
     'Erste Woche ohne jede Intensität. Erst wenn zwei lockere Läufe problemlos sitzen, wird wieder hart gelaufen.',
     'Velo-Pendeln bleibt Zone 1. Das ist die Bedingung dafür, dass die Läufe Qualität haben.',
-    'Zwei Läufe pro Woche: Mittwoch kurz, Freitag oder Samstag lang. Ein ausgefallener Lauf wird gestrichen, nicht nachgeholt.',
+    'Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.',
     'Letzte plyometrische Einheit: 30. September.'
   ],
   wochen: [
     { nr: 1, start: '2026-09-14', fokus: 'Zurückkommen, nichts beweisen',
       tage: [
         { typ:'kraft', titel:'Kraft B leicht', detail:'Oberkörper, keine Beine, 2 statt 3 Sätze', session:'kraft-b' },
+        { typ:'lauf', titel:'Lockerer Lauf', detail:'30 Min bei 7:30–7:50, Sprechtest', km:4 },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Lockerer Lauf', detail:'30–35 Min bei 7:30–7:50, Sprechtest, keine Tempoabschnitte', km:4.5 },
+        { typ:'lauf', titel:'Lockerer Lauf', detail:'35 Min locker, letzte 5 Min zügiger', km:4.5 },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'frei', titel:'Frei', detail:'' },
-        { typ:'lauf', titel:'Ruhiger langer Lauf', detail:'60 Min durchgehend locker. Wenn es besser passt: Freitag statt Samstag', km:8.5 },
+        { typ:'lauf', titel:'Ruhiger langer Lauf', detail:'60–70 Min durchgehend locker, keine Tempoabschnitte', km:9 },
         { typ:'frei', titel:'Frei', detail:'' }
       ] },
     { nr: 2, start: '2026-09-21', fokus: 'Tempo wieder anfassen',
@@ -188,27 +180,27 @@ var PLAN_HALLWILERSEE = {
         { typ:'kraft', titel:'Kraft A mit Power', detail:'Power-Block nach dem Aufwärmen, dann Kraft', session:'kraft-a' },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
         { typ:'lauf', titel:'Qualität: 5 × 5 Min Zieltempo', detail:'6:55–7:05, je 2 Min traben; 12 Min ein- und auslaufen', km:11 },
-        { typ:'kraft', titel:'Kraft B', detail:'Oberkörper und OAP, keine Beine – Beine bleiben frisch für Samstag', session:'kraft-b' },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'kraft', titel:'Kraft B', detail:'Oberkörper und OAP, keine Beine', session:'kraft-b' },
         { typ:'lauf', titel:'Langer Lauf 14 km', detail:'Locker, letzte 4 km im Zieltempo', km:14 },
         { typ:'frei', titel:'Frei', detail:'' }
       ] },
     { nr: 3, start: '2026-09-28', fokus: 'Generalprobe',
       tage: [
-        { typ:'kraft', titel:'Kraft A mit Power', detail:'Letzter Power-Block der Vorbereitung', session:'kraft-a' },
+        { typ:'kraft', titel:'Kraft A mit Power', detail:'Letzte plyometrische Einheit am Mittwoch – heute normal', session:'kraft-a' },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Qualität: 3 × 8 Min Schwelle', detail:'6:20–6:30, je 2:30 traben. Letzte plyometrische Einheit im Warm-up', km:11 },
+        { typ:'lauf', titel:'Qualität: 3 × 8 Min Schwelle', detail:'6:20–6:30, je 2:30 traben. Letzte Plyo-Einheit heute im Warm-up', km:11 },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
         { typ:'kraft', titel:'Kraft B', detail:'Oberkörper, keine Beine', session:'kraft-b' },
-        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
         { typ:'lauf', titel:'Generalprobe 17 km', detail:'Letzte 6 km im Zieltempo, Wettkampfschuhe, Gel bei km 7 und 13', km:17 },
         { typ:'frei', titel:'Frei', detail:'' }
       ] },
     { nr: 4, start: '2026-10-05', fokus: 'Tapering – Umfang runter, Intensität kurz halten',
       tage: [
         { typ:'kraft', titel:'Kraft B kurz', detail:'Nur Oberkörper, 2 Sätze, kein Muskelversagen', session:'kraft-b' },
+        { typ:'lauf', titel:'Lockerer Lauf mit Tempoabschnitten', detail:'30 Min locker mit 3 × 3 Min im Zieltempo', km:5 },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Letzter Lauf vor dem Rennen', detail:'30 Min locker mit 3 × 3 Min im Zieltempo, danach 4 Steigerungen', km:5 },
-        { typ:'frei', titel:'Frei', detail:'' },
+        { typ:'lauf', titel:'Kurz und locker', detail:'20 Min plus 4 Steigerungsläufe à 20 s', km:3.5 },
         { typ:'frei', titel:'Frei – Beine hoch', detail:'Kohlenhydrate hochfahren, früh ins Bett' },
         { typ:'lauf', titel:'Hallwilerseelauf', detail:'km 0–5 bei 7:10 · km 5–15 bei 7:00 · Gel km 7 und 13 · ab km 15 Rest geben', km:21.1 },
         { typ:'frei', titel:'Frei', detail:'' }
@@ -216,8 +208,41 @@ var PLAN_HALLWILERSEE = {
   ]
 };
 
-var SESSIONS_VERSION = 3;
-var DEFAULT_SESSIONS = window.DEFAULT_SESSIONS || [];
+var DEFAULT_SESSIONS = [
+  { id:'kraft-a', name:'Kraft A – Beine und Power', tag:'Montag',
+    hinweis:'Power-Block direkt nach dem Aufwärmen, ausgeruht. Rund 80 Bodenkontakte. Bei unsauberer Landung Block abbrechen.',
+    bloecke:[
+      { titel:'Aufwärmen', uebungen:[
+        {id:'a-w1', name:'Lockeres Laufen oder Velo', dosis:'5 Min'},
+        {id:'a-w2', name:'Sprunggelenk und Hüfte mobilisieren', dosis:'3 Min'} ]},
+      { titel:'Power', uebungen:[
+        {id:'a-p1', name:'Ankle Hops', dosis:'2 × 15 s, Pause 60 s', hinweis:'Kurzer Bodenkontakt, Knie fast gestreckt'},
+        {id:'a-p2', name:'Countermovement Jump', dosis:'3 × 5, Pause 2 Min', hinweis:'Maximal hoch, weich landen'},
+        {id:'a-p3', name:'Einbeinige Sprünge seitlich', dosis:'2 × 6 pro Seite, Pause 90 s', hinweis:'Landung 1 s stabilisieren'} ]},
+      { titel:'Kraft', uebungen:[
+        {id:'a-k1', name:'Kettlebell-Swing', dosis:'4 × 8, Pause 2 Min', hinweis:'Hüftexplosion, Arme führen nur'},
+        {id:'a-k2', name:'Goblet-Squat', dosis:'3 × 6, Pause 2 Min', hinweis:'Zügig hoch, 3 s runter'},
+        {id:'a-k3', name:'Einbeiniges RDL', dosis:'3 × 8 pro Seite', hinweis:'Kontrolliert, Absicherung'},
+        {id:'a-k4', name:'Wadenheben zügig', dosis:'3 × 12'} ]},
+      { titel:'Abschluss', uebungen:[
+        {id:'a-r1', name:'Plank', dosis:'3 × 40 s'} ]}
+    ] },
+  { id:'kraft-b', name:'Kraft B – Oberkörper und OAP', tag:'Freitag',
+    hinweis:'Keine Beine. In der Wettkampfwoche zwei Sätze statt drei und kein Muskelversagen.',
+    bloecke:[
+      { titel:'OAP-Progression', uebungen:[
+        {id:'b-o1', name:'Klimmzug mit voller Streckung', dosis:'4 × 6, Pause 2 Min'},
+        {id:'b-o2', name:'Einarmig negativ ablassen', dosis:'3 × 3 pro Seite', hinweis:'5 s Abwärtsphase'},
+        {id:'b-o3', name:'Pelican Curls an den Ringen', dosis:'2 × 3–5', hinweis:'Konservativ steigern'} ]},
+      { titel:'Drücken und Ziehen', uebungen:[
+        {id:'b-d1', name:'Ring-Dips oder Liegestütz an Ringen', dosis:'3 × 8'},
+        {id:'b-d2', name:'Ring-Rows', dosis:'3 × 10'},
+        {id:'b-d3', name:'Ring Face Pulls', dosis:'3 × 12'} ]},
+      { titel:'Rumpf', uebungen:[
+        {id:'b-r1', name:'Side-Plank', dosis:'3 × 40 s pro Seite'},
+        {id:'b-r2', name:'Hanging Leg Raise', dosis:'3 × 8'} ]}
+    ] }
+];
 
 /* ════════════════ Zustand ════════════════ */
 var plaene = load(K.plaene, null);
@@ -226,10 +251,7 @@ var aktivId = load(K.aktiv, plaene[0].id);
 var runs = load(K.runs, []);
 var kraftlog = load(K.kraftlog, []);
 var sessions = load(K.sessions, null);
-if (!sessions || !sessions.length || load(K.sessver, 0) !== SESSIONS_VERSION){
-  sessions = DEFAULT_SESSIONS; save(K.sessions, sessions); save(K.sessver, SESSIONS_VERSION);
-}
-var aktivSession = load(K.asess, sessions.length ? sessions[0].id : null);
+if (!sessions || !sessions.length) { sessions = DEFAULT_SESSIONS; save(K.sessions, sessions); }
 
 function plan(){ return plaene.filter(function(p){return p.id===aktivId;})[0] || plaene[0]; }
 
@@ -341,7 +363,6 @@ function renderPlan(){
            (wk?'Wettkampf':t.typ)+'</span></div>';
       if (t.detail) h += '<div class="small muted">'+esc(t.detail)+'</div>';
       if (t.km) h += '<div class="tiny muted">ca. '+t.km+' km</div>';
-      if (t.session) h += '<button class="btn sm" style="margin-top:6px" data-open="'+esc(t.session)+'">Einheit öffnen</button>';
       h += '</div>';
       if (ok) h += '<div class="check">✓</div>';
       h += '</div>';
@@ -356,9 +377,6 @@ function renderPlan(){
   }
 
   document.getElementById('t-plan').innerHTML = h;
-  document.getElementById('t-plan').querySelectorAll('[data-open]').forEach(function(b){
-    b.onclick = function(ev){ ev.stopPropagation(); oeffneSession(b.dataset.open); };
-  });
   var sel = document.getElementById('planWahl');
   if (sel) sel.onchange = function(){ aktivId = sel.value; save(K.aktiv, aktivId); renderKopf(); renderPlan(); };
   renderKopf();
@@ -499,57 +517,26 @@ function csvImport(ev){
 
 /* ════════════════ Tab Kraft ════════════════ */
 function renderKraft(){
-  var el = document.getElementById('t-kraft');
-  if (!sessions.length){ el.innerHTML = '<div class="card">Keine Einheiten hinterlegt.</div>'; return; }
-  var s = sessions.filter(function(x){ return x.id===aktivSession; })[0] || sessions[0];
-  aktivSession = s.id;
-
-  // Wahlleiste, nach Gruppe sortiert
-  var gruppen = [];
-  sessions.forEach(function(x){
-    var g = gruppen.filter(function(y){ return y.name === (x.gruppe||'Übrige'); })[0];
-    if (!g){ g = { name:x.gruppe||'Übrige', items:[] }; gruppen.push(g); }
-    g.items.push(x);
-  });
-  var h = '<div class="card"><div style="overflow-x:auto"><div class="gwahl">';
-  gruppen.forEach(function(g){
-    h += '<div class="gblock"><div class="glabel">'+esc(g.name)+'</div><div class="row" style="gap:5px">';
-    g.items.forEach(function(x){
-      h += '<button class="sbtn'+(x.id===s.id?' on':'')+'" data-sess="'+esc(x.id)+'">'+esc(x.name)+'</button>';
+  var h = '';
+  sessions.forEach(function(s){
+    h += '<div class="card"><div class="between"><h3>'+esc(s.name)+'</h3>'+
+         '<span class="tag">'+esc(s.tag||'')+'</span></div>';
+    if (s.hinweis) h += '<p class="small muted" style="margin:2px 0 6px">'+esc(s.hinweis)+'</p>';
+    s.bloecke.forEach(function(b){
+      h += '<div style="margin-top:10px"><strong class="small">'+esc(b.titel)+'</strong>';
+      b.uebungen.forEach(function(u){
+        h += '<div class="ue"><input type="checkbox" id="cb-'+esc(u.id)+'" data-s="'+esc(s.id)+'"><div>'+
+             '<label for="cb-'+esc(u.id)+'" style="color:inherit;font-size:1rem;font-weight:600;margin:0">'+esc(u.name)+'</label>'+
+             '<div class="small">'+esc(u.dosis)+'</div>'+
+             (u.hinweis ? '<div class="tiny muted">'+esc(u.hinweis)+'</div>' : '')+
+             '</div></div>';
+      });
+      h += '</div>';
     });
-    h += '</div></div>';
+    h += '<input type="text" id="note-'+esc(s.id)+'" placeholder="Notiz (Gewichte, Gefühl)" style="margin-top:10px">';
+    h += '<div class="btns"><button class="btn prim" data-save="'+esc(s.id)+'">Einheit eintragen</button></div></div>';
   });
-  h += '</div></div></div>';
 
-  // Detail
-  h += '<div class="card"><div class="between"><h3>'+esc(s.name)+'</h3>'+
-       (s.dauer ? '<span class="tiny muted">'+esc(s.dauer)+'</span>' : '')+'</div>';
-  if (s.untertitel) h += '<p class="small muted" style="margin:0">'+esc(s.untertitel)+'</p>';
-  var meta = '';
-  if (s.fokus) meta += '<tr><td class="muted">Fokus</td><td>'+esc(s.fokus)+'</td></tr>';
-  if (s.equipment) meta += '<tr><td class="muted">Material</td><td>'+esc(s.equipment)+'</td></tr>';
-  if (s.warmup) meta += '<tr><td class="muted">Aufwärmen</td><td>'+esc(s.warmup)+'</td></tr>';
-  if (s.pause) meta += '<tr><td class="muted">Pause</td><td>'+esc(s.pause)+'</td></tr>';
-  if (meta) h += '<details style="margin-top:8px"><summary>Details</summary><table>'+meta+'</table></details>';
-
-  var letzterTag = '';
-  (s.uebungen||[]).forEach(function(u){
-    if (u.tag && u.tag !== letzterTag){
-      h += '<div style="margin-top:10px"><strong class="small">'+esc(u.tag)+'</strong></div>';
-      letzterTag = u.tag;
-    }
-    h += '<div class="ue"><input type="checkbox" data-ue="'+esc(u.id)+'"><div>'+
-         '<div style="font-weight:600">'+esc(u.name)+'</div>'+
-         '<div class="small">'+esc(u.dosis)+'</div>'+
-         (u.cue ? '<div class="tiny muted">'+esc(u.cue)+'</div>' : '')+
-         (u.schulter ? '<div class="tiny" style="color:var(--warn)">'+esc(u.schulter)+'</div>' : '')+
-         '</div></div>';
-  });
-  if (s.finisher) h += '<p class="hint"><strong>Finisher:</strong> '+esc(s.finisher)+'</p>';
-  h += '<input type="text" id="kNote" placeholder="Notiz (Gewichte, Schmerz, Gefühl)" style="margin-top:10px">';
-  h += '<div class="btns"><button class="btn prim" id="kSave">Einheit eintragen</button></div></div>';
-
-  // Log
   h += '<div class="card"><h3>Kraft-Log</h3>';
   if (!kraftlog.length) h += '<p class="small muted">Noch nichts eingetragen.</p>';
   else {
@@ -564,29 +551,27 @@ function renderKraft(){
   }
   h += '</div>';
 
+  var el = document.getElementById('t-kraft');
   el.innerHTML = h;
-  el.querySelectorAll('[data-sess]').forEach(function(b){
-    b.onclick = function(){ aktivSession = b.dataset.sess; save(K.asess, aktivSession); renderKraft(); };
+  el.querySelectorAll('[data-save]').forEach(function(b){
+    b.onclick = function(){
+      var sid = b.dataset.save;
+      var s = sessions.filter(function(x){ return x.id===sid; })[0];
+      var cbs = el.querySelectorAll('input[type=checkbox][data-s="'+sid+'"]');
+      var erledigt = 0;
+      cbs.forEach(function(c){ if (c.checked) erledigt++; });
+      var notizEl = document.getElementById('note-'+sid);
+      kraftlog.push({ id:uid(), datum:heute(), session:sid, name:s.name,
+        erledigt:erledigt, total:cbs.length, notiz:notizEl ? notizEl.value.trim() : '' });
+      save(K.kraftlog, kraftlog); renderKraft(); toast('Eingetragen');
+    };
   });
-  document.getElementById('kSave').onclick = function(){
-    var cbs = el.querySelectorAll('input[data-ue]');
-    var erledigt = 0;
-    cbs.forEach(function(c){ if (c.checked) erledigt++; });
-    if (!erledigt){ toast('Nichts angehakt'); return; }
-    kraftlog.push({ id:uid(), datum:heute(), session:s.id, name:s.name,
-      erledigt:erledigt, total:cbs.length, notiz:document.getElementById('kNote').value.trim() });
-    save(K.kraftlog, kraftlog); renderKraft(); toast('Eingetragen');
-  };
   el.querySelectorAll('[data-kdel]').forEach(function(b){
     b.onclick = function(){
       kraftlog = kraftlog.filter(function(l){ return l.id !== b.dataset.kdel; });
       save(K.kraftlog, kraftlog); renderKraft(); toast('Gelöscht');
     };
   });
-}
-function oeffneSession(id){
-  if (!sessions.some(function(x){ return x.id===id; })) return;
-  aktivSession = id; save(K.asess, id); zeige('kraft');
 }
 
 /* ════════════════ Tab Fortschritt ════════════════ */
