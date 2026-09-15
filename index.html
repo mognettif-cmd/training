@@ -169,18 +169,18 @@ var PLAN_HALLWILERSEE = {
   regeln: [
     'Erste Woche ohne jede Intensität. Erst wenn zwei lockere Läufe problemlos sitzen, wird wieder hart gelaufen.',
     'Velo-Pendeln bleibt Zone 1. Das ist die Bedingung dafür, dass die Läufe Qualität haben.',
-    'Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.',
+    'Zwei Läufe pro Woche: Mittwoch kurz, Freitag oder Samstag lang. Ein ausgefallener Lauf wird gestrichen, nicht nachgeholt.',
     'Letzte plyometrische Einheit: 30. September.'
   ],
   wochen: [
     { nr: 1, start: '2026-09-14', fokus: 'Zurückkommen, nichts beweisen',
       tage: [
         { typ:'kraft', titel:'Kraft B leicht', detail:'Oberkörper, keine Beine, 2 statt 3 Sätze', session:'kraft-b' },
-        { typ:'lauf', titel:'Lockerer Lauf', detail:'30 Min bei 7:30–7:50, Sprechtest', km:4 },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Lockerer Lauf', detail:'35 Min locker, letzte 5 Min zügiger', km:4.5 },
+        { typ:'lauf', titel:'Lockerer Lauf', detail:'30–35 Min bei 7:30–7:50, Sprechtest, keine Tempoabschnitte', km:4.5 },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Ruhiger langer Lauf', detail:'60–70 Min durchgehend locker, keine Tempoabschnitte', km:9 },
+        { typ:'frei', titel:'Frei', detail:'' },
+        { typ:'lauf', titel:'Ruhiger langer Lauf', detail:'60 Min durchgehend locker. Wenn es besser passt: Freitag statt Samstag', km:8.5 },
         { typ:'frei', titel:'Frei', detail:'' }
       ] },
     { nr: 2, start: '2026-09-21', fokus: 'Tempo wieder anfassen',
@@ -188,27 +188,27 @@ var PLAN_HALLWILERSEE = {
         { typ:'kraft', titel:'Kraft A mit Power', detail:'Power-Block nach dem Aufwärmen, dann Kraft', session:'kraft-a' },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
         { typ:'lauf', titel:'Qualität: 5 × 5 Min Zieltempo', detail:'6:55–7:05, je 2 Min traben; 12 Min ein- und auslaufen', km:11 },
+        { typ:'kraft', titel:'Kraft B', detail:'Oberkörper und OAP, keine Beine – Beine bleiben frisch für Samstag', session:'kraft-b' },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'kraft', titel:'Kraft B', detail:'Oberkörper und OAP, keine Beine', session:'kraft-b' },
         { typ:'lauf', titel:'Langer Lauf 14 km', detail:'Locker, letzte 4 km im Zieltempo', km:14 },
         { typ:'frei', titel:'Frei', detail:'' }
       ] },
     { nr: 3, start: '2026-09-28', fokus: 'Generalprobe',
       tage: [
-        { typ:'kraft', titel:'Kraft A mit Power', detail:'Letzte plyometrische Einheit am Mittwoch – heute normal', session:'kraft-a' },
+        { typ:'kraft', titel:'Kraft A mit Power', detail:'Letzter Power-Block der Vorbereitung', session:'kraft-a' },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Qualität: 3 × 8 Min Schwelle', detail:'6:20–6:30, je 2:30 traben. Letzte Plyo-Einheit heute im Warm-up', km:11 },
-        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'lauf', titel:'Qualität: 3 × 8 Min Schwelle', detail:'6:20–6:30, je 2:30 traben. Letzte plyometrische Einheit im Warm-up', km:11 },
         { typ:'kraft', titel:'Kraft B', detail:'Oberkörper, keine Beine', session:'kraft-b' },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
         { typ:'lauf', titel:'Generalprobe 17 km', detail:'Letzte 6 km im Zieltempo, Wettkampfschuhe, Gel bei km 7 und 13', km:17 },
         { typ:'frei', titel:'Frei', detail:'' }
       ] },
     { nr: 4, start: '2026-10-05', fokus: 'Tapering – Umfang runter, Intensität kurz halten',
       tage: [
         { typ:'kraft', titel:'Kraft B kurz', detail:'Nur Oberkörper, 2 Sätze, kein Muskelversagen', session:'kraft-b' },
-        { typ:'lauf', titel:'Lockerer Lauf mit Tempoabschnitten', detail:'30 Min locker mit 3 × 3 Min im Zieltempo', km:5 },
         { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
-        { typ:'lauf', titel:'Kurz und locker', detail:'20 Min plus 4 Steigerungsläufe à 20 s', km:3.5 },
+        { typ:'lauf', titel:'Letzter Lauf vor dem Rennen', detail:'30 Min locker mit 3 × 3 Min im Zieltempo, danach 4 Steigerungen', km:5 },
+        { typ:'frei', titel:'Frei', detail:'' },
         { typ:'frei', titel:'Frei – Beine hoch', detail:'Kohlenhydrate hochfahren, früh ins Bett' },
         { typ:'lauf', titel:'Hallwilerseelauf', detail:'km 0–5 bei 7:10 · km 5–15 bei 7:00 · Gel km 7 und 13 · ab km 15 Rest geben', km:21.1 },
         { typ:'frei', titel:'Frei', detail:'' }
