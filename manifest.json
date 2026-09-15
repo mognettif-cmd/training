@@ -1,16 +1,16 @@
 {
-  "name": "Training · Hallwilersee & OAP",
+  "name": "Training",
   "short_name": "Training",
+  "description": "Laufplan, Kraft, Theorie und Trainingstagebuch",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#08080f",
-  "theme_color": "#08080f",
-  "lang": "de-CH",
+  "background_color": "#0b0d12",
+  "theme_color": "#0b0d12",
   "icons": [
-    {"src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
-    {"src": "./icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
