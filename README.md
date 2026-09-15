@@ -51,3 +51,9 @@ Tab «Läufe» → Garmin-CSV importieren. Velo und Duplikate werden übersprung
 der Session, `schulter` erzeugt den Warnhinweis. Nach einer Änderung in `sessions.js`
 die Konstante `SESSIONS_VERSION` in `index.html` um eins erhöhen, sonst behält das
 Gerät die gespeicherte Fassung.
+
+## Warum Änderungen manchmal nicht ankommen
+Pläne und Krafteinheiten werden beim ersten Start ins Gerät geschrieben und danach
+von dort gelesen. Damit eine geänderte Fassung übernommen wird:
+`version` im Plan bzw. `SESSIONS_VERSION` in `index.html` um eins erhöhen.
+Eigene, selbst importierte Pläne bleiben dabei unangetastet.

@@ -157,6 +157,7 @@ function save(k, v){
 ════════════════════════════════════════════════ */
 var PLAN_HALLWILERSEE = {
   id: 'hallwilersee-2026',
+  version: 2,
   name: 'Hallwilerseelauf 2026 – Wiedereinstieg',
   wettkampf: { name: 'Hallwilerseelauf', datum: '2026-10-10', distanz: 21.1 },
   ziel: '2:28–2:32 · realistisch nach über einer Woche Ausfall',
@@ -220,8 +221,16 @@ var SESSIONS_VERSION = 3;
 var DEFAULT_SESSIONS = window.DEFAULT_SESSIONS || [];
 
 /* ════════════════ Zustand ════════════════ */
+var MITGELIEFERT = [PLAN_HALLWILERSEE];
 var plaene = load(K.plaene, null);
-if (!plaene || !plaene.length) { plaene = [PLAN_HALLWILERSEE]; save(K.plaene, plaene); }
+if (!plaene || !plaene.length) plaene = [];
+MITGELIEFERT.forEach(function(neuP){
+  var i = -1;
+  plaene.forEach(function(p, idx){ if (p.id === neuP.id) i = idx; });
+  if (i < 0) plaene.push(neuP);
+  else if ((plaene[i].version || 0) < (neuP.version || 0)) plaene[i] = neuP;  // veraltete Fassung ersetzen
+});
+save(K.plaene, plaene);
 var aktivId = load(K.aktiv, plaene[0].id);
 var runs = load(K.runs, []);
 var kraftlog = load(K.kraftlog, []);
