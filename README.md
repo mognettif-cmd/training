@@ -10,7 +10,7 @@ ohne Konto und ohne Server.
 | `theorie.js` | Theorie-Modul (7 Themen, je mit Trainingseinheit) |
 | `manifest.json`, `sw.js`, `icon-*.png` | Installierbarkeit und Offline-Betrieb |
 | `plan-hallwilersee-2026.json` | abgeschlossener Plan Hallwilerseelauf |
-| `plan-aufbau-2027.json` | aktueller Plan: Saisonübersicht 2027 und Block 1 im Detail |
+| `plan-saison-2027.json` | aktueller Plan: ganze Saison 2026/27, alle Blöcke Woche für Woche |
 
 ## Online stellen (GitHub Pages)
 1. Alle Dateien ins Repository hochladen (Add file → Upload files → Commit).

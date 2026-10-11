@@ -127,6 +127,9 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .ok{height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:1rem;cursor:pointer}
 .ok.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 /* Statistik */
+.blockwochen{margin-bottom:12px}
+.blockwochen > summary{padding:10px 2px;font-size:.95rem;color:var(--text)}
+.warum summary{font-size:.76rem;margin:4px 0 2px;color:var(--accent)}
 .chart{width:100%;height:auto;display:block;margin-top:4px}
 .chart text{fill:var(--muted);font-size:9px}
 .chart .gl{stroke:var(--line);stroke-width:1}
@@ -141,7 +144,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .hw{margin:0;padding-left:1.1em;font-size:.86rem}
 .hw li{margin-bottom:6px}
 .kal{display:grid;gap:3px}
-.kal i{aspect-ratio:1;border-radius:3px;background:var(--surface)}
+.kal i{aspect-ratio:1;border-radius:3px;background:var(--surface);max-height:22px}
 .kal i.zukunft{opacity:.35}
 .kal-wt{font-size:.66rem;color:var(--muted);line-height:1}
 details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom:8px}
@@ -270,28 +273,31 @@ var PLAN_HALLWILERSEE = {
   ]
 };
 
-/* Neuer Aufbau-Plan ab Oktober 2026. Optional: bloecke = Saisonübersicht. */
-var PLAN_AUFBAU_2027 = {
- "id": "aufbau-2027",
- "name": "Aufbau 2027 – Block 1: Grundlage und Kraft",
+/* Saisonplan 2026/27: alle Blöcke bis zum Thuner Stadtlauf */
+var PLAN_SAISON_2027 = {
+ "id": "saison-2027",
+ "name": "Saison 2026/27 – Vogellisi und Thuner Stadtlauf",
  "wettkampf": {
   "name": "Vogellisi-Berglauf",
   "datum": "2027-07-11",
   "distanz": 13
  },
- "ziel": "Hybrid: Schwerpunkt Kraft, Laufen und Beweglichkeit auf Erhaltung",
+ "ziel": "Hybrid: Kraft und Beweglichkeit bleiben, Laufen wird blockweise aufgebaut",
  "tempi": {
   "locker / Plaudertempo": "7:15–7:45",
-  "Schwelle (Referenz, aus HM)": "ca. 6:15",
-  "Bergauf": "nach Sprechtest"
+  "Schwelle (Startwert aus HM)": "ca. 6:15",
+  "10-km-Tempo (Startwert)": "ca. 6:05",
+  "Bergauf": "nach RPE, nicht nach Pace"
  },
  "regeln": [
-  "Beide Läufe überwiegend locker. Grundausdauer entsteht durch Umfang, nicht durch Tempo.",
+  "Beide Läufe überwiegend locker, ausser es steht Qualität im Plan.",
   "Der lange Lauf steigt höchstens 1–2 km pro Woche.",
   "Kraft B nie am Tag vor dem langen Lauf.",
   "Nur eine Krafteinheit in der Woche möglich: A und B abwechseln.",
   "Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.",
-  "Bergsprints nur ausgeruht und mit voller Erholung. Bei unsauberem Laufstil abbrechen."
+  "Bergsprints und Hügelintervalle nur ausgeruht. Bei unsauberem Laufstil abbrechen.",
+  "Tempi nach jedem Block mit den Journaldaten überprüfen.",
+  "Sobald das Datum des Thuner Stadtlaufs feststeht, Block 6 darauf ausrichten."
  ],
  "bloecke": [
   {
@@ -299,50 +305,59 @@ var PLAN_AUFBAU_2027 = {
    "von": "2026-10-12",
    "bis": "2026-10-18",
    "schwerpunkt": "Regeneration nach dem Halbmarathon",
-   "erhaltung": "Velo und Spazieren in Zone 1"
+   "erhaltung": "Velo und Spazieren in Zone 1",
+   "warum": "Muskeln, Sehnen und Herz brauchen nach einem Halbmarathon am Limit rund eine Woche. Wer zu früh wieder läuft, startet den Aufbau müde."
   },
   {
    "name": "Block 1: Grundlage und Kraft",
    "von": "2026-10-19",
    "bis": "2026-12-13",
    "schwerpunkt": "Kraft: OAP, Handstand, einbeinige Beinkraft",
-   "erhaltung": "2 lockere Läufe, Bergsprints ab Woche 5, Beweglichkeit"
+   "erhaltung": "2 lockere Läufe, Bergsprints ab Woche 5, Beweglichkeit",
+   "warum": "Der Wettkampf ist 9 Monate weg: Jetzt stört Kraft das Laufen am wenigsten. Beinkraft und belastbare Sehnen sind die Basis für alles, was später bergauf kommt."
   },
   {
    "name": "Block 2: Laufgrundlage",
    "von": "2026-12-14",
    "bis": "2027-02-07",
    "schwerpunkt": "Laufumfang in Zone 2, langer Lauf bis 18 km",
-   "erhaltung": "Kraft A und B mit 2 Sätzen"
+   "erhaltung": "Kraft A und B mit 2 Sätzen",
+   "warum": "Erst Umfang, dann Intensität. Im Winter sind lange, lockere Läufe einfacher als Bergtempo, und die Feiertage fallen in die Entlastungswoche."
   },
   {
    "name": "Block 3: Bergkraft",
    "von": "2027-02-08",
    "bis": "2027-04-04",
    "schwerpunkt": "Kraft B schwer, Bergsprints und Hügelintervalle",
-   "erhaltung": "Kraft A, Laufumfang"
+   "erhaltung": "Kraft A, Laufumfang",
+   "warum": "Die Grundlage steht, jetzt wird die Kraft in Bergkraft umgesetzt: schwere Beine im Kraftraum, kurze harte Anstiege draussen. Liegt bewusst gut 4 Monate vor dem Vogellisi."
   },
   {
    "name": "Block 4: Bergausdauer",
    "von": "2027-04-05",
    "bis": "2027-06-06",
-   "schwerpunkt": "Lange Anstiege, im langen Lauf bis 800–900 Hm",
-   "erhaltung": "Kraft 1× pro Woche, A und B abwechselnd"
+   "schwerpunkt": "Lange Anstiege, im langen Lauf bis 900 Hm",
+   "erhaltung": "Kraft 1× pro Woche, A und B abwechselnd",
+   "warum": "Im Frühling werden die Wege in tieferen Lagen schneefrei. Aus kurzer Bergkraft wird lange Bergausdauer; Kraft geht auf Erhaltung, damit die Beine für die Höhenmeter frisch bleiben."
   },
   {
    "name": "Block 5: Vogellisi spezifisch",
    "von": "2027-06-07",
    "bis": "2027-07-11",
-   "schwerpunkt": "Wettkampfnahe Bergläufe, Taper",
+   "schwerpunkt": "Wettkampfnahe Bergläufe, Generalprobe, Taper",
    "erhaltung": "Kraft kurz, in der Wettkampfwoche nur Oberkörper",
-   "wettkampf": "Vogellisi-Berglauf, So 11.07.2027, 13 km, ca. 860 Hm"
+   "wettkampf": "Vogellisi-Berglauf, So 11.07.2027, 13 km, ca. 860 Hm",
+   "wkDatum": "2027-07-11",
+   "wkName": "Vogellisi-Berglauf",
+   "warum": "Drei Wochen im Wettkampftempo bergauf, dann zwei Wochen Reduktion. Die Form ist da, der Taper macht sie abrufbar."
   },
   {
    "name": "Erholung",
    "von": "2027-07-12",
    "bis": "2027-07-18",
    "schwerpunkt": "Regeneration",
-   "erhaltung": "Velo Zone 1"
+   "erhaltung": "Velo Zone 1",
+   "warum": "Nach dem Berglauf eine Woche ohne Laufen, damit der letzte Block mit frischen Beinen startet."
   },
   {
    "name": "Block 6: Tempo Stadtlauf",
@@ -350,12 +365,15 @@ var PLAN_AUFBAU_2027 = {
    "bis": "2027-08-21",
    "schwerpunkt": "Schwelle und 10-km-Tempo, Taper",
    "erhaltung": "Kraft 1× pro Woche",
-   "wettkampf": "Thuner Stadtlauf, Ende August 2027 (Datum noch offen; 2026: 22.08.)"
+   "wettkampf": "Thuner Stadtlauf, Ende August 2027 (Datum noch offen; 2026: 22.08.)",
+   "wkDatum": "2027-08-21",
+   "wkName": "Thuner Stadtlauf",
+   "warum": "Die Bergkraft trägt jetzt aufs flache Tempo über. Fünf Wochen reichen, um Schwelle und 10-km-Tempo zu schärfen; ein längerer Block würde nach dem Berglauf überladen."
   }
  ],
  "wochen": [
   {
-   "nr": 0,
+   "nr": 1,
    "start": "2026-10-12",
    "fokus": "Erholung nach dem Hallwilerseelauf – keine Läufe",
    "tage": [
@@ -371,8 +389,8 @@ var PLAN_AUFBAU_2027 = {
     },
     {
      "typ": "frei",
-     "titel": "Spaziergang",
-     "detail": "30–45 Min"
+     "titel": "Frei",
+     "detail": "Spaziergang 30–45 Min"
     },
     {
      "typ": "kraft",
@@ -387,8 +405,8 @@ var PLAN_AUFBAU_2027 = {
     },
     {
      "typ": "frei",
-     "titel": "Spaziergang oder Velo locker",
-     "detail": "30–45 Min, Zone 1"
+     "titel": "Frei",
+     "detail": "Spaziergang oder Velo locker, Zone 1"
     },
     {
      "typ": "frei",
@@ -405,7 +423,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf",
+     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
      "session": "kraft-a"
     },
     {
@@ -451,7 +469,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf",
+     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
      "session": "kraft-a"
     },
     {
@@ -468,7 +486,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit",
+     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
      "session": "kraft-b"
     },
     {
@@ -497,7 +515,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf",
+     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
      "session": "kraft-a"
     },
     {
@@ -514,7 +532,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit",
+     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
      "session": "kraft-b"
     },
     {
@@ -525,7 +543,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "lauf",
      "titel": "Langer Lauf hügelig",
-     "detail": "Anstiege locker mit kurzen Schritten, nicht forcieren",
+     "detail": "Anstiege locker mit kurzen Schritten",
      "km": 12
     },
     {
@@ -589,13 +607,13 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf",
+     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
      "session": "kraft-a"
     },
     {
      "typ": "lauf",
      "titel": "Lauf mit Bergsprints",
-     "detail": "Locker, darin 6 × 10 s steil bergauf, volle Erholung (zurückgehen)",
+     "detail": "Locker, darin 6 × 10 s steil bergauf, volle Erholung",
      "km": 8
     },
     {
@@ -606,7 +624,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit",
+     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
      "session": "kraft-b"
     },
     {
@@ -635,7 +653,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf",
+     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
      "session": "kraft-a"
     },
     {
@@ -652,7 +670,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit",
+     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
      "session": "kraft-b"
     },
     {
@@ -681,7 +699,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf",
+     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
      "session": "kraft-a"
     },
     {
@@ -698,7 +716,7 @@ var PLAN_AUFBAU_2027 = {
     {
      "typ": "kraft",
      "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit",
+     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
      "session": "kraft-b"
     },
     {
@@ -757,6 +775,1644 @@ var PLAN_AUFBAU_2027 = {
      "titel": "Langer Lauf",
      "detail": "Locker, flach",
      "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2026-12-14",
+   "fokus": "Umfang hochfahren",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, Plaudertempo",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2026-12-21",
+   "fokus": "Umfang halten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe à 20 s",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 15
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2026-12-28",
+   "fokus": "Entlastung über die Feiertage",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-01-04",
+   "fokus": "Langer Lauf wächst",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-01-11",
+   "fokus": "Bergkraft wachhalten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 6 × 15 s steil bergauf",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-01-18",
+   "fokus": "Höchster Umfang",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig, Verpflegung üben",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-01-25",
+   "fokus": "Umfang halten, Tempo antippen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, letzte 10 Min zügig (RPE 5)",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-02-01",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-02-08",
+   "fokus": "Bergkraft starten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 15 s steil bergauf",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 300 Hm",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-02-15",
+   "fokus": "Hügelintervalle",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "6 × 1 Min bergauf RPE 7–8, zurücktraben; 15 Min ein- und auslaufen",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 350 Hm",
+     "km": 15
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-02-22",
+   "fokus": "Hügelintervalle steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "8 × 1 Min bergauf RPE 7–8, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 400 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-03-01",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker, plus 6 × 10 s Bergsprints",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 11
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-03-08",
+   "fokus": "Längere Anstiege",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "5 × 2 Min bergauf RPE 7, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 450 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-03-15",
+   "fokus": "Längere Anstiege steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "6 × 2 Min bergauf RPE 7, zurücktraben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 500 Hm",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-03-22",
+   "fokus": "Schwelle bergauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 4 Min bergauf RPE 7, 2 Min zurücktraben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 550 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-03-29",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-04-05",
+   "fokus": "Lange Anstiege",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 6 Min bergauf RPE 7, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, Anstiege im Sprechtest · ca. 600 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-04-12",
+   "fokus": "Anstiege verlängern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 8 Min bergauf RPE 7",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 650 Hm",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-04-19",
+   "fokus": "Mehr Höhenmeter",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 6 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 700 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-04-26",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wenig Höhe · ca. 400 Hm",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-05-03",
+   "fokus": "Bergausdauer aufbauen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 8 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 750 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-05-10",
+   "fokus": "Bergausdauer steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 10 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, steile Passagen zügig gehen erlaubt · ca. 800 Hm",
+     "km": 19
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-05-17",
+   "fokus": "Höchste Bergbelastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 10 Min bergauf RPE 7",
+     "km": 12
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, Verpflegung wie im Wettkampf · ca. 850 Hm",
+     "km": 20
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-05-24",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "45 Min locker",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker · ca. 450 Hm",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 9,
+   "start": "2027-05-31",
+   "fokus": "Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "2 × 15 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 900 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-06-07",
+   "fokus": "Wettkampfnah bergauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "3 × 10 Min bergauf im geplanten Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Ruhig, Streckenprofil ähnlich Vogellisi · ca. 800 Hm",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-06-14",
+   "fokus": "Wettkampfnah bergauf, länger",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "2 × 15 Min bergauf im Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Ruhig · ca. 900 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-06-21",
+   "fokus": "Generalprobe",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "3 × 12 Min bergauf im Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Generalprobe",
+     "detail": "13 km mit ca. 860 Hm: erste Hälfte ruhig, zweite im Wettkampftempo; Schuhe und Verpflegung testen",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-06-28",
+   "fokus": "Reduktion – Umfang runter, Intensität kurz halten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Kurz: 2 Sätze, leicht, keine schweren Beine",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Anstiegen",
+     "detail": "4 × 4 Min bergauf im Wettkampftempo",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker · ca. 400 Hm",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-07-05",
+   "fokus": "Wettkampfwoche Vogellisi",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurz: nur Oberkörper, 2 Sätze, kein Muskelversagen",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz mit Anstiegen",
+     "detail": "30 Min locker, darin 3 × 2 Min bergauf im Wettkampftempo",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz und locker",
+     "detail": "20 Min plus 4 Steigerungsläufe",
+     "km": 3.5
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei – Beine hoch, Kohlenhydrate hochfahren"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Berglauf",
+     "detail": "Adelboden–Silleren, 13 km, ca. 860 Hm · ruhig starten, ab der zweiten Hälfte steigern",
+     "km": 13,
+     "wk": true
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-07-12",
+   "fokus": "Erholung nach dem Vogellisi – keine Läufe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spazieren erlaubt"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Leicht: 2 Sätze, keine Beine",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang oder Velo locker"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Ruhepuls und HRV prüfen"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-07-19",
+   "fokus": "Zurück ins Tempo",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Schwelle",
+     "detail": "3 × 8 Min an der Schwelle (ca. 6:15), 2 Min traben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-07-26",
+   "fokus": "10-km-Tempo kennenlernen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "10-km-Tempo",
+     "detail": "5 × 1 km im 10-km-Tempo (ca. 6:05), 2 Min traben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-08-02",
+   "fokus": "Tempo verlängern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Schwelle",
+     "detail": "3 × 10 Min an der Schwelle, 2 Min traben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, letzte 3 km im 10-km-Tempo",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-08-09",
+   "fokus": "Letzter harter Reiz",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Kurz: 2 Sätze, leicht",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "lauf",
+     "titel": "10-km-Tempo",
+     "detail": "3 × 2 km im 10-km-Tempo, 3 Min traben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Beweglichkeit 15 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-08-16",
+   "fokus": "Wettkampfwoche Thuner Stadtlauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurz: nur Oberkörper, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz mit Tempo",
+     "detail": "Locker, darin 3 × 1 km im 10-km-Tempo",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz und locker",
+     "detail": "20 Min plus 4 Steigerungsläufe",
+     "km": 3.5
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei – Beine hoch"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Thuner Stadtlauf",
+     "detail": "10 km (Datum noch offen, 2026 war es der 22.08.) · erste 2 km kontrolliert, ab km 7 steigern",
+     "km": 10,
+     "wk": true
     },
     {
      "typ": "frei",
@@ -1042,9 +2698,11 @@ function toast(txt){
 var plaene = load(K.plaene, null);
 if (!plaene || !plaene.length) { plaene = [PLAN_HALLWILERSEE]; save(K.plaene, plaene); }
 var aktivId = load(K.aktiv, plaene[0].id);
-if (!plaene.some(function(p){ return p.id === PLAN_AUFBAU_2027.id; })){
-  plaene.push(PLAN_AUFBAU_2027); save(K.plaene, plaene);
-  aktivId = PLAN_AUFBAU_2027.id; save(K.aktiv, aktivId);
+/* Einmalig: Saisonplan 2026/27 ergänzen, Vorversion «aufbau-2027» (nur Block 1) ersetzen */
+if (!plaene.some(function(p){ return p.id === PLAN_SAISON_2027.id; })){
+  plaene = plaene.filter(function(p){ return p.id !== 'aufbau-2027'; });
+  plaene.push(PLAN_SAISON_2027); save(K.plaene, plaene);
+  aktivId = PLAN_SAISON_2027.id; save(K.aktiv, aktivId);
 }
 var sessions = load(K.sessions, null);
 if (!sessions || !sessions.length || load(K.sessver, 1) < SESSIONS_VERSION) {
@@ -1103,9 +2761,14 @@ document.getElementById('datenBtn').onclick = function(){ zeige('daten'); };
 
 /* ════════════════ Kopf ════════════════ */
 function renderKopf(){
-  var p = plan(), d = tageBis(p.wettkampf.datum);
+  var p = plan(), wk = { name:p.wettkampf.name, datum:p.wettkampf.datum };
+  /* Bei Saisonplänen: nächster Wettkampf aus den Blöcken */
+  (p.bloecke||[]).filter(function(b){ return b.wkDatum && b.wkDatum >= heute(); })
+    .sort(function(a,b){ return a.wkDatum < b.wkDatum ? -1 : 1; }).slice(0,1)
+    .forEach(function(b){ wk = { name:b.wkName||b.name, datum:b.wkDatum }; });
+  var d = tageBis(wk.datum);
   document.getElementById('hEyebrow').textContent =
-    p.wettkampf.name + ', ' + deDatum(p.wettkampf.datum) + String(p.wettkampf.datum).slice(0,4);
+    wk.name + ', ' + deDatum(wk.datum) + String(wk.datum).slice(0,4);
   document.getElementById('hTitel').textContent =
     d > 0 ? 'Noch ' + d + ' Tage' : (d === 0 ? 'Heute ist Wettkampf' : 'Wettkampf vorbei');
   document.getElementById('hSub').textContent = p.ziel || '';
@@ -1141,16 +2804,31 @@ function renderPlan(){
            '<span class="tiny muted">'+deDatum(b.von)+String(b.von).slice(2,4)+'–'+deDatum(b.bis)+String(b.bis).slice(2,4)+'</span></div>'+
            '<div class="small">Schwerpunkt: '+esc(b.schwerpunkt||'')+'</div>'+
            (b.erhaltung ? '<div class="tiny muted">Erhaltung: '+esc(b.erhaltung)+'</div>' : '')+
-           (b.wettkampf ? '<div class="tiny akz">Wettkampf: '+esc(b.wettkampf)+'</div>' : '')+'</div>';
+           (b.wettkampf ? '<div class="tiny akz">Wettkampf: '+esc(b.wettkampf)+'</div>' : '')+
+           (b.warum ? '<details class="warum"><summary>Warum jetzt?</summary><div class="small">'+esc(b.warum)+'</div></details>' : '')+'</div>';
     });
-    h += '<p class="hint">Die Wochen im Detail stehen nur für den laufenden Block. Der nächste Block kommt als eigener Plan dazu.</p></div>';
+    h += '</div>';
   }
   h += '<div class="card"><div class="between"><h3>Tempi</h3><span class="tiny muted">min/km</span></div><table>';
   Object.keys(p.tempi || {}).forEach(function(k){
     h += '<tr><td>'+esc(k)+'</td><td class="num">'+esc(p.tempi[k])+'</td></tr>';
   });
   h += '</table></div>';
-  (p.wochen || []).forEach(function(w){
+  var gruppen = [];
+  if (p.bloecke && p.bloecke.length){
+    p.bloecke.forEach(function(b){ gruppen.push({ b:b, w:(p.wochen||[]).filter(function(w){ return w.start >= b.von && w.start <= b.bis; }) }); });
+  } else gruppen.push({ b:null, w:p.wochen||[] });
+  /* Offen: laufender Block; vor Saisonstart der erste */
+  var offenIdx = gruppen.map(function(g){ return g.b && g.b.von <= heute() && g.b.bis >= heute(); }).indexOf(true);
+  if (offenIdx < 0) offenIdx = gruppen.map(function(g){ return !g.b || g.b.von > heute(); }).indexOf(true);
+  gruppen.forEach(function(g, gi){
+    if (!g.w.length) return;
+    if (g.b) h += '<details class="blockwochen"'+(gi===offenIdx?' open':'')+'><summary><strong>'+esc(g.b.name)+'</strong> <span class="tiny muted">'+
+      deDatum(g.b.von)+'–'+deDatum(g.b.bis)+' · '+g.w.length+' Wochen</span></summary>';
+    g.w.forEach(wocheKarte);
+    if (g.b) h += '</details>';
+  });
+  function wocheKarte(w){
     var ende = plusTage(w.start, 6), jetzt = heute() >= w.start && heute() <= ende;
     h += '<div class="card'+(jetzt?' now':'')+'">';
     h += '<div class="between"><h3>Woche '+w.nr+(jetzt?' (jetzt)':'')+'</h3>'+
@@ -1158,7 +2836,7 @@ function renderPlan(){
     if (w.fokus) h += '<p class="small muted" style="margin:0 0 8px">'+esc(w.fokus)+'</p>';
     (w.tage || []).forEach(function(t, i){
       var datum = plusTage(w.start, i), ist = datum === heute();
-      var ok = erledigtAm(datum, t.typ), wk = t.km && t.km > 20;
+      var ok = erledigtAm(datum, t.typ), wk = t.wk || (t.km && t.km > 20);
       h += '<div class="day'+(ist?' heute':'')+'">';
       h += '<div class="dw">'+WT[i]+' '+deDatum(datum).slice(0,3)+'</div><div style="flex:1">';
       h += '<div class="tt">'+esc(t.titel)+' <span class="tag '+(wk?'wk':t.typ)+'">'+(wk?'Wettkampf':t.typ)+'</span></div>';
@@ -1169,7 +2847,7 @@ function renderPlan(){
       h += '</div>';
     });
     h += '</div>';
-  });
+  }
   if (p.regeln && p.regeln.length){
     h += '<div class="card"><h3>Regeln</h3><ul class="small" style="margin:0;padding-left:1.1em">';
     p.regeln.forEach(function(r){ h += '<li style="margin-bottom:5px">'+esc(r)+'</li>'; });
