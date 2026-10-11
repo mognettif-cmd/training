@@ -1,16 +1,16 @@
 # Training – PWA
 
-Laufplan, Krafteinheiten, Theorie und Trainingstagebuch. Alles läuft lokal im Gerät,
+Plan, Journal (Trainingstagebuch), Krafteinheiten, Statistik und Theorie. Alles läuft lokal im Gerät,
 ohne Konto und ohne Server.
 
 ## Dateien
 | Datei | Zweck |
 |---|---|
 | `index.html` | die App |
-| `sessions.js` | alle Krafteinheiten als Daten: A1/A2, B1/B2, C1/C2, D1/D2, T1/T2, R1/R2, Kraft A/B |
 | `theorie.js` | Theorie-Modul (7 Themen, je mit Trainingseinheit) |
 | `manifest.json`, `sw.js`, `icon-*.png` | Installierbarkeit und Offline-Betrieb |
-| `plan-hallwilersee-2026.json` | der aktuelle Plan als Datei – Beispiel für künftige Pläne |
+| `plan-hallwilersee-2026.json` | abgeschlossener Plan Hallwilerseelauf |
+| `plan-aufbau-2027.json` | aktueller Plan: Saisonübersicht 2027 und Block 1 im Detail |
 
 ## Online stellen (GitHub Pages)
 1. Alle Dateien ins Repository hochladen (Add file → Upload files → Commit).
@@ -22,7 +22,7 @@ Chrome → Adresse öffnen → Menü ⋮ → «App installieren».
 
 ## Updates
 Neue Dateien hochladen **und in `sw.js` den Wert von `CACHE` hochzählen**
-(z. B. `training-v4-2026-10-20`). Ohne das behält das Handy die alte Version.
+(z. B. `training-v3-2026-10-20`). Ohne das behält das Handy die alte Version.
 Vorher im Tab «Daten» ein Backup exportieren.
 
 ## Neue Vorbereitung ohne Codeänderung
@@ -37,23 +37,26 @@ im Tab «Plan» oder «Daten» umgeschaltet. Aufbau:
              tage:[ {typ:"lauf|kraft|velo|frei", titel, detail, km, session} x7 ] } ] }
 ```
 `tage[0]` ist Montag. `km` speist die Soll-Kilometer im Tab «Fortschritt».
+Optional `bloecke:[{name,von,bis,schwerpunkt,erhaltung,wettkampf}]` zeigt im Tab «Plan» die Saisonübersicht.
+
+## Krafteinheiten ändern
+In `index.html` `DEFAULT_SESSIONS` anpassen und `SESSIONS_VERSION` hochzählen.
+Dann ersetzt die App die Einheiten im Gerät einmalig; der Kraft-Log bleibt erhalten.
+
+## Journal
+Ein Eintrag pro Training, drei Arten:
+- **Lauf**: Distanz, Dauer, Höhenmeter, Ø Puls, RPE (Pace wird berechnet)
+- **Kraft**: Sätze pro Übung (vorbelegt mit den Werten vom letzten Mal, abhaken), Dauer, RPE
+- **Beweglichkeit**: Dauer, RPE
+
+Bestehende Läufe und Kraft-Logs werden beim ersten Start einmalig ins Journal übernommen.
+
+## Statistik
+Zeitraum umschaltbar (4 Wochen, Block, Saison). Laufkilometer mit Plan-Soll, Belastung (sRPE = Minuten × RPE,
+nach Foster) mit Monotonie, Intensitätsverteilung nach RPE, Laufeffizienz (Meter pro Herzschlag, 100 Hm ≈ 1 km),
+Höhenmeter, Kraftverlauf pro Übung (geschätztes Maximum nach Epley bzw. Wiederholungen oder Haltezeit),
+Konsistenz-Kalender und automatische Hinweise.
 
 ## Daten
-Backup im Tab «Daten» → Exportieren (enthält Pläne, Läufe, Kraft-Log, Theorie).
-Garmin: Garmin Connect (Web) → Aktivitäten → Alle Aktivitäten → CSV exportieren →
-Tab «Läufe» → Garmin-CSV importieren. Velo und Duplikate werden übersprungen.
-
-## Krafteinheiten ergänzen
-`sessions.js` enthält alle Einheiten als Objekte:
-`{ id, name, untertitel, gruppe, dauer, equipment, fokus, warmup, pause, finisher,
-   uebungen:[{id, name, dosis, cue, tag, schulter}] }`
-`gruppe` steuert die Wahlleiste im Tab «Kraft», `tag` gruppiert die Übungen innerhalb
-der Session, `schulter` erzeugt den Warnhinweis. Nach einer Änderung in `sessions.js`
-die Konstante `SESSIONS_VERSION` in `index.html` um eins erhöhen, sonst behält das
-Gerät die gespeicherte Fassung.
-
-## Warum Änderungen manchmal nicht ankommen
-Pläne und Krafteinheiten werden beim ersten Start ins Gerät geschrieben und danach
-von dort gelesen. Damit eine geänderte Fassung übernommen wird:
-`version` im Plan bzw. `SESSIONS_VERSION` in `index.html` um eins erhöhen.
-Eigene, selbst importierte Pläne bleiben dabei unangetastet.
+Über den Knopf «Daten» oben rechts. Backup → Exportieren (enthält Pläne, Journal, Krafteinheiten, Theorie).
+Alte Backups (Version 2 mit Läufen und Kraft-Log) lassen sich weiterhin importieren.
