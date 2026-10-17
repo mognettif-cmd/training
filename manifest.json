@@ -1,7 +1,7 @@
 {
   "name": "Training",
   "short_name": "Training",
-  "description": "Laufplan, Kraft, Theorie und Trainingstagebuch",
+  "description": "Laufplan, Kraft (OAP, L-Sitz, Liegestütz, Sehnen), Spagat, Tests, Theorie und Trainingstagebuch",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

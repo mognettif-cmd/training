@@ -148,6 +148,27 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .kal i.zukunft{opacity:.35}
 .kal-wt{font-size:.66rem;color:var(--muted);line-height:1}
 details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom:8px}
+/* V4: Durchführung, Skills, Tests */
+.ueb.skip{padding-bottom:8px}
+.ueb [data-alle]{white-space:nowrap;flex:0 0 auto}
+.vors{color:var(--accent);margin-top:3px}
+.bew{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.bew button{background:none;border:0;color:var(--muted);font-size:.74rem;padding:5px 10px;cursor:pointer}
+.bew button + button{border-left:1px solid var(--line)}
+.bew button.on{background:var(--accent);color:var(--on-accent);font-weight:600}
+.pausebar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;
+  display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--accent);border-radius:99px;padding:8px 10px 8px 18px;
+  box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.pausebar span{color:var(--muted);font-size:.8rem}
+.pausebar b{font-size:1.6rem;font-variant-numeric:tabular-nums;min-width:3.2ch;text-align:center;color:var(--accent)}
+.fort{height:6px;border-radius:99px;background:var(--surface);overflow:hidden;margin:5px 0 3px}
+.fort i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.wahl{display:flex;gap:10px;align-items:flex-start;color:var(--text);font-size:.88rem;padding:8px 0;border-top:1px solid var(--line);margin:0;cursor:pointer}
+.wahl input{width:18px;height:18px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--accent)}
+.radar{width:100%;max-width:380px;height:auto;display:block;margin:6px auto 0}
+.radar text{fill:var(--muted);font-size:10px}
+.radar .ring{fill:none;stroke:var(--line)}
+.radar .ax{stroke:var(--line)}
 @media (prefers-reduced-motion: reduce){ .toast{transition:none} }
 </style>
 </head>
@@ -161,7 +182,8 @@ details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom
 </header>
 
 <div class="wrap">
-  <section id="t-plan"></section>
+  <section id="t-heute"></section>
+  <section id="t-plan" hidden></section>
   <section id="t-journal" hidden></section>
   <section id="t-kraft" hidden></section>
   <section id="t-statistik" hidden></section>
@@ -177,6 +199,7 @@ details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom
 </div>
 
 <nav>
+  <button data-tab="heute"><span class="ic">●</span>Heute</button>
   <button data-tab="plan"><span class="ic">▤</span>Plan</button>
   <button data-tab="journal"><span class="ic">✎</span>Journal</button>
   <button data-tab="kraft"><span class="ic">▦</span>Kraft</button>
@@ -192,7 +215,8 @@ details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom
 var K = {
   plaene:'tp_plaene_v1', aktiv:'tp_plan_aktiv_v1', runs:'tp_runs_v1',
   kraftlog:'tp_kraftlog_v1', sessions:'tp_sessions_v1', sessver:'tp_sessions_ver',
-  journal:'tp_journal_v1', tab:'tp_tab', zr:'tp_stat_zeitraum', filter:'tp_journal_filter', uebung:'tp_stat_uebung'
+  journal:'tp_journal_v1', tab:'tp_tab', zr:'tp_stat_zeitraum', filter:'tp_journal_filter', uebung:'tp_stat_uebung',
+  stufen:'tp_stufen_v1', tests:'tp_tests_v1', variante:'tp_variante'
 };
 var ram = {};
 function load(k, fb){
@@ -282,7 +306,7 @@ var PLAN_SAISON_2027 = {
   "datum": "2027-07-11",
   "distanz": 13
  },
- "ziel": "Hybrid: Kraft und Beweglichkeit bleiben, Laufen wird blockweise aufgebaut",
+ "ziel": "Hybrid: OAP, L-Sitz, Liegestütz und starke Sehnen · Explosivkraft fürs Laufen · Spagat · Laufen blockweise",
  "tempi": {
   "locker / Plaudertempo": "7:15–7:45",
   "Schwelle (Startwert aus HM)": "ca. 6:15",
@@ -290,14 +314,18 @@ var PLAN_SAISON_2027 = {
   "Bergauf": "nach RPE, nicht nach Pace"
  },
  "regeln": [
+  "Laufen nur Mittwoch und Samstag. Ein ausgefallener Lauf wird nicht verschoben.",
   "Beide Läufe überwiegend locker, ausser es steht Qualität im Plan.",
   "Der lange Lauf steigt höchstens 1–2 km pro Woche.",
   "Kraft B nie am Tag vor dem langen Lauf.",
-  "Nur eine Krafteinheit in der Woche möglich: A und B abwechseln.",
+  "Höchstens zwei Krafteinheiten pro Woche: Kraft B (Beine, explosiv) am Montag, Kraft A (Oberkörper) am Freitag. Jede Einheit 30–45 Min – bei Zeitnot die Kurzversion.",
   "Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.",
   "Bergsprints und Hügelintervalle nur ausgeruht. Bei unsauberem Laufstil abbrechen.",
   "Tempi nach jedem Block mit den Journaldaten überprüfen.",
-  "Sobald das Datum des Thuner Stadtlaufs feststeht, Block 6 darauf ausrichten."
+  "Sobald das Datum des Thuner Stadtlaufs feststeht, Block 6 darauf ausrichten.",
+  "Sehnen passen sich über Monate an: eine Skill-Stufe erst wechseln, wenn das Ziel zweimal sauber erreicht wurde.",
+  "Sehnen-Snacks (Di, So) sind freiwillig und kurz. Bei gereizten Ellbogen oder Fingern auslassen.",
+  "Testbatterie alle 6 Wochen, idealerweise in der Entlastungswoche (Freitag statt Kraft A)."
  ],
  "bloecke": [
   {
@@ -312,7 +340,7 @@ var PLAN_SAISON_2027 = {
    "name": "Block 1: Grundlage und Kraft",
    "von": "2026-10-19",
    "bis": "2026-12-13",
-   "schwerpunkt": "Kraft: OAP, Handstand, einbeinige Beinkraft",
+   "schwerpunkt": "Kraft: OAP, L-Sitz, Liegestütz, Explosivkraft Beine, Spagat",
    "erhaltung": "2 lockere Läufe, Bergsprints ab Woche 5, Beweglichkeit",
    "warum": "Der Wettkampf ist 9 Monate weg: Jetzt stört Kraft das Laufen am wenigsten. Beinkraft und belastbare Sehnen sind die Basis für alles, was später bergauf kommt."
   },
@@ -337,7 +365,7 @@ var PLAN_SAISON_2027 = {
    "von": "2027-04-05",
    "bis": "2027-06-06",
    "schwerpunkt": "Lange Anstiege, im langen Lauf bis 900 Hm",
-   "erhaltung": "Kraft 1× pro Woche, A und B abwechselnd",
+   "erhaltung": "Kraft A (Oberkörper) jede Woche am Freitag, Kraft B alle 2 Wochen am Montag",
    "warum": "Im Frühling werden die Wege in tieferen Lagen schneefrei. Aus kurzer Bergkraft wird lange Bergausdauer; Kraft geht auf Erhaltung, damit die Beine für die Höhenmeter frisch bleiben."
   },
   {
@@ -345,7 +373,7 @@ var PLAN_SAISON_2027 = {
    "von": "2027-06-07",
    "bis": "2027-07-11",
    "schwerpunkt": "Wettkampfnahe Bergläufe, Generalprobe, Taper",
-   "erhaltung": "Kraft kurz, in der Wettkampfwoche nur Oberkörper",
+   "erhaltung": "Kraft A am Freitag kurz, Kraft B alle 2 Wochen; in der Wettkampfwoche nur Oberkörper am Montag",
    "wettkampf": "Vogellisi-Berglauf, So 11.07.2027, 13 km, ca. 860 Hm",
    "wkDatum": "2027-07-11",
    "wkName": "Vogellisi-Berglauf",
@@ -364,7 +392,7 @@ var PLAN_SAISON_2027 = {
    "von": "2027-07-19",
    "bis": "2027-08-21",
    "schwerpunkt": "Schwelle und 10-km-Tempo, Taper",
-   "erhaltung": "Kraft 1× pro Woche",
+   "erhaltung": "Kraft A jede Woche am Freitag, Kraft B alle 2 Wochen",
    "wettkampf": "Thuner Stadtlauf, Ende August 2027 (Datum noch offen; 2026: 22.08.)",
    "wkDatum": "2027-08-21",
    "wkName": "Thuner Stadtlauf",
@@ -380,12 +408,14 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Spazieren erlaubt"
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
     },
     {
      "typ": "velo",
      "titel": "Velo-Pendeln",
-     "detail": "Zone 1, ganz locker"
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "frei",
@@ -393,15 +423,15 @@ var PLAN_SAISON_2027 = {
      "detail": "Spaziergang 30–45 Min"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
      "typ": "kraft",
      "titel": "Kraft A",
      "detail": "Leicht: 2 Sätze, kein Muskelversagen, keine Beine",
      "session": "kraft-a"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
     },
     {
      "typ": "frei",
@@ -422,9 +452,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Leicht: 2 Sätze, Gewichte tief einsteigen",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -439,14 +475,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Leicht: 2 Sätze, Gewichte tief einsteigen",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -457,7 +488,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -468,9 +500,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -485,14 +523,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -503,7 +536,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -514,9 +548,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -531,14 +571,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -549,7 +584,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -560,9 +596,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Entlastung: 2 Sätze statt 3",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -577,14 +619,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Entlastung: 2 Sätze statt 3",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -595,7 +632,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -606,9 +644,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -623,14 +667,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -641,7 +680,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -652,9 +692,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -669,14 +715,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -687,7 +728,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -698,9 +740,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Oberkörper, Handstand, OAP, Rumpf · 3 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -715,14 +763,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Beine einbeinig, Rumpf, Beweglichkeit · 3 Sätze",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -733,7 +776,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -744,9 +788,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Entlastung: 2 Sätze statt 3",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -761,14 +811,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Entlastung: 2 Sätze statt 3",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -779,7 +824,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -790,9 +836,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -807,14 +859,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -825,7 +872,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -836,9 +884,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -853,14 +907,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -871,7 +920,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -882,9 +932,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Entlastung: 2 Sätze, leichter",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -899,14 +955,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Entlastung: 2 Sätze, leichter",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -917,7 +968,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -928,9 +980,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -945,14 +1003,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -963,7 +1016,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -974,9 +1028,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -991,14 +1051,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1009,7 +1064,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1020,9 +1076,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1037,14 +1099,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1055,7 +1112,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1066,9 +1124,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1083,14 +1147,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Erhaltung: 2 Sätze, Gewichte halten",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1101,7 +1160,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1112,9 +1172,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
+     "titel": "Kraft B",
      "detail": "Entlastung: 2 Sätze, leichter",
-     "session": "kraft-a"
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1129,14 +1195,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
+     "titel": "Kraft A",
      "detail": "Entlastung: 2 Sätze, leichter",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1147,7 +1208,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1158,9 +1220,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1175,14 +1243,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1193,7 +1256,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1204,9 +1268,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1221,14 +1291,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1239,7 +1304,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1250,9 +1316,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1267,14 +1339,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1285,7 +1352,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1296,9 +1364,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1313,14 +1387,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Entlastung: 2 Sätze, mittlere Last",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1331,7 +1400,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1342,9 +1412,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1359,14 +1435,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1377,7 +1448,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1388,9 +1460,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1405,14 +1483,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1423,7 +1496,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1434,9 +1508,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1451,14 +1531,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Rumpf und Beweglichkeit normal",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1469,7 +1544,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1480,9 +1556,15 @@ var PLAN_SAISON_2027 = {
    "tage": [
     {
      "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1497,14 +1579,9 @@ var PLAN_SAISON_2027 = {
     },
     {
      "typ": "kraft",
-     "titel": "Kraft B",
-     "detail": "Entlastung: 2 Sätze, mittlere Last",
-     "session": "kraft-b"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1515,7 +1592,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1525,10 +1603,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Lange Anstiege",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1542,14 +1626,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1560,7 +1640,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1576,6 +1657,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "Bergauf-Schwelle",
      "detail": "3 × 8 Min bergauf RPE 7",
@@ -1587,14 +1674,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1605,7 +1688,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1615,10 +1699,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Mehr Höhenmeter",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1632,14 +1722,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1650,7 +1736,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1666,6 +1753,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "Lockerer Lauf",
      "detail": "40 Min locker",
@@ -1677,14 +1770,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1695,7 +1784,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1705,10 +1795,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Bergausdauer aufbauen",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1722,14 +1818,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1740,7 +1832,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1756,6 +1849,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "Bergauf-Schwelle",
      "detail": "3 × 10 Min bergauf RPE 7",
@@ -1767,14 +1866,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1785,7 +1880,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1795,10 +1891,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Höchste Bergbelastung",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1812,14 +1914,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1830,7 +1928,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1846,6 +1945,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "Lockerer Lauf",
      "detail": "45 Min locker",
@@ -1857,14 +1962,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1875,7 +1976,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1885,10 +1987,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Blockabschluss",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1902,14 +2010,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1920,7 +2024,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1930,10 +2035,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Wettkampfnah bergauf",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -1947,14 +2058,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -1965,7 +2072,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -1981,6 +2089,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "Vogellisi-Tempo bergauf",
      "detail": "2 × 15 Min bergauf im Wettkampftempo",
@@ -1992,14 +2106,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2010,7 +2120,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2020,10 +2131,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Generalprobe",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -2037,14 +2154,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2055,7 +2168,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2071,6 +2185,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "Lauf mit Anstiegen",
      "detail": "4 × 4 Min bergauf im Wettkampftempo",
@@ -2082,14 +2202,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2100,7 +2216,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2116,15 +2233,15 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-a"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
      "typ": "lauf",
      "titel": "Kurz mit Anstiegen",
      "detail": "30 Min locker, darin 3 × 2 Min bergauf im Wettkampftempo",
      "km": 6
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
     },
     {
      "typ": "frei",
@@ -2132,15 +2249,15 @@ var PLAN_SAISON_2027 = {
      "detail": "Frei"
     },
     {
-     "typ": "lauf",
-     "titel": "Kurz und locker",
-     "detail": "20 Min plus 4 Steigerungsläufe",
-     "km": 3.5
-    },
-    {
      "typ": "frei",
      "titel": "Frei",
      "detail": "Frei – Beine hoch, Kohlenhydrate hochfahren"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz und locker",
+     "detail": "15–20 Min plus 4 Steigerungsläufe (Vorbelastung)",
+     "km": 3
     },
     {
      "typ": "lauf",
@@ -2159,12 +2276,14 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Spazieren erlaubt"
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
     },
     {
      "typ": "velo",
      "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "frei",
@@ -2172,15 +2291,15 @@ var PLAN_SAISON_2027 = {
      "detail": "Spaziergang"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
      "typ": "kraft",
      "titel": "Kraft A",
      "detail": "Leicht: 2 Sätze, keine Beine",
      "session": "kraft-a"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
     },
     {
      "typ": "frei",
@@ -2200,10 +2319,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Zurück ins Tempo",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -2217,14 +2342,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2235,7 +2356,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2251,6 +2373,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "10-km-Tempo",
      "detail": "5 × 1 km im 10-km-Tempo (ca. 6:05), 2 Min traben",
@@ -2262,14 +2390,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2280,7 +2404,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2290,10 +2415,16 @@ var PLAN_SAISON_2027 = {
    "fokus": "Tempo verlängern",
    "tage": [
     {
-     "typ": "kraft",
-     "titel": "Kraft A",
-     "detail": "Erhaltung: 2 Sätze",
-     "session": "kraft-a"
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
     },
     {
      "typ": "lauf",
@@ -2307,14 +2438,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2325,7 +2452,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2341,6 +2469,12 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-b"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
      "typ": "lauf",
      "titel": "10-km-Tempo",
      "detail": "3 × 2 km im 10-km-Tempo, 3 Min traben",
@@ -2352,14 +2486,10 @@ var PLAN_SAISON_2027 = {
      "detail": "Zone 1"
     },
     {
-     "typ": "frei",
-     "titel": "Frei",
-     "detail": "Beweglichkeit 15 Min"
-    },
-    {
-     "typ": "velo",
-     "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
     },
     {
      "typ": "lauf",
@@ -2370,7 +2500,8 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   },
@@ -2386,6 +2517,11 @@ var PLAN_SAISON_2027 = {
      "session": "kraft-a"
     },
     {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
      "typ": "lauf",
      "titel": "Kurz mit Tempo",
      "detail": "Locker, darin 3 × 1 km im 10-km-Tempo",
@@ -2394,13 +2530,7 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "velo",
      "titel": "Velo-Pendeln",
-     "detail": "Zone 1"
-    },
-    {
-     "typ": "lauf",
-     "titel": "Kurz und locker",
-     "detail": "20 Min plus 4 Steigerungsläufe",
-     "km": 3.5
+     "detail": "Zone 1, ganz locker"
     },
     {
      "typ": "frei",
@@ -2417,236 +2547,356 @@ var PLAN_SAISON_2027 = {
     {
      "typ": "frei",
      "titel": "Frei",
-     "detail": "Optional 15 Min Beweglichkeit: Spagat, Pancake"
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
     }
    ]
   }
- ]
+ ],
+ "version": 4
 };
 
 /* SESSIONS_VERSION hochzählen, wenn sich die Standard-Einheiten ändern –
    dann werden sie im Gerät einmalig ersetzt (Journal bleibt erhalten). */
-var SESSIONS_VERSION = 3;
+var SESSIONS_VERSION = 4;
 var DEFAULT_SESSIONS = [
  {
-  "id": "kraft-a",
-  "name": "Kraft A – Oberkörper und Handstand",
+  "id": "kraft-b",
+  "name": "Kraft B – Beine explosiv und Spagat",
   "tag": "Montag",
-  "hinweis": "Handstand zuerst, solange die Schultern frisch sind. In Entlastungswochen 2 Sätze statt 3.",
+  "dauer": {
+   "kurz": 30,
+   "normal": 45
+  },
+  "hinweis": "Plyometrie zuerst, solange die Beine frisch sind: Qualität vor Menge, Abbruch bei langen Bodenkontakten. Danach schwer und langsam ablassen, zum Schluss Spagat unter Last. Paare im Wechsel trainieren, das spart die Hälfte der Pausen.",
   "bloecke": [
    {
-    "titel": "Aufwärmen",
+    "titel": "Aufwärmen (5 Min)",
     "uebungen": [
      {
-      "id": "a2-w1",
-      "name": "Handgelenke mobilisieren",
-      "dosis": "3 Min",
-      "hinweis": "Kreisen, im Vierfüssler vor und zurück schaukeln",
+      "id": "b2-w1",
+      "name": "Seilspringen oder Velo",
+      "dosis": "3 Min, letzte Minute zügig",
       "art": "skip"
      },
      {
-      "id": "a2-w2",
-      "name": "Schulterblätter aktivieren",
-      "dosis": "3 Min",
-      "hinweis": "Scapula-Pull-ups, TRX-Rows",
+      "id": "b4-w2",
+      "name": "Lauf-ABC und Beinpendel",
+      "dosis": "2 Min: Skippings, Anfersen, Beinpendel vor/seitlich",
       "art": "skip"
      }
     ]
    },
    {
-    "titel": "Handstand-Technik",
+    "titel": "Plyometrie (8 Min)",
     "uebungen": [
      {
-      "id": "a2-h1",
-      "name": "Wandhandstand, Brust zur Wand",
-      "dosis": "4 × 30–45 s, Pause 90 s",
-      "hinweis": "Rippen rein, Schultern zu den Ohren",
-      "art": "sek"
+      "id": "b4-p1",
+      "name": "Pogo-Hops",
+      "dosis": "3 × 20 Kontakte, Pause 60 s",
+      "art": "bw",
+      "hinweis": "Steife Sprunggelenke, Ferse berührt nicht, so kurz wie möglich am Boden",
+      "pause": 60,
+      "kurzDosis": "2 × 20 Kontakte"
      },
      {
-      "id": "a2-h2",
-      "name": "Freistand-Versuche",
-      "dosis": "8–10 Min üben",
-      "hinweis": "Kick-ups mit kontrolliertem Abrollen",
-      "art": "min"
+      "id": "b4-p2",
+      "name": "Einbeinige Sprünge vorwärts (Bounds)",
+      "dosis": "3 × 5 pro Bein, Pause 90 s",
+      "art": "bw",
+      "hinweis": "Weit und flach, aktiv greifen statt bremsen. Ab Block 3: einbeinige Hops über Linie",
+      "pause": 90,
+      "kurzDosis": "2 × 5 pro Bein"
+     },
+     {
+      "id": "b4-p3",
+      "name": "Drop Jump (30–40 cm)",
+      "dosis": "3 × 4, Pause 90 s",
+      "art": "bw",
+      "hinweis": "Fallen lassen, sofort hoch: Bodenkontakt unter 0,25 s. Nur ausgeruht",
+      "pause": 90,
+      "kurz": false
      }
     ]
    },
    {
-    "titel": "Ziehen: OAP-Progression",
+    "titel": "Paar 1: einbeinige Kraft + Achillessehne",
     "uebungen": [
      {
-      "id": "a2-o1",
-      "name": "Klimmzug mit voller Streckung",
-      "dosis": "4 × 6, Pause 2–3 Min",
-      "art": "bw"
+      "id": "b2-k1",
+      "name": "Bulgarian Split Squats",
+      "dosis": "3 × 5–8 pro Seite, Pause 90 s",
+      "art": "kg",
+      "hinweis": "Schwer, 3 s ablassen, explosiv hoch. Letzte 2 Wdh hart",
+      "pause": 90,
+      "kurzDosis": "3 × 5–8 pro Seite"
      },
      {
-      "id": "a2-o2",
-      "name": "Einarmig negativ ablassen",
-      "dosis": "3 × 3 pro Seite",
-      "hinweis": "5 s Abwärtsphase",
-      "art": "bw"
+      "id": "b2-k3",
+      "name": "Einbeiniges Wadenheben schwer (gestreckt)",
+      "dosis": "3 × 8 pro Seite, Pause 60 s",
+      "art": "bw",
+      "hinweis": "Mit Zusatzgewicht, 3 s runter, 1 s oben halten – Achillessehne steifer, Laufökonomie besser",
+      "pause": 60
      }
     ]
    },
    {
-    "titel": "Drücken",
+    "titel": "Paar 2: hintere Kette + Soleus",
     "uebungen": [
      {
-      "id": "a2-d1",
-      "name": "Pike-Push-ups",
-      "dosis": "3 × 6–10, Pause 2 Min",
-      "hinweis": "Steigerung: Füsse erhöht",
-      "art": "bw"
+      "id": "b2-k2",
+      "name": "Einbeiniges Kreuzheben",
+      "dosis": "3 × 6–8 pro Seite, Pause 60 s",
+      "art": "kg",
+      "hinweis": "Becken bleibt gerade, Bewegung aus der Hüfte",
+      "pause": 60,
+      "kurzDosis": "2 × 6–8 pro Seite"
+     },
+     {
+      "id": "b4-k4",
+      "name": "Wadenheben sitzend (Soleus)",
+      "dosis": "3 × 10, Pause 60 s",
+      "art": "kg",
+      "hinweis": "Kurzhantel auf dem Knie, Knie 90°, langsam",
+      "pause": 60,
+      "kurz": false
      }
     ]
    },
    {
-    "titel": "Arme und Griff",
+    "titel": "Spagat unter Last (8 Min)",
     "uebungen": [
      {
-      "id": "a2-g1",
-      "name": "Curls (Kurzhanteln)",
-      "dosis": "3 × 8–12",
-      "art": "kg"
+      "id": "b4-m1",
+      "name": "Cossack Squat mit Kettlebell",
+      "dosis": "2 × 6 pro Seite, Pause 45 s",
+      "art": "kg",
+      "hinweis": "Männerspagat: Adduktoren in der Dehnung kräftigen, gestrecktes Bein Zehen hoch",
+      "pause": 45,
+      "kurzDosis": "1 × 6 pro Seite"
      },
      {
-      "id": "a2-g2",
-      "name": "Unterarm-Curls",
-      "dosis": "3 × 12–15",
-      "art": "kg"
+      "id": "b4-m2",
+      "name": "Querspagat (Männerspagat) mit PNF",
+      "dosis": "2 × 60 s",
+      "art": "sek",
+      "hinweis": "Hineinsinken, 3 × (5 s Boden wegdrücken, entspannen, tiefer). Abstand Boden in die Notiz",
+      "pause": 30,
+      "kurzDosis": "1 × 60 s"
      },
      {
-      "id": "a2-g3",
-      "name": "Farmer's Walk",
-      "dosis": "3 × 40 m",
-      "hinweis": "Ab und zu einseitig als Suitcase Carry, 24–32 kg",
-      "art": "kgm"
-     }
-    ]
-   },
-   {
-    "titel": "Rumpf",
-    "uebungen": [
-     {
-      "id": "a2-r1",
-      "name": "Hängendes Beinheben",
-      "dosis": "3 × 8–12",
-      "hinweis": "Steigerung: Toes-to-Bar",
-      "art": "bw"
+      "id": "b2-m1",
+      "name": "Längsspagat (Frauenspagat) mit PNF",
+      "dosis": "2 × 60 s pro Seite",
+      "art": "sek",
+      "hinweis": "Becken gerade, hinteres Knie auf Kissen. 3 × (5 s vordere Ferse in den Boden, entspannen, tiefer)",
+      "pause": 30,
+      "kurzDosis": "1 × 60 s pro Seite"
      },
      {
-      "id": "a2-r2",
-      "name": "TRX Body Saw",
-      "dosis": "3 × 8–10",
-      "hinweis": "Lendenwirbelsäule nicht durchhängen lassen",
-      "art": "bw"
+      "id": "b2-r2",
+      "name": "Copenhagen-Seitstütz",
+      "dosis": "2 × 20–30 s pro Seite",
+      "art": "sek",
+      "hinweis": "Adduktoren kräftig für Querspagat und Leiste",
+      "pause": 30,
+      "kurz": false
      }
     ]
    }
   ]
  },
  {
-  "id": "kraft-b",
-  "name": "Kraft B – Beine, Rumpf, Beweglichkeit",
-  "tag": "Donnerstag",
-  "hinweis": "Nie am Tag vor dem langen Lauf. Einbeinig: sauber vor schwer. In Entlastungswochen 2 Sätze statt 3.",
+  "id": "kraft-a",
+  "name": "Kraft A – Oberkörper und starke Sehnen",
+  "tag": "Freitag",
+  "dauer": {
+   "kurz": 30,
+   "normal": 45
+  },
+  "hinweis": "Schwer und langsam statt viel: Sehnen reagieren auf hohe Last und lange Spannung (3–5 s). Paare im Wechsel: Klimmzug ↔ L-Sitz, Liegestütz ↔ OAP-Skill. Stufen der Skill-Leitern erst wechseln, wenn das Ziel zweimal erreicht ist.",
   "bloecke": [
    {
-    "titel": "Aufwärmen",
+    "titel": "Aufwärmen (5 Min)",
     "uebungen": [
      {
-      "id": "b2-w1",
-      "name": "Velo, Seilspringen oder lockeres Laufen",
-      "dosis": "5 Min",
-      "art": "skip"
+      "id": "a2-w1",
+      "name": "Handgelenke und Finger mobilisieren",
+      "dosis": "2 Min",
+      "art": "skip",
+      "hinweis": "Kreisen, im Vierfüssler vor und zurück schaukeln, Finger strecken"
      },
      {
-      "id": "b2-w2",
-      "name": "Hüfte und Sprunggelenk mobilisieren",
-      "dosis": "3 Min",
-      "art": "skip"
+      "id": "a2-w2",
+      "name": "Scapula-Pull-ups und Scapula-Push-ups",
+      "dosis": "2 × 8",
+      "art": "skip",
+      "hinweis": "Schulterblätter zuerst, Arme gestreckt"
      }
     ]
    },
    {
-    "titel": "Beine",
+    "titel": "Handstand (Erhaltung)",
     "uebungen": [
      {
-      "id": "b2-k1",
-      "name": "Bulgarian Split Squats",
-      "dosis": "3 × 6–10 pro Seite, Pause 2 Min",
-      "hinweis": "Kurzhanteln, 3 s runter",
-      "art": "kg"
-     },
-     {
-      "id": "b2-k2",
-      "name": "Einbeiniges Kreuzheben",
-      "dosis": "3 × 8 pro Seite",
-      "hinweis": "Kettlebell oder Kurzhantel, Becken bleibt gerade",
-      "art": "kg"
-     },
-     {
-      "id": "b2-k3",
-      "name": "Einbeiniges Wadenheben",
-      "dosis": "3 × 10–15 pro Seite",
-      "hinweis": "Mit Zusatzgewicht, 3 s runter, volle Bewegung",
-      "art": "bw"
-     },
-     {
-      "id": "b2-k4",
-      "name": "Hüftbeuger heben",
-      "dosis": "3 × 8–10 pro Seite",
-      "hinweis": "Knie über Hüfthöhe 2 s halten",
-      "art": "bw"
+      "id": "a2-h1",
+      "name": "Wandhandstand, Brust zur Wand",
+      "dosis": "2 × 30–45 s, Pause 60 s",
+      "art": "sek",
+      "hinweis": "Rippen rein, Schultern zu den Ohren",
+      "pause": 60,
+      "kurzDosis": "1 × 30–45 s"
      }
     ]
    },
    {
-    "titel": "Drücken",
+    "titel": "Paar 1: schwer ziehen + L-Sitz",
     "uebungen": [
      {
-      "id": "b2-d1",
-      "name": "Ring-Push-ups",
-      "dosis": "3 × 8–12",
-      "art": "bw"
+      "id": "a4-o1",
+      "name": "Klimmzug mit Zusatzlast",
+      "dosis": "4 × 3–5, Pause 2 Min",
+      "art": "bw",
+      "hinweis": "Volle Streckung unten, 2–3 s ablassen. 1–2 Wdh in Reserve",
+      "pause": 120,
+      "kurzDosis": "3 × 3–5"
+     },
+     {
+      "id": "a4-l1",
+      "name": "L-Sitz (Stufe)",
+      "dosis": "4 × Stufenziel, Pause 60 s",
+      "art": "sek",
+      "hinweis": "Schultern tief, Ellbogen gestreckt, Knie gestreckt sobald die Stufe es verlangt",
+      "pause": 60,
+      "kurzDosis": "3 × Stufenziel",
+      "leiter": "lsitz"
      }
     ]
    },
    {
-    "titel": "Rumpf",
+    "titel": "Paar 2: drücken + OAP-Skill",
     "uebungen": [
      {
-      "id": "b2-r1",
-      "name": "Renegade Rows",
-      "dosis": "3 × 6–8 pro Seite",
-      "hinweis": "Füsse breit, Becken ruhig",
-      "art": "kg"
+      "id": "a4-p1",
+      "name": "Liegestütz (Stufe)",
+      "dosis": "4 × Stufenziel, Pause 90 s",
+      "art": "bw",
+      "hinweis": "3 s ablassen, 1 s unten halten. Gewichtsweste möglich, wenn die Stufe sitzt",
+      "pause": 90,
+      "kurzDosis": "3 × Stufenziel",
+      "leiter": "liegestuetz"
      },
      {
-      "id": "b2-r2",
-      "name": "Copenhagen-Seitstütz",
-      "dosis": "3 × 20–30 s pro Seite",
-      "hinweis": "Oberer Fuss auf Bank oder Stuhl",
-      "art": "sek"
+      "id": "a4-o2",
+      "name": "OAP-Skill (Stufe)",
+      "dosis": "3 × Stufenziel pro Seite, Pause 90 s",
+      "art": "sek",
+      "hinweis": "Einarmig: Schulter gepackt, Rumpf fest, kein Schwingen",
+      "pause": 90,
+      "leiter": "oap"
      }
     ]
    },
    {
-    "titel": "Beweglichkeit (Erhaltung)",
+    "titel": "Exzentrik einarmig",
     "uebungen": [
      {
-      "id": "b2-m1",
-      "name": "Spagat",
-      "dosis": "2 × 60 s pro Seite",
-      "art": "sek"
+      "id": "a2-o2",
+      "name": "Einarmig negativ ablassen",
+      "dosis": "3 × 2 pro Seite, 5 s Abwärtsphase, Pause 90 s",
+      "art": "bw",
+      "hinweis": "Mit beiden Armen hochziehen, einarmig ablassen. Abbrechen, sobald es unkontrolliert wird",
+      "pause": 90,
+      "kurz": false
+     }
+    ]
+   },
+   {
+    "titel": "Sehnen-Finisher (5 Min)",
+    "uebungen": [
+     {
+      "id": "a4-s1",
+      "name": "Dead Hang einarmig (Fingerhilfe nach Bedarf)",
+      "dosis": "3 × 10–15 s pro Seite, Pause 45 s",
+      "art": "sek",
+      "hinweis": "Schwer: so viel Hilfe, dass 15 s gerade gehen. Ellbogen- und Fingerbeuger-Sehnen",
+      "pause": 45,
+      "kurzDosis": "2 × 10–15 s pro Seite"
      },
      {
-      "id": "b2-m2",
-      "name": "Pancake",
+      "id": "a4-s2",
+      "name": "Unterarm exzentrisch (Beuger und Strecker)",
+      "dosis": "2 × 8 je Richtung, 4 s ablassen",
+      "art": "kg",
+      "hinweis": "Kurzhantel, Unterarm auf dem Oberschenkel. Schützt die Ellbogen (Golfer-/Tennisarm)",
+      "pause": 30,
+      "kurz": false
+     },
+     {
+      "id": "a2-g3",
+      "name": "Farmer's Walk schwer",
+      "dosis": "2 × 40 m",
+      "art": "kgm",
+      "hinweis": "Ab und zu einseitig als Suitcase Carry, 24–32 kg",
+      "pause": 60,
+      "kurz": false
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "snack",
+  "name": "Sehnen-Snack (optional)",
+  "tag": "Di / So",
+  "dauer": {
+   "kurz": 5,
+   "normal": 10
+  },
+  "hinweis": "Freiwillig, zählt nicht als Krafteinheit. Kurze Reize mit mehreren Stunden Abstand reichen für die Sehne. Nicht bis zur Ermüdung, bei Reizung auslassen.",
+  "bloecke": [
+   {
+    "titel": "Sehnen",
+    "uebungen": [
+     {
+      "id": "sn-1",
+      "name": "Dead Hang beidarmig",
+      "dosis": "4 × 10–20 s, Pause 30 s",
+      "art": "sek",
+      "hinweis": "Mit Zusatzlast, wenn 30 s leicht gehen",
+      "pause": 30
+     },
+     {
+      "id": "sn-2",
+      "name": "Isometrischer Klimmzug-Halt, Ellbogen 90°",
+      "dosis": "3 × 8–10 s, Pause 45 s",
+      "art": "sek",
+      "hinweis": "Kräftig, aber nicht maximal",
+      "pause": 45,
+      "kurz": false
+     },
+     {
+      "id": "sn-3",
+      "name": "Wadenheben isometrisch einbeinig",
+      "dosis": "3 × 30 s pro Seite",
+      "art": "sek",
+      "hinweis": "Halbe Höhe halten, kräftig drücken",
+      "pause": 15,
+      "kurz": false
+     }
+    ]
+   },
+   {
+    "titel": "Spagat",
+    "uebungen": [
+     {
+      "id": "sn-4",
+      "name": "Spagat-PNF (Quer oder Längs, im Wechsel)",
       "dosis": "2 × 60 s",
-      "art": "sek"
+      "art": "sek",
+      "hinweis": "Anspannen 5 s, entspannen, tiefer – Abstand in die Notiz",
+      "pause": 15
      }
     ]
    }
@@ -2704,6 +2954,11 @@ if (!plaene.some(function(p){ return p.id === PLAN_SAISON_2027.id; })){
   plaene.push(PLAN_SAISON_2027); save(K.plaene, plaene);
   aktivId = PLAN_SAISON_2027.id; save(K.aktiv, aktivId);
 }
+/* V4: Saisonplan mit neuer Wochenstruktur (Mo Beine, Mi+Sa Lauf, Fr Oberkörper) ersetzt die alte Fassung im Gerät */
+if (plaene.some(function(p){ return p.id === PLAN_SAISON_2027.id && (p.version||0) < PLAN_SAISON_2027.version; })){
+  plaene = plaene.map(function(p){ return p.id === PLAN_SAISON_2027.id ? PLAN_SAISON_2027 : p; });
+  save(K.plaene, plaene);
+}
 var sessions = load(K.sessions, null);
 if (!sessions || !sessions.length || load(K.sessver, 1) < SESSIONS_VERSION) {
   sessions = DEFAULT_SESSIONS; save(K.sessions, sessions); save(K.sessver, SESSIONS_VERSION);
@@ -2738,16 +2993,86 @@ function alleUebungen(s){ var a=[]; (s?s.bloecke:[]).forEach(function(b){ b.uebu
 var TYPNAME = { lauf:'Lauf', kraft:'Kraft', beweg:'Beweglichkeit' };
 var EINHEIT = { kg:['kg','Wdh'], bw:['+kg','Wdh'], sek:[null,'s'], min:[null,'Min'], kgm:['kg','m'] };
 
+/* ════════════════ Skill-Leitern ════════════════
+   Stufe wechseln, wenn das Ziel (n pro Satz, alle Sätze) in zwei Einheiten
+   hintereinander erreicht wurde und die Bewertung nicht «hart» war. */
+var LEITERN = [
+  { id:'oap', name:'Einarmiger Klimmzug (OAP)', stufen:[
+    { name:'Einarmig aktiv hängen', art:'sek', n:15, ziel:'15 s pro Seite', hinweis:'Schulter gepackt, kein Durchhängen im Gelenk' },
+    { name:'Archer-Klimmzug', art:'bw', n:4, ziel:'4 Wdh pro Seite', hinweis:'Der Hilfsarm bleibt so gestreckt wie möglich' },
+    { name:'Einarmig oben halten', art:'sek', n:8, ziel:'8 s pro Seite', hinweis:'Kinn über der Stange, mit beiden Armen hochziehen' },
+    { name:'Einarmig 90° halten', art:'sek', n:8, ziel:'8 s pro Seite', hinweis:'Die schwächste Stelle der Bewegung' },
+    { name:'Einarmig mit Fingerhilfe (Handtuch)', art:'bw', n:3, ziel:'3 Wdh pro Seite', hinweis:'Hilfshand am Handtuch so tief wie möglich' },
+    { name:'Einarmiger Klimmzug', art:'bw', n:1, ziel:'1–2 Wdh pro Seite', hinweis:'Aus voller Streckung, kein Schwung' } ] },
+  { id:'lsitz', name:'L-Sitz', stufen:[
+    { name:'Tuck-L-Sitz (Barren, Stühle)', art:'sek', n:20, ziel:'20 s', hinweis:'Knie zur Brust, Schultern weg von den Ohren' },
+    { name:'Einbein-L-Sitz, Bein wechseln', art:'sek', n:20, ziel:'20 s', hinweis:'Pro Satz Seite wechseln' },
+    { name:'L-Sitz an Parallettes', art:'sek', n:15, ziel:'15 s', hinweis:'Knie gestreckt, Zehen gestreckt' },
+    { name:'L-Sitz am Boden', art:'sek', n:20, ziel:'20 s', hinweis:'Braucht Kompression: Beine aktiv hochziehen' },
+    { name:'L-Sitz am Boden, lang', art:'sek', n:30, ziel:'30 s', hinweis:'Danach: V-Sitz-Ansätze' } ] },
+  { id:'liegestuetz', name:'Liegestütz', stufen:[
+    { name:'Liegestütz langsam (3 s ab)', art:'bw', n:15, ziel:'15 Wdh', hinweis:'Körper wie ein Brett, Ellbogen 45°' },
+    { name:'Ring-Liegestütz', art:'bw', n:12, ziel:'12 Wdh', hinweis:'Oben Ringe nach aussen drehen' },
+    { name:'Archer-Liegestütz', art:'bw', n:6, ziel:'6 Wdh pro Seite', hinweis:'Der gestreckte Arm hilft nur wenig' },
+    { name:'Pseudo-Planche-Liegestütz', art:'bw', n:8, ziel:'8 Wdh', hinweis:'Hände auf Hüfthöhe, Schultern vor die Hände' },
+    { name:'Einarmiger Liegestütz erhöht', art:'bw', n:5, ziel:'5 Wdh pro Seite', hinweis:'Hand auf Bank oder Box, Füsse breit' },
+    { name:'Einarmiger Liegestütz am Boden', art:'bw', n:3, ziel:'3 Wdh pro Seite', hinweis:'Becken bleibt parallel zum Boden' } ] }
+];
+var stufen = load(K.stufen, {});
+function leiter(id){ return LEITERN.filter(function(l){ return l.id===id; })[0]; }
+function stufeNr(id){ var l = leiter(id), s = stufen[id] || 1; return Math.max(1, Math.min(s, l.stufen.length)); }
+function stufeVon(id){ return leiter(id).stufen[stufeNr(id)-1]; }
+/* Eintrags-ID pro Stufe, damit der Kraftverlauf die Stufen nicht vermischt */
+function uebId(u){ return u.leiter ? u.id+'@'+stufeNr(u.leiter) : u.id; }
+function uebName(u){ return u.leiter ? u.name.replace(' (Stufe)','')+': '+stufeVon(u.leiter).name : u.name; }
+function uebArt(u){ return u.leiter ? stufeVon(u.leiter).art : u.art; }
+function uebDosis(u, variante){
+  var d = (variante==='kurz' && u.kurzDosis) ? u.kurzDosis : u.dosis;
+  return u.leiter ? d.replace('Stufenziel', stufeVon(u.leiter).ziel) : d;
+}
+/* Bereit für die nächste Stufe? Zwei Einheiten in Folge mit allen Sätzen ≥ Ziel */
+function leiterBereit(id){
+  var l = leiter(id), nr = stufeNr(id), st = l.stufen[nr-1];
+  if (nr >= l.stufen.length) return false;
+  var treffer = [];
+  journal.filter(function(e){ return e.typ==='kraft'; }).sort(function(a,b){ return a.datum < b.datum ? 1 : -1; })
+    .forEach(function(e){ (e.uebungen||[]).forEach(function(u){ if (u.leiter===id) treffer.push({ e:e, u:u }); }); });
+  if (treffer.length < 2) return false;
+  return treffer.slice(0,2).every(function(t){
+    return t.u.stufe===nr && t.u.saetze.length >= 2 && t.u.bew!=='hart' &&
+      t.u.saetze.every(function(s){ return (s.n||0) >= st.n; });
+  });
+}
+
+/* ════════════════ Testbatterie (alle 6 Wochen) ════════════════ */
+var TESTS = [
+  { id:'t-klimm', name:'Klimmzug, Zusatzlast für 3 Wdh', kurz:'Klimmzug +kg', einheit:'kg', besser:'hoch' },
+  { id:'t-oaph', name:'Einarmig oben halten, schwächere Seite', kurz:'OAP-Halt', einheit:'s', besser:'hoch' },
+  { id:'t-hang', name:'Dead Hang einarmig, schwächere Seite', kurz:'Hang 1-armig', einheit:'s', besser:'hoch' },
+  { id:'t-lsitz', name:'L-Sitz maximal (aktuelle Stufe)', kurz:'L-Sitz', einheit:'s', besser:'hoch' },
+  { id:'t-push', name:'Ring-Liegestütz maximal', kurz:'Ring-LS', einheit:'Wdh', besser:'hoch' },
+  { id:'t-weit', name:'Standweitsprung, bester von 3', kurz:'Weitsprung', einheit:'cm', besser:'hoch' },
+  { id:'t-drei', name:'Dreisprung einbeinig, schwächere Seite', kurz:'Dreisprung', einheit:'cm', besser:'hoch' },
+  { id:'t-quer', name:'Querspagat (Männerspagat): Schambein–Boden', kurz:'Querspagat', einheit:'cm', besser:'tief' },
+  { id:'t-laengs', name:'Längsspagat (Frauenspagat): Leiste–Boden, schlechtere Seite', kurz:'Längsspagat', einheit:'cm', besser:'tief' },
+  { id:'t-3km', name:'3-km-Testlauf', kurz:'3 km', einheit:'Zeit', besser:'tief' }
+];
+var tests = load(K.tests, []);
+function testWert(t, v){ return v==null ? '–' : (t.einheit==='Zeit' ? zeitStr(v) : f1(v)+' '+t.einheit); }
+function letzterTest(){ return tests.slice().sort(function(a,b){ return a.datum < b.datum ? -1 : 1; }).slice(-1)[0] || null; }
+function naechsterTest(){ var l = letzterTest(); return l ? plusTage(l.datum, 42) : heute(); }
+
 /* ════════════════ Navigation ════════════════ */
-var TABS = ['plan','journal','kraft','statistik','theorie','daten'];
+var TABS = ['heute','plan','journal','kraft','statistik','theorie','daten'];
 function zeige(tab){
   if (tab==='laeufe') tab = 'journal';
   if (tab==='fortschritt') tab = 'statistik';
-  if (TABS.indexOf(tab) < 0) tab = 'plan';
+  if (TABS.indexOf(tab) < 0) tab = 'heute';
   TABS.forEach(function(t){ document.getElementById('t-'+t).hidden = (t!==tab); });
   document.querySelectorAll('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.tab===tab); });
   document.getElementById('datenBtn').classList.toggle('on', tab==='daten');
   save(K.tab, tab);
+  if (tab==='heute') renderHeute();
   if (tab==='plan') renderPlan();
   if (tab==='journal') renderJournal();
   if (tab==='kraft') renderKraft();
@@ -2937,6 +3262,7 @@ function bogen(titel, html){
 function bogenZu(){
   document.getElementById('sheet').hidden = true;
   document.body.classList.remove('sheet-offen');
+  wachHalten(false); pauseStop();
   var tab = load(K.tab, 'journal'); zeige(tab);
 }
 document.getElementById('shX').onclick = bogenZu;
@@ -3026,60 +3352,149 @@ function formBeweg(e){
   loeschenBinden(e);
 }
 
-/* Letzte Sätze einer Übung (für Vorbelegung) */
-function letzteSaetze(uid_, ausser){
+/* Letzte Einträge einer Übung (für Vorbelegung und Progressionsvorschlag) */
+function letzteUebung(uid_, ausser){
   var best = null;
   journal.forEach(function(x){
     if (x.typ!=='kraft' || x.id===ausser) return;
     (x.uebungen||[]).forEach(function(u){
-      if (u.id===uid_ && u.saetze.length && (!best || x.datum > best.d)) best = { d:x.datum, s:u.saetze };
+      if (u.id===uid_ && u.saetze.length && (!best || x.datum > best.d)) best = { d:x.datum, u:u };
     });
   });
-  return best ? best.s : null;
+  return best;
 }
+function letzteSaetze(uid_, ausser){ var b = letzteUebung(uid_, ausser); return b ? b.u.saetze : null; }
 function satzZahl(dosis){ var m = /^(\d+)\s*×/.exec(dosis||''); return m ? parseInt(m[1],10) : 1; }
 
-function formKraft(e, sidVorgabe){
+/* Progression nach der Bewertung vom letzten Mal (Autoregulation, vgl. Hickmott et al. 2022) */
+function vorschlag(u, art, letzte){
+  if (!letzte || !letzte.u.bew) return { text:'', saetze:null };
+  var bew = letzte.u.bew, alt = letzte.u.saetze, mitKg = alt.some(function(s){ return s.kg; });
+  var plus = (art==='kg' || (art==='bw' && mitKg) || art==='kgm');
+  var neu = alt.map(function(s){ return { kg:s.kg, n:s.n }; });
+  var text;
+  if (bew==='leicht'){
+    if (plus){ neu.forEach(function(s){ if (s.kg!=null) s.kg = Math.round((s.kg + 2.5)*10)/10; }); text = 'Letztes Mal leicht → heute +2,5 kg.'; }
+    else if (art==='sek'){ neu.forEach(function(s){ if (s.n!=null) s.n += 3; }); text = 'Letztes Mal leicht → heute +3 s.'; }
+    else { neu.forEach(function(s){ if (s.n!=null) s.n += 1; }); text = 'Letztes Mal leicht → heute +1 Wdh.'; }
+  } else if (bew==='passend'){ text = 'Letztes Mal passend → gleiche Werte, saubere Ausführung.'; }
+  else { text = 'Letztes Mal hart → Last halten, erst steigern, wenn es passend wird.'; }
+  return { text:text, saetze:neu };
+}
+
+/* ── Pausentimer und Einheiten-Uhr ── */
+var kraftStart = null, pauseH = null, wakeLock = null;
+function wachHalten(an){
+  try {
+    if (an && 'wakeLock' in navigator && !wakeLock) navigator.wakeLock.request('screen').then(function(w){ wakeLock = w; }).catch(function(){});
+    if (!an && wakeLock){ wakeLock.release().catch(function(){}); wakeLock = null; }
+  } catch(e){}
+}
+function pauseStart(sek){
+  var bar = document.getElementById('pauseBar'); if (!bar || !sek) return;
+  clearInterval(pauseH);
+  var ende = Date.now() + sek*1000;
+  bar.hidden = false;
+  function tick(){
+    var rest = Math.round((ende - Date.now())/1000);
+    if (rest <= 0){
+      clearInterval(pauseH); bar.querySelector('b').textContent = 'Los!';
+      try { navigator.vibrate && navigator.vibrate([200,100,200]); } catch(e){}
+      setTimeout(function(){ bar.hidden = true; }, 2500); return;
+    }
+    if (rest === 10){ try { navigator.vibrate && navigator.vibrate(80); } catch(e){} }
+    bar.querySelector('b').textContent = Math.floor(rest/60)+':'+pad(rest%60);
+  }
+  tick(); pauseH = setInterval(tick, 250);
+}
+function pauseStop(){ clearInterval(pauseH); var bar = document.getElementById('pauseBar'); if (bar) bar.hidden = true; }
+
+function formKraft(e, sidVorgabe, varVorgabe){
   var sid = e ? e.session : (sidVorgabe || naechsteSession());
   var s = sessionVon(sid) || sessions[0];
+  var variante = e ? (e.variante||'normal') : (varVorgabe || load(K.variante, 'normal'));
+  if (kraftStart && Date.now()-kraftStart > 3*3600000) kraftStart = null;
+  if (!e && !kraftStart) kraftStart = Date.now();
   var h = kopfFelder(e);
-  h += '<label>Einheit</label><div class="chips" style="margin-bottom:12px">';
+  h += '<label>Einheit</label><div class="chips" style="margin-bottom:8px">';
   sessions.forEach(function(x){
     h += '<button type="button" class="chip'+(x.id===s.id?' on':'')+'" data-ses="'+esc(x.id)+'"'+(e?' disabled':'')+'>'+esc(x.name.split(' – ')[0])+'</button>';
   });
-  h += '</div><p class="tiny muted" style="margin:-6px 0 10px">Sätze sind mit den Werten vom letzten Mal vorbelegt. Abhaken, was du gemacht hast, Abweichungen überschreiben.</p>';
+  h += '</div><label>Version</label><div class="chips" style="margin-bottom:10px">';
+  [['kurz','Kurz'],['normal','Normal']].forEach(function(v){
+    var min = s.dauer ? s.dauer[v[0]] : null;
+    h += '<button type="button" class="chip'+(variante===v[0]?' on':'')+'" data-var="'+v[0]+'"'+(e?' disabled':'')+'>'+v[1]+(min?' ~'+min+'′':'')+'</button>';
+  });
+  h += '</div>';
+  if (s.hinweis) h += '<p class="tiny muted" style="margin:-4px 0 10px">'+esc(s.hinweis)+'</p>';
+  h += '<p class="tiny muted" style="margin:0 0 10px">Vorbelegt mit dem Vorschlag aus dem letzten Mal. ✓ startet die Pause. Pro Übung kurz bewerten: daraus kommt der nächste Vorschlag.</p>';
   s.bloecke.forEach(function(b){
-    var ues = b.uebungen.filter(function(u){ return u.art!=='skip'; });
-    if (!ues.length) return;
+    var alle = b.uebungen.filter(function(u){ return variante==='normal' || u.kurz!==false; });
+    if (!alle.length) return;
     h += '<h3 class="bt">'+esc(b.titel)+'</h3>';
-    ues.forEach(function(u){
-      var gespeichert = e ? (e.uebungen||[]).filter(function(x){ return x.id===u.id; })[0] : null;
-      var saetze, done;
+    alle.forEach(function(u){
+      if (u.art==='skip'){
+        h += '<div class="ueb skip"><strong class="small">'+esc(u.name)+'</strong><div class="tiny muted">'+esc(uebDosis(u, variante))+(u.hinweis?' · '+esc(u.hinweis):'')+'</div></div>';
+        return;
+      }
+      var id = uebId(u), art = uebArt(u);
+      var gespeichert = e ? (e.uebungen||[]).filter(function(x){ return x.id===id || (u.leiter && x.leiter===u.leiter); })[0] : null;
+      if (gespeichert){ id = gespeichert.id; art = gespeichert.art; }
+      var saetze, done, bew = gespeichert ? gespeichert.bew : null, vtext = '';
       if (gespeichert){ saetze = gespeichert.saetze; done = true; }
       else {
-        saetze = letzteSaetze(u.id, e?e.id:null) || [];
-        if (!saetze.length){ for (var i=0;i<satzZahl(u.dosis);i++) saetze.push({kg:null,n:null}); }
+        var letzte = letzteUebung(id, e?e.id:null), vs = vorschlag(u, art, letzte);
+        vtext = vs.text;
+        saetze = vs.saetze || (letzte ? letzte.u.saetze : []);
+        var soll = satzZahl(uebDosis(u, variante));
+        saetze = saetze.slice(0, soll);
+        while (saetze.length < soll) saetze.push(saetze.length ? { kg:saetze[saetze.length-1].kg, n:saetze[saetze.length-1].n } : {kg:null,n:null});
         done = false;
       }
-      var ein = EINHEIT[u.art] || ['kg','Wdh'];
-      h += '<div class="ueb" data-u="'+esc(u.id)+'" data-name="'+esc(u.name)+'" data-art="'+esc(u.art)+'">'+
-           '<div class="between"><strong class="small">'+esc(u.name)+'</strong>'+
+      var ein = EINHEIT[art] || ['kg','Wdh'];
+      var st = u.leiter ? stufeVon(u.leiter) : null;
+      var nameU = gespeichert ? gespeichert.name : uebName(u);
+      var stufeU = gespeichert && gespeichert.stufe ? gespeichert.stufe : (u.leiter ? stufeNr(u.leiter) : null);
+      h += '<div class="ueb" data-u="'+esc(id)+'" data-name="'+esc(nameU)+'" data-art="'+esc(art)+'" data-p="'+(u.pause||0)+'"'+
+           (u.leiter ? ' data-leiter="'+esc(u.leiter)+'" data-stufe="'+stufeU+'"' : '')+'>'+
+           '<div class="between"><strong class="small">'+esc(nameU)+'</strong>'+
            '<button type="button" class="btn sm" data-alle>alle ✓</button></div>'+
-           '<div class="tiny muted">'+esc(u.dosis)+(u.hinweis?' · '+esc(u.hinweis):'')+'</div><div class="saetze">';
-      saetze.forEach(function(st, i){ h += satzHtml(i+1, st, ein, done); });
-      h += '</div><button type="button" class="link" data-plus>+ Satz</button></div>';
+           '<div class="tiny muted">'+esc(uebDosis(u, variante))+(u.hinweis?' · '+esc(u.hinweis):'')+'</div>';
+      if (st) h += '<div class="tiny akz">Stufe '+stufeNr(u.leiter)+'/'+leiter(u.leiter).stufen.length+' · Ziel '+esc(st.ziel)+(st.hinweis?' · '+esc(st.hinweis):'')+
+                   (leiterBereit(u.leiter) ? ' · <strong>bereit für die nächste Stufe</strong>' : '')+'</div>';
+      if (vtext) h += '<div class="tiny vors">'+esc(vtext)+'</div>';
+      h += '<div class="saetze">';
+      saetze.forEach(function(x, i){ h += satzHtml(i+1, x, ein, done); });
+      h += '</div><div class="between" style="margin-top:6px"><button type="button" class="link" data-plus>+ Satz</button>'+
+           '<span class="bew" role="group" aria-label="Bewertung">'+
+           [['leicht','leicht'],['passend','passend'],['hart','hart']].map(function(b){
+             return '<button type="button" data-bew="'+b[0]+'"'+(bew===b[0]?' class="on"':'')+'>'+b[1]+'</button>'; }).join('')+
+           '</span></div></div>';
     });
   });
-  var dauerVor = e && e.sek ? Math.round(e.sek/60) : (letzteDauer(s.id) || '');
-  h += '<label for="fM" style="margin-top:14px">Dauer gesamt (Min)</label><input id="fM" inputmode="numeric" value="'+dauerVor+'" placeholder="60">';
+  var dauerVor = e && e.sek ? Math.round(e.sek/60) : '';
+  h += '<label for="fM" style="margin-top:14px">Dauer gesamt (Min)</label><input id="fM" inputmode="numeric" value="'+dauerVor+'" placeholder="'+(e?'':'leer lassen: wird gemessen')+'">';
+  if (!e) h += '<p class="tiny muted" id="fUhr" style="margin:-6px 0 10px"></p>';
   h += rpeHtml(e ? e.rpe : null) + fussFelder(e);
-  bogen(e ? 'Krafteinheit bearbeiten' : 'Krafteinheit eintragen', h);
+  h += '<div class="pausebar" id="pauseBar" hidden><span>Pause</span><b>0:00</b><button type="button" class="btn sm" id="pauseX">Überspringen</button></div>';
+  bogen(e ? 'Krafteinheit bearbeiten' : s.name.split(' – ')[0]+' · '+(variante==='kurz'?'Kurz':'Normal'), h);
+  wachHalten(true);
   var box = document.getElementById('shB'); rpeBinden(box);
-  box.querySelectorAll('[data-ses]').forEach(function(b){
-    b.onclick = function(){ formKraft(null, b.dataset.ses); };
+  document.getElementById('pauseX').onclick = pauseStop;
+  var uhr = document.getElementById('fUhr');
+  if (uhr){ var uTick = function(){ if (!document.body.contains(uhr)) return; uhr.textContent = 'Läuft seit '+Math.round((Date.now()-kraftStart)/60000)+' Min'; setTimeout(uTick, 30000); }; uTick(); }
+  box.querySelectorAll('[data-ses]').forEach(function(b){ b.onclick = function(){ formKraft(null, b.dataset.ses, variante); }; });
+  box.querySelectorAll('[data-var]').forEach(function(b){ b.onclick = function(){ save(K.variante, b.dataset.var); formKraft(null, s.id, b.dataset.var); }; });
+  box.querySelectorAll('.bew').forEach(function(g){
+    g.querySelectorAll('button').forEach(function(b){ b.onclick = function(){
+      var war = b.classList.contains('on'); g.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
+      if (!war) b.classList.add('on'); }; });
   });
   function satzBinden(root){
-    root.querySelectorAll('.ok').forEach(function(b){ b.onclick = function(){ b.classList.toggle('on'); b.setAttribute('aria-pressed', b.classList.contains('on')); }; });
+    root.querySelectorAll('.ok').forEach(function(b){ b.onclick = function(){
+      b.classList.toggle('on'); b.setAttribute('aria-pressed', b.classList.contains('on'));
+      if (b.classList.contains('on')) pauseStart(parseInt(b.closest('.ueb').dataset.p,10)||0);
+    }; });
   }
   satzBinden(box);
   box.querySelectorAll('[data-alle]').forEach(function(b){
@@ -3097,19 +3512,30 @@ function formKraft(e, sidVorgabe){
   });
   document.getElementById('fSave').onclick = function(){
     var ues = [];
-    box.querySelectorAll('.ueb').forEach(function(u){
+    box.querySelectorAll('.ueb[data-u]').forEach(function(u){
       var saetze = [];
       u.querySelectorAll('.satz').forEach(function(r){
         if (!r.querySelector('.ok').classList.contains('on')) return;
         var kgEl = r.querySelector('.kg');
         saetze.push({ kg: kgEl ? zahl(kgEl.value) : null, n: zahl(r.querySelector('.n').value) });
       });
-      if (saetze.length) ues.push({ id:u.dataset.u, name:u.dataset.name, art:u.dataset.art, saetze:saetze });
+      var bw = u.querySelector('.bew .on');
+      if (saetze.length){
+        var x = { id:u.dataset.u, name:u.dataset.name, art:u.dataset.art, saetze:saetze };
+        if (bw) x.bew = bw.dataset.bew;
+        if (u.dataset.leiter){ x.leiter = u.dataset.leiter; x.stufe = parseInt(u.dataset.stufe,10); }
+        ues.push(x);
+      }
     });
     var m = zahl(document.getElementById('fM').value);
+    if (!m && !e && kraftStart){ var gem = Math.round((Date.now()-kraftStart)/60000); if (gem >= 5) m = gem; }
+    var bereitVorher = LEITERN.filter(function(l){ return leiterBereit(l.id); }).map(function(l){ return l.id; });
+    kraftStart = null; pauseStop();
     speichern({ id:e?e.id:uid(), typ:'kraft', datum:document.getElementById('fD').value||heute(),
-      session:s.id, titel:s.name, sek:m ? m*60 : null, rpe:rpeLesen(box), uebungen:ues,
+      session:s.id, titel:s.name, variante:variante, sek:m ? m*60 : null, rpe:rpeLesen(box), uebungen:ues,
       notiz:document.getElementById('fN').value.trim() });
+    var neu = LEITERN.filter(function(l){ return leiterBereit(l.id) && bereitVorher.indexOf(l.id) < 0; });
+    if (neu.length) setTimeout(function(){ toast(neu[0].name+': bereit für die nächste Stufe'); }, 1900);
   };
   loeschenBinden(e);
 }
@@ -3119,17 +3545,126 @@ function satzHtml(nr, st, ein, done){
     '<input class="n" inputmode="decimal" value="'+(st.n!=null?st.n:'')+'" aria-label="'+ein[1]+'"><span class="u">'+ein[1]+'</span>'+
     '<button type="button" class="ok'+(done?' on':'')+'" aria-pressed="'+(done?'true':'false')+'" aria-label="Satz erledigt">✓</button></div>';
 }
-function letzteDauer(sid){
-  var l = journal.filter(function(x){ return x.typ==='kraft' && x.session===sid && x.sek; })
-    .sort(function(a,b){ return a.datum < b.datum ? 1 : -1; })[0];
-  return l ? Math.round(l.sek/60) : null;
-}
 function naechsteSession(){
   var t = planTag(heute());
   if (t && t.session) return t.session;
-  var l = journal.filter(function(x){ return x.typ==='kraft'; }).sort(function(a,b){ return a.datum < b.datum ? 1 : -1; })[0];
-  if (l && sessions.length > 1){ var i = sessions.map(function(s){return s.id;}).indexOf(l.session); return sessions[(i+1)%sessions.length].id; }
-  return sessions[0].id;
+  var rot = sessions.filter(function(s){ return s.id!=='snack'; });
+  var l = journal.filter(function(x){ return x.typ==='kraft' && x.session!=='snack'; }).sort(function(a,b){ return a.datum < b.datum ? 1 : -1; })[0];
+  if (l && rot.length > 1){ var i = rot.map(function(s){return s.id;}).indexOf(l.session); return rot[(i+1)%rot.length].id; }
+  return rot[0].id;
+}
+function varianteFuer(tag){ return tag && /kurz/i.test((tag.titel||'')+' '+(tag.detail||'')) ? 'kurz' : load(K.variante, 'normal'); }
+
+/* ════════════════ Tab Heute ════════════════ */
+function renderHeute(){
+  var t = heute(), p = plan(), tag = planTag(t), h = '';
+  var b = (p.bloecke||[]).filter(function(x){ return x.von <= t && x.bis >= t; })[0];
+  if (b) h += '<p class="tiny muted" style="margin:0 0 10px">'+esc(b.name)+' · '+esc(b.schwerpunkt||'')+'</p>';
+  h += '<div class="card now"><div class="eyebrow">'+WT[wtag(t)]+' '+deDatum(t)+'</div>';
+  if (!tag){
+    h += '<h2>Kein Plan für heute</h2><p class="small muted">Der aktive Plan deckt heute nicht ab.</p>';
+  } else {
+    var ok = erledigtAm(t, tag.typ==='velo'||tag.typ==='frei' ? '-' : tag.typ);
+    h += '<h2>'+esc(tag.titel)+(ok?' <span class="akz">✓</span>':'')+'</h2>';
+    if (tag.detail) h += '<p class="small muted" style="margin:4px 0 0">'+esc(tag.detail)+'</p>';
+    if (tag.km) h += '<p class="tiny muted" style="margin:2px 0 0">ca. '+tag.km+' km</p>';
+    h += '<div class="btns">';
+    if (tag.typ==='kraft'){
+      var s = sessionVon(tag.session), v = varianteFuer(tag);
+      ['kurz','normal'].forEach(function(x){
+        h += '<button class="btn'+(x===v?' prim':'')+'" data-go="'+esc(tag.session)+'" data-v="'+x+'">'+(x==='kurz'?'Kurz':'Normal')+(s&&s.dauer?' ~'+s.dauer[x]+'′':'')+' starten</button>';
+      });
+    }
+    if (tag.typ==='lauf') h += '<button class="btn prim" data-lauf>Lauf eintragen</button>';
+    if (tag.extra==='snack') h += '<button class="btn" data-go="snack" data-v="normal">Sehnen-Snack starten</button>';
+    if (tag.typ==='frei' || tag.typ==='velo') h += '<button class="btn" data-beweg>Beweglichkeit eintragen</button>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  /* Woche */
+  var m = montag(t);
+  h += '<div class="card"><h3>Diese Woche</h3>';
+  for (var i=0;i<7;i++){
+    var d = plusTage(m,i), pt = planTag(d);
+    if (!pt) continue;
+    var erl = (pt.typ==='lauf'||pt.typ==='kraft') && erledigtAm(d, pt.typ);
+    h += '<div class="day'+(d===t?' heute':'')+'"><div class="dw">'+WT[i]+'</div><div style="flex:1"><span class="small">'+esc(pt.titel)+'</span> <span class="tag '+pt.typ+'">'+pt.typ+'</span></div>'+(erl?'<div class="check">✓</div>':'')+'</div>';
+  }
+  h += '</div>';
+
+  /* Skills */
+  h += '<div class="card"><div class="between"><h3>Skill-Leitern</h3><button class="link" data-stufen>Stufen ändern</button></div>';
+  LEITERN.forEach(function(l){
+    var nr = stufeNr(l.id), st = l.stufen[nr-1], pc = Math.round(nr/l.stufen.length*100);
+    h += '<div style="margin-top:10px"><div class="between"><strong class="small">'+esc(l.name)+'</strong><span class="tiny muted">Stufe '+nr+'/'+l.stufen.length+'</span></div>'+
+         '<div class="fort"><i style="width:'+pc+'%"></i></div>'+
+         '<div class="tiny muted">'+esc(st.name)+' · Ziel '+esc(st.ziel)+(leiterBereit(l.id)?' · <span class="akz">bereit für Stufe '+(nr+1)+'</span>':'')+'</div></div>';
+  });
+  h += '</div>';
+
+  /* Test */
+  var nt = naechsterTest(), lt = letzterTest(), bis = tageBis(nt);
+  h += '<div class="card"><h3>Testbatterie</h3><p class="small" style="margin:0">'+
+       (lt ? 'Letzter Test '+deDatum(lt.datum)+String(lt.datum).slice(2,4)+'. '+(bis > 0 ? 'Nächster in '+bis+' Tagen ('+deDatum(nt)+').' : '<strong class="akz">Jetzt fällig.</strong>')
+           : 'Noch kein Test. Der Ersttest zeigt, auf welcher Stufe du startest.')+
+       '</p><p class="tiny muted" style="margin:4px 0 0">Alle 6 Wochen, am besten am Freitag einer Entlastungswoche statt Kraft A. Dauer ca. 40 Min.</p>'+
+       '<div class="btns"><button class="btn'+(bis<=0?' prim':'')+'" data-test>Test eintragen</button></div></div>';
+
+  var el = document.getElementById('t-heute');
+  el.innerHTML = h;
+  el.querySelectorAll('[data-go]').forEach(function(x){ x.onclick = function(){ formKraft(null, x.dataset.go, x.dataset.v); }; });
+  el.querySelectorAll('[data-lauf]').forEach(function(x){ x.onclick = function(){ formLauf(null); }; });
+  el.querySelectorAll('[data-beweg]').forEach(function(x){ x.onclick = function(){ formBeweg(null); }; });
+  el.querySelectorAll('[data-stufen]').forEach(function(x){ x.onclick = formStufen; });
+  el.querySelectorAll('[data-test]').forEach(function(x){ x.onclick = function(){ formTest(null); }; });
+  renderKopf();
+}
+
+/* ── Stufen wählen ── */
+function formStufen(){
+  var h = '<p class="small muted">Wähle die Stufe, deren Ziel du noch nicht sicher schaffst. Die App schlägt den Wechsel vor, sobald das Ziel zweimal erreicht ist.</p>';
+  LEITERN.forEach(function(l){
+    h += '<h3 class="bt">'+esc(l.name)+'</h3>';
+    l.stufen.forEach(function(st, i){
+      var id = 'st-'+l.id+'-'+i;
+      h += '<label class="wahl" for="'+id+'"><input type="radio" name="st-'+l.id+'" id="'+id+'" value="'+(i+1)+'"'+(stufeNr(l.id)===i+1?' checked':'')+'>'+
+           '<span><strong>'+(i+1)+'. '+esc(st.name)+'</strong><span class="tiny muted d-block">Ziel '+esc(st.ziel)+' · '+esc(st.hinweis||'')+'</span></span></label>';
+    });
+  });
+  h += '<div class="btns"><button class="btn prim" id="fSave">Speichern</button></div>';
+  bogen('Skill-Stufen', h);
+  document.getElementById('fSave').onclick = function(){
+    LEITERN.forEach(function(l){ var r = document.querySelector('input[name="st-'+l.id+'"]:checked'); if (r) stufen[l.id] = parseInt(r.value,10); });
+    save(K.stufen, stufen); bogenZu(); toast('Stufen gespeichert');
+  };
+}
+
+/* ── Test eintragen ── */
+function formTest(tst){
+  var h = kopfFelder(tst) + '<p class="tiny muted" style="margin:-4px 0 10px">Ausgeruht, gleiche Reihenfolge, gleiche Tageszeit. Felder leer lassen, wenn ein Test ausfällt. Spagat: 0 cm = ganz unten.</p>';
+  TESTS.forEach(function(t){
+    var v = tst && tst.werte ? tst.werte[t.id] : null;
+    h += '<label for="'+t.id+'">'+esc(t.name)+' ('+(t.einheit==='Zeit'?'mm:ss':t.einheit)+')</label>'+
+         '<input id="'+t.id+'" inputmode="'+(t.einheit==='Zeit'?'numeric':'decimal')+'" value="'+(v==null?'':(t.einheit==='Zeit'?zeitStr(v):v))+'">';
+  });
+  h += '<label for="fN">Notiz (optional)</label><input type="text" id="fN" value="'+esc(tst ? tst.notiz||'' : '')+'">'+
+       '<div class="btns"><button class="btn prim" id="fSave">Speichern</button>'+(tst?'<button class="btn gefahr" id="fDel">Test löschen</button>':'')+'</div>';
+  bogen(tst ? 'Test bearbeiten' : 'Testbatterie', h);
+  document.getElementById('fSave').onclick = function(){
+    var w = {}, n = 0;
+    TESTS.forEach(function(t){ var raw = document.getElementById(t.id).value.trim(); if (!raw) return;
+      var v = t.einheit==='Zeit' ? parseZeit(raw) : zahl(raw); if (v!=null){ w[t.id] = v; n++; } });
+    if (!n){ toast('Mindestens ein Wert fehlt'); return; }
+    var x = { id: tst ? tst.id : uid(), datum: document.getElementById('fD').value || heute(), werte:w, notiz:document.getElementById('fN').value.trim() };
+    tests = tests.filter(function(y){ return y.id !== x.id; }).concat([x]);
+    save(K.tests, tests); bogenZu(); toast('Test gespeichert');
+  };
+  var d = document.getElementById('fDel');
+  if (d) d.onclick = function(){
+    if (d.dataset.sicher !== '1'){ d.dataset.sicher = '1'; d.textContent = 'Wirklich löschen?'; return; }
+    tests = tests.filter(function(y){ return y.id !== tst.id; }); save(K.tests, tests); bogenZu(); toast('Gelöscht');
+  };
 }
 
 /* ════════════════ Tab Kraft (Übersicht der Einheiten) ════════════════ */
@@ -3137,20 +3672,22 @@ function renderKraft(){
   var h = '';
   sessions.forEach(function(s){
     h += '<div class="card"><div class="between"><h3>'+esc(s.name)+'</h3><span class="tag">'+esc(s.tag||'')+'</span></div>';
+    if (s.dauer) h += '<p class="tiny muted" style="margin:0">Kurz ~'+s.dauer.kurz+' Min · Normal ~'+s.dauer.normal+' Min</p>';
     if (s.hinweis) h += '<p class="small muted" style="margin:2px 0 6px">'+esc(s.hinweis)+'</p>';
     s.bloecke.forEach(function(b){
       h += '<div style="margin-top:10px"><strong class="small">'+esc(b.titel)+'</strong>';
       b.uebungen.forEach(function(u){
-        h += '<div class="ue"><div><div class="tt">'+esc(u.name)+'</div><div class="small">'+esc(u.dosis)+'</div>'+
+        h += '<div class="ue"><div><div class="tt">'+esc(uebName(u))+(u.kurz===false?' <span class="tag">nur Normal</span>':'')+'</div><div class="small">'+esc(uebDosis(u,'normal'))+
+             (u.kurzDosis ? ' <span class="tiny muted">· kurz: '+esc(uebDosis(u,'kurz'))+'</span>' : '')+'</div>'+
              (u.hinweis ? '<div class="tiny muted">'+esc(u.hinweis)+'</div>' : '')+'</div></div>';
       });
       h += '</div>';
     });
-    h += '<div class="btns"><button class="btn prim" data-start="'+esc(s.id)+'">Einheit eintragen</button></div></div>';
+    h += '<div class="btns"><button class="btn" data-start="'+esc(s.id)+'" data-v="kurz">Kurz starten</button><button class="btn prim" data-start="'+esc(s.id)+'" data-v="normal">Normal starten</button></div></div>';
   });
   var el = document.getElementById('t-kraft');
   el.innerHTML = h;
-  el.querySelectorAll('[data-start]').forEach(function(b){ b.onclick = function(){ formKraft(null, b.dataset.start); }; });
+  el.querySelectorAll('[data-start]').forEach(function(b){ b.onclick = function(){ formKraft(null, b.dataset.start, b.dataset.v); }; });
 }
 
 /* ════════════════ Tab Statistik ════════════════ */
@@ -3313,6 +3850,51 @@ function hinweise(z, liste){
   return h;
 }
 
+/* ── Spinnennetz: jede Achse relativ zum besten je erreichten Wert (1 = Bestwert) ── */
+function radar(achsen, serien){
+  var W = 380, H = 300, cx = W/2, cy = 150, r = 100, n = achsen.length, h = '';
+  function pt(i, v){ var a = -Math.PI/2 + 2*Math.PI*i/n; return [cx + Math.cos(a)*r*v, cy + Math.sin(a)*r*v]; }
+  h += '<svg viewBox="0 0 '+W+' '+H+'" class="radar" role="img" aria-label="Testbatterie">';
+  [0.25,0.5,0.75,1].forEach(function(k){ h += '<polygon class="ring" points="'+achsen.map(function(_,i){ return pt(i,k).join(','); }).join(' ')+'"/>'; });
+  achsen.forEach(function(a, i){
+    var p = pt(i,1), l = pt(i,1.17), anc = Math.abs(l[0]-cx) < 8 ? 'middle' : (l[0] < cx ? 'end' : 'start');
+    h += '<line class="ax" x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'"/>'+
+         '<text x="'+l[0]+'" y="'+(l[1]+3)+'" text-anchor="'+anc+'">'+esc(a)+'</text>';
+  });
+  serien.forEach(function(s){
+    h += '<polygon points="'+s.werte.map(function(v,i){ return pt(i, v==null?0:Math.max(0.04,v)).join(','); }).join(' ')+'" style="fill:'+s.farbe+';fill-opacity:'+(s.fill||0.18)+';stroke:'+s.farbe+';stroke-width:2'+(s.dash?';stroke-dasharray:4 3':'')+'"/>';
+  });
+  return h + '</svg>';
+}
+function testKarte(){
+  var liste = tests.slice().sort(function(a,b){ return a.datum < b.datum ? -1 : 1; });
+  var h = '<div class="card"><div class="between"><h3>Testbatterie</h3><button class="btn sm" data-test>+ Test</button></div>';
+  if (!liste.length) return h + '<p class="small muted" style="margin:0">Noch kein Test eingetragen. Alle 6 Wochen testen: Oberkörper, Sprungkraft, Spagat und 3 km.</p></div>';
+  var akt = liste[liste.length-1], vor = liste.length > 1 ? liste[liste.length-2] : null;
+  var achsen = TESTS.filter(function(t){ return liste.some(function(x){ return x.werte[t.id]!=null; }); });
+  function norm(t, v){
+    if (v==null) return null;
+    var alle = liste.map(function(x){ return x.werte[t.id]; }).filter(function(x){ return x!=null; });
+    if (t.besser==='hoch'){ var mx = Math.max.apply(null, alle); return mx > 0 ? v/mx : 1; }
+    var mn = Math.min.apply(null, alle);           /* tiefer ist besser: Spagat in cm, Laufzeit */
+    if (t.einheit==='cm'){ var mxc = Math.max.apply(null, alle) + 5; return (mxc - v)/(mxc - mn || 1); }
+    return v > 0 ? mn/v : 1;
+  }
+  if (achsen.length >= 3){
+    var ser = [];
+    if (vor) ser.push({ werte:achsen.map(function(t){ return norm(t, vor.werte[t.id]); }), farbe:'var(--muted)', fill:0.06, dash:true });
+    ser.push({ werte:achsen.map(function(t){ return norm(t, akt.werte[t.id]); }), farbe:'var(--accent)' });
+    h += radar(achsen.map(function(t){ return t.kurz; }), ser) +
+         legende([['Test '+deDatum(akt.datum), 'var(--accent)']].concat(vor ? [['Test '+deDatum(vor.datum), 'var(--muted)']] : []))+
+         '<p class="tiny muted" style="margin:4px 0 0">Aussen = bester je gemessener Wert. Beim Spagat zählt jeder cm näher am Boden.</p>';
+  }
+  h += '<table style="margin-top:8px"><tr><th>Test</th>'+liste.slice(-3).map(function(x){ return '<th class="num"><button class="link" data-tedit="'+esc(x.id)+'">'+deDatum(x.datum)+'</button></th>'; }).join('')+'</tr>';
+  achsen.forEach(function(t){
+    h += '<tr><td class="small">'+esc(t.kurz)+'</td>'+liste.slice(-3).map(function(x){ return '<td class="num small">'+testWert(t, x.werte[t.id])+'</td>'; }).join('')+'</tr>';
+  });
+  return h + '</table></div>';
+}
+
 function renderStatistik(){
   var z = zeitraum(), liste = imZeitraum(z), p = plan();
   var lab = z.wochen.map(function(m){ return deDatum(m); });
@@ -3422,22 +4004,28 @@ function renderStatistik(){
     h += '</div></div>';
   }
 
+  /* 8 Testbatterie */
+  h += testKarte();
+
   h += '<p class="tiny muted">Quellen: sRPE und Monotonie nach Foster et al.; geschätztes Maximum nach Epley (nur bis 12 Wdh); 100 Hm ≈ 1 km als Faustregel. Bewusst nicht enthalten: Acute:Chronic Workload Ratio (keine belastbare Evidenz, Impellizzeri et al. 2020).</p>';
 
   var el = document.getElementById('t-statistik');
   el.innerHTML = h;
   el.querySelectorAll('[data-zr]').forEach(function(b){ b.onclick = function(){ save(K.zr, b.dataset.zr); renderStatistik(); }; });
   var uw = document.getElementById('uWahl'); if (uw) uw.onchange = function(){ save(K.uebung, uw.value); renderStatistik(); };
+  el.querySelectorAll('[data-test]').forEach(function(b){ b.onclick = function(){ formTest(null); }; });
+  el.querySelectorAll('[data-tedit]').forEach(function(b){ b.onclick = function(){ formTest(tests.filter(function(x){ return x.id===b.dataset.tedit; })[0]); }; });
 }
 
 /* ════════════════ Tab Daten ════════════════ */
 function alleDaten(){
-  return { version:3, exportiert:heute(), plaene:plaene, aktiv:aktivId, sessions:sessions, journal:journal,
+  return { version:4, exportiert:heute(), plaene:plaene, aktiv:aktivId, sessions:sessions, journal:journal,
+    stufen:stufen, tests:tests,
     theorie: (window.Theorie ? Theorie.export() : null) };
 }
 function renderDaten(){
   var h = '<div class="card"><h3>Backup</h3>'+
-    '<p class="small muted">Alles liegt lokal auf diesem Gerät. Der Export enthält Pläne, Journal, Krafteinheiten und Theorie.</p>'+
+    '<p class="small muted">Alles liegt lokal auf diesem Gerät. Der Export enthält Pläne, Journal, Krafteinheiten, Skill-Stufen, Tests und Theorie. Ein Backup aus Version 3 lässt sich hier einlesen.</p>'+
     '<div class="btns"><button class="btn prim" id="dEx">Exportieren</button>'+
     '<button class="btn" id="dImBtn">Importieren</button></div>'+
     '<input type="file" id="dIm" accept=".json,application/json" hidden></div>';
@@ -3456,6 +4044,7 @@ function renderDaten(){
     '<tr><td>Journal: Läufe</td><td class="num">'+n('lauf')+'</td></tr>'+
     '<tr><td>Journal: Krafteinheiten</td><td class="num">'+n('kraft')+'</td></tr>'+
     '<tr><td>Journal: Beweglichkeit</td><td class="num">'+n('beweg')+'</td></tr>'+
+    '<tr><td>Tests</td><td class="num">'+tests.length+'</td></tr>'+
     '<tr><td>Pläne</td><td class="num">'+plaene.length+'</td></tr>'+
     '<tr><td>Theorie-Themen</td><td class="num">'+(window.Theorie ? Theorie.themen().length : 0)+'</td></tr>'+
     '</table><p class="hint">Vor jedem Update der App ein Backup ziehen.</p></div>';
@@ -3471,7 +4060,11 @@ function renderDaten(){
     dateiLesen(ev, function(d){
       if (d.plaene && d.plaene.length) plaene = d.plaene;
       if (d.aktiv) aktivId = d.aktiv;
-      if (d.sessions && d.sessions.length && (d.version||0) >= 3) sessions = d.sessions;
+      if (d.sessions && d.sessions.length && (d.version||0) >= 4) sessions = d.sessions;
+      if (d.stufen) stufen = d.stufen;
+      (d.tests||[]).forEach(function(t){ if (t && t.id && !tests.some(function(x){ return x.id===t.id; })) tests.push(t); });
+      /* Saisonplan aus einem V3-Backup nicht über die neue Wochenstruktur legen */
+      plaene = plaene.map(function(p){ return (p.id===PLAN_SAISON_2027.id && (p.version||0) < PLAN_SAISON_2027.version) ? PLAN_SAISON_2027 : p; });
       var rein = (d.journal || []).concat(ausAltdaten(d.runs || d.laeufe, d.kraftlog || d.logs));
       var neu = rein.filter(function(e){
         return e && e.datum && !journal.some(function(x){ return x.id===e.id ||
@@ -3480,6 +4073,7 @@ function renderDaten(){
       journal = journal.concat(neu);
       if (d.theorie && window.Theorie) Theorie.import(d.theorie);
       save(K.plaene, plaene); save(K.aktiv, aktivId); save(K.sessions, sessions); save(K.journal, journal);
+      save(K.stufen, stufen); save(K.tests, tests);
       renderDaten(); renderKopf(); toast(neu.length + ' Einträge dazu');
     });
   };
@@ -3511,7 +4105,7 @@ function dateiLesen(ev, cb){
 
 /* ════════════════ Start ════════════════ */
 renderKopf();
-zeige(load(K.tab, 'plan'));
+zeige(load(K.tab, 'heute'));
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(function(){});
 
 </script>

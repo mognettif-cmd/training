@@ -16,6 +16,7 @@
   'use strict';
 
   var STORE_KEY = 'theorie_v1';
+  var GRADE = { A: 'Meta-Analyse oder Leitlinie', B: 'Kontrollierte Studien', C: 'Mechanismus, Erfahrung, Konsens' };
   var LOG_KEY = 'theorie_log_v1';
 
   /* ---------- Speicher (fällt auf RAM zurück, wenn localStorage blockt) ---------- */
@@ -563,6 +564,214 @@
           }
         ]
       }
+    },
+
+    /* ============================ 8 SEHNEN ============================ */
+    {
+      id: 'sehnen',
+      titel: 'Starke Sehnen',
+      kurz: 'Sehnen werden durch hohe Last und lange Spannung steifer und belastbarer – langsam, über Monate.',
+      stand: '2026-10-17',
+      abschnitte: [
+        {
+          h: 'Was sich anpasst',
+          grad: 'A',
+          p: 'Die Meta-Analyse von Bohm, Mersmann und Arampatzis (2015, 27 Studien, gesunde Erwachsene) zeigt: Training erhöht vor allem die Steifigkeit (Effektgrösse 0,70) und die Materialeigenschaften der Sehne (Elastizitätsmodul 0,69). Der Querschnitt wächst nur wenig (0,24). Die Sehne wird also nicht viel dicker, sondern «straffer» und belastbarer.'
+        },
+        {
+          h: 'Welcher Reiz wirkt',
+          grad: 'A',
+          liste: [
+            'Hohe Last: Wirksam waren vor allem Intensitäten ab etwa 70 % der Maximalkraft. Leichte Lasten mit vielen Wiederholungen bringen der Sehne wenig.',
+            'Lange Spannung: Kontraktionen von rund 3 s, isometrisch oder langsam exzentrisch. Ob isometrisch, konzentrisch oder exzentrisch spielt bei gleicher Last eine kleinere Rolle.',
+            'Geduld: Effekte zeigen sich nach 8–12 Wochen und werden mit längeren Programmen grösser.'
+          ]
+        },
+        {
+          h: 'Lange statt kurze Halte',
+          grad: 'B',
+          p: 'Kubo und Kollegen (2001) liessen dieselbe Muskulatur entweder mit langen (20 s) oder kurzen (1 s) isometrischen Kontraktionen trainieren. Nur die langen Halte machten die Sehne steifer. Deshalb arbeitet Kraft A mit langsamem Ablassen (3–5 s), Halten und einarmigem Hängen.'
+        },
+        {
+          h: 'Warum das fürs Laufen zählt',
+          grad: 'B',
+          p: 'In einer 14-wöchigen Studie (Albracht & Arampatzis 2013) stieg die Steifigkeit der Achillessehne um rund 16 %, und die Laufökonomie verbesserte sich um etwa 4 %. Eine steifere Sehne speichert Energie besser und gibt sie beim Abdruck zurück. Darum steht in Kraft B das schwere einbeinige Wadenheben mit langsamer Abwärtsphase.'
+        },
+        {
+          h: 'Obere Extremität: was wir wissen und was nicht',
+          grad: 'C',
+          liste: [
+            'Die meisten Sehnenstudien betreffen Achilles- und Patellasehne. Für Ellbogen, Unterarm und Finger gibt es kaum Längsschnittdaten.',
+            'Bei Kletterern verbessert Hangboard-Training die Fingerkraft (RCT, Hermans et al. 2022); direkte Messungen der Sehne fehlen.',
+            'Folgerung: Die Prinzipien (hohe Last, lange Spannung, langsame Steigerung) werden übertragen, weil das biologische Gewebe gleich ist. Das ist plausibel, aber nicht direkt belegt.'
+          ]
+        },
+        {
+          h: 'Häufigkeit und Snacks',
+          grad: 'C',
+          p: 'Laborstudien an gezüchteten Bändern zeigen, dass die Kollagenbildung nach etwa 10 Minuten Belastung gesättigt ist und sich nach rund 6 Stunden wieder anregen lässt (Baar 2017). Kurze Reize mit Abstand sind deshalb sinnvoller als lange Einheiten. Am Menschen ist das nicht direkt belegt. Die Sehnen-Snacks sind deshalb freiwillig und kurz.'
+        },
+        {
+          h: 'Die wichtigste Regel',
+          grad: 'C',
+          p: 'Muskeln werden in Wochen stärker, Sehnen in Monaten. Wer die Last nach dem Muskelgefühl steigert, überholt die Sehne. Deshalb wechselt die App eine Skill-Stufe erst, wenn das Ziel zweimal sauber erreicht wurde. Ein dumpfer Schmerz am Ellbogen oder an der Fingerbasis, der am nächsten Morgen noch da ist, heisst: eine Stufe zurück.'
+        }
+      ],
+      quellen: [
+        { t: 'Bohm, Mersmann & Arampatzis (2015). Human tendon adaptation in response to mechanical loading: a systematic review and meta-analysis. Sports Medicine – Open 1:7', url: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4532714/' },
+        { t: 'Kubo, Kanehisa & Fukunaga (2001). Effects of different duration isometric contractions on tendon elasticity in human quadriceps muscles. J Physiol 536:649–655', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC2278867/' },
+        { t: 'Albracht & Arampatzis (2013). Exercise-induced changes in triceps surae tendon stiffness and muscle strength affect running economy in humans. Eur J Appl Physiol 113:1605–1615', url: 'https://pubmed.ncbi.nlm.nih.gov/23328797/' },
+        { t: 'Hermans et al. (2022). Effects of 10 weeks hangboard training on climbing-specific maximal and explosive strength. Front Sports Act Living', url: 'https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2022.888158/full' },
+        { t: 'Baar (2017). Minimizing injury and maximizing return to play: lessons from engineered ligaments. Sports Medicine 47(Suppl 1):5–11', url: 'https://pubmed.ncbi.nlm.nih.gov/28332110/' }
+      ],
+      einheit: {
+        name: 'Sehnen-Snack',
+        wann: 'Dienstag und Sonntag, freiwillig, 5–10 Min',
+        hinweis: 'Kräftig, aber nie bis zur Ermüdung. Bei gereizten Ellbogen oder Fingern auslassen.',
+        bloecke: [
+          {
+            titel: 'Sehnen',
+            uebungen: [
+              { id: 's-u1', name: 'Dead Hang beidarmig', dosis: '4 × 10–20 s', hinweis: 'Mit Zusatzlast, wenn 30 s leicht gehen' },
+              { id: 's-u2', name: 'Isometrischer Klimmzug-Halt, Ellbogen 90°', dosis: '3 × 8–10 s', hinweis: 'Kräftig, nicht maximal' },
+              { id: 's-u3', name: 'Wadenheben isometrisch einbeinig', dosis: '3 × 30 s pro Seite', hinweis: 'Halbe Höhe halten' }
+            ]
+          }
+        ]
+      }
+    },
+
+    /* ======================= 9 SKILLS: OAP, L-SITZ, LIEGESTÜTZ ======================= */
+    {
+      id: 'skills',
+      titel: 'Einarmiger Klimmzug, L-Sitz, Liegestütz',
+      kurz: 'Skill-Kraft mit dem eigenen Körper: Stufenleitern, Kriterien und warum Zusatzlast dazugehört.',
+      stand: '2026-10-17',
+      abschnitte: [
+        {
+          h: 'Körpergewicht ist Krafttraining',
+          grad: 'B',
+          p: 'Werden Liegestütz und Bankdrücken mit vergleichbarer Muskelaktivität trainiert (6RM, z. B. mit Band), steigt die Kraft ähnlich (Calatayud et al. 2015, 5 Wochen, trainierte Studierende). Entscheidend ist nicht das Gerät, sondern die Nähe zur Maximalkraft. Deshalb steigern die Stufenleitern den Hebel statt die Wiederholungen.'
+        },
+        {
+          h: 'Einarmiger Klimmzug (OAP)',
+          grad: 'C',
+          liste: [
+            'Zwei Wege laufen parallel: schwere Klimmzüge mit Zusatzlast (Grundkraft) und einarmige Teilbewegungen (Spezifik).',
+            'Als Faustregel aus der Trainingspraxis gilt: Wer einen Klimmzug mit etwa 40–50 % des Körpergewichts als Zusatzlast schafft, hat die Grundkraft für den OAP. Die Zahl ist Erfahrungswissen, keine Studie.',
+            'Einarmig halten (oben und bei 90°) und langsam ablassen sind die wirksamsten Vorstufen, weil sie die schwerste Stelle mit langer Spannung belasten – gut für Muskel und Sehne.',
+            'Ellbogen und Bizepssehne sind das Nadelöhr. Darum stehen einarmiges Hängen und Unterarm-Exzentrik im Programm.'
+          ]
+        },
+        {
+          h: 'L-Sitz',
+          grad: 'C',
+          liste: [
+            'Der L-Sitz scheitert selten an der Bauchkraft, sondern an der Kompression: Hüftbeuger, die die Beine bei gestreckten Knien hochziehen, und Beweglichkeit der hinteren Oberschenkel.',
+            'Darum hilft der Längsspagat-Teil von Kraft B auch dem L-Sitz.',
+            'Stützkraft und Schulterblatt-Senkung (Schultern weg von den Ohren) tragen das Gewicht. Halten ist isometrische Arbeit für die Trizeps- und Handgelenksehnen.'
+          ]
+        },
+        {
+          h: 'Liegestütz-Leiter',
+          grad: 'C',
+          p: 'Über Ring-, Archer- und Pseudo-Planche-Liegestütz bis zum einarmigen Liegestütz wird der Hebel länger und die Last pro Arm grösser. Ringe verlangen Stabilität in der Schulter. Bei der Pseudo-Planche liegt mehr Last auf Handgelenk und Bizepssehne: langsam steigern.'
+        },
+        {
+          h: 'Wie die App steigert',
+          grad: 'B',
+          liste: [
+            'Pro Übung tippst du nach den Sätzen «leicht / passend / hart». Daraus kommt der Vorschlag fürs nächste Mal. Autoregulation dieser Art erzielt ähnliche Kraftzuwächse wie feste Prozentvorgaben (Hickmott et al. 2022).',
+            'Skill-Stufen: Ziel in allen Sätzen erreicht, zweimal hintereinander und nicht «hart» → die App schlägt die nächste Stufe vor.',
+            'Paare (Ziehen ↔ L-Sitz, Drücken ↔ OAP-Skill) nutzen die Pause für die andere Übung. So passt eine Normaleinheit in 45 Minuten.'
+          ]
+        }
+      ],
+      quellen: [
+        { t: 'Calatayud et al. (2015). Bench press and push-up at comparable levels of muscle activity results in similar strength gains. J Strength Cond Res 29(1):246–253', url: 'https://pubmed.ncbi.nlm.nih.gov/24983847/' },
+        { t: 'Hickmott et al. (2022). The effect of load and volume autoregulation on muscular strength and hypertrophy: a systematic review and meta-analysis. Sports Medicine – Open 8:9', url: 'https://doi.org/10.1186/s40798-021-00404-9' }
+      ]
+    },
+
+    /* ============================ 10 SPAGAT ============================ */
+    {
+      id: 'spagat',
+      titel: 'Männer- und Frauenspagat',
+      kurz: 'Querspagat und Längsspagat: Beweglichkeit wächst mit Kraft in der Dehnposition genauso gut wie mit Dehnen.',
+      stand: '2026-10-17',
+      abschnitte: [
+        {
+          h: 'Begriffe',
+          p: 'Männerspagat = Querspagat (Beine seitlich, Adduktoren). Frauenspagat = Längsspagat (ein Bein vorne, eines hinten: hintere Oberschenkel vorne, Hüftbeuger hinten).'
+        },
+        {
+          h: 'Kraft oder Dehnen?',
+          grad: 'A',
+          p: 'Eine Meta-Analyse randomisierter Studien (Afonso et al. 2021, 11 Studien, 452 Personen) fand keinen Unterschied im Bewegungsumfang zwischen Krafttraining über den vollen Bewegungsumfang und Dehnen. Für einen Hybrid-Athleten mit wenig Zeit heisst das: Kraft in der Endposition (Cossack Squat, Copenhagen) zählt doppelt – für die Beweglichkeit und für die Belastbarkeit.'
+        },
+        {
+          h: 'PNF: Anspannen und Entspannen',
+          grad: 'B',
+          p: 'Beim Anspannen-Entspannen (PNF) drückt man in der Dehnposition 5 s gegen den Boden, entspannt und sinkt tiefer. In Übersichtsarbeiten ist das mindestens so wirksam wie statisches Dehnen, manchmal wirksamer (Sharman et al. 2006). Ein Teil des Effekts ist eine höhere Dehntoleranz, nicht nur «längere» Muskeln.'
+        },
+        {
+          h: 'Dosis',
+          grad: 'C',
+          liste: [
+            'Zwei- bis dreimal pro Woche reicht: Kraft B am Montag plus optional Sonntag.',
+            'Pro Spagat 2 × 60 s mit 3 PNF-Zyklen, danach gemessen: Abstand Schambein bzw. Leiste zum Boden.',
+            'Querspagat: Hüfte nach vorne kippen, nicht ins Hohlkreuz ausweichen. Längsspagat: Becken gerade halten, sonst dehnt man an der Zielstruktur vorbei.',
+            'Statisches Dehnen über 60 s direkt vor Sprüngen kann die Sprungleistung kurzfristig etwas senken. Deshalb kommt der Spagat in Kraft B ans Ende.'
+          ]
+        }
+      ],
+      quellen: [
+        { t: 'Afonso et al. (2021). Strength training versus stretching for improving range of motion: a systematic review and meta-analysis. Healthcare 9(4):427', url: 'https://estudogeral.sib.uc.pt/bitstream/10316/104612/1/Strength-training-versus-stretching-for-improving-range-of-motion-A-systematic-review-and-metaanalysisHealthcare-Switzerland.pdf' },
+        { t: 'Sharman, Cresswell & Riek (2006). Proprioceptive neuromuscular facilitation stretching: mechanisms and clinical implications. Sports Medicine 36(11):929–939', url: 'https://pubmed.ncbi.nlm.nih.gov/17052131/' }
+      ]
+    },
+
+    /* ======================= 11 ZWEI EINHEITEN PRO WOCHE ======================= */
+    {
+      id: 'minimaldosis',
+      titel: 'Zwei Krafteinheiten pro Woche',
+      kurz: 'Minimaldosis, Wochenstruktur und warum Beine am Montag und Oberkörper am Freitag liegen.',
+      stand: '2026-10-17',
+      abschnitte: [
+        {
+          h: 'Wie wenig reicht',
+          grad: 'B',
+          p: 'Nach der Übersicht von Spiering et al. (2021) bleiben Kraft und Muskelmasse bei jüngeren Erwachsenen bis zu 32 Wochen erhalten – schon mit einer Einheit pro Woche und einem Satz pro Übung, solange die Last hoch bleibt. Die Intensität ist die entscheidende Grösse, nicht der Umfang. Für Fortschritt braucht es mehr; zwei Einheiten mit wenigen, schweren Sätzen sind ein guter Kompromiss (Androulakis-Korakakis et al. 2020).'
+        },
+        {
+          h: 'Interferenz',
+          grad: 'A',
+          p: 'Kraft und Ausdauer zusammen kosten kaum Maximalkraft oder Muskelmasse, aber etwas Schnellkraft – vor allem, wenn beides in derselben Einheit stattfindet (Schumann et al. 2022). Darum liegen Kraft B (explosiv) und die Läufe an verschiedenen Tagen mit mindestens 48 Stunden Abstand.'
+        },
+        {
+          h: 'Die Woche',
+          liste: [
+            'Montag: Kraft B – Beine explosiv und Spagat. Zwei Tage nach dem langen Lauf, zwei Tage vor dem Lauf am Mittwoch.',
+            'Mittwoch: Lauf (locker oder Qualität laut Block).',
+            'Freitag: Kraft A – Oberkörper und Sehnen. Belastet die Beine kaum, darum passt sie vor den langen Lauf.',
+            'Samstag: langer Lauf.',
+            'Dienstag und Sonntag: optional ein Sehnen-Snack, Donnerstag Velo Zone 1.'
+          ]
+        },
+        {
+          h: 'Kurz- oder Normalversion',
+          liste: [
+            'Normal (~45 Min) ist der Standard.',
+            'Kurz (~30 Min) bei Zeitnot, in Entlastungswochen und wenn der Plan «kurz» sagt. Gestrichen werden Zusatzübungen; die schweren Hauptübungen bleiben. Das entspricht der Minimaldosis-Logik: Intensität halten, Volumen kürzen.'
+          ]
+        }
+      ],
+      quellen: [
+        { t: 'Spiering et al. (2021). Maintaining physical performance: the minimal dose of exercise needed to preserve endurance and strength over time. J Strength Cond Res 35(5):1449–1458', url: 'https://pubmed.ncbi.nlm.nih.gov/33629972/' },
+        { t: 'Androulakis-Korakakis et al. (2020). The minimum effective training dose required to increase 1RM strength in resistance-trained men: a systematic review and meta-analysis. Sports Medicine 50:751–765', url: 'https://link.springer.com/article/10.1007/s40279-019-01236-0' },
+        { t: 'Schumann et al. (2022). Compatibility of concurrent aerobic and strength training for skeletal muscle size and function: an updated systematic review and meta-analysis. Sports Medicine 52:601–612', url: 'https://link.springer.com/article/10.1007/s40279-021-01587-7' },
+        { t: 'Behm et al. (2023). Minimalist training: is lower dosage or intensity resistance training effective to improve physical fitness? A narrative review. Sports Medicine', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10933173/' }
+      ]
     }
   ];
 
@@ -633,6 +842,8 @@
     '.th-log{margin-top:16px;font-size:.85rem;opacity:.8}',
     '.th-log div{padding:3px 0}',
     '.th-hinweis{font-size:.85rem;opacity:.75;margin-top:8px;max-width:68ch}',
+    '.th-grad{display:inline-block;font-size:.66rem;font-weight:600;padding:1px 7px;border-radius:99px;border:1px solid currentColor;vertical-align:2px;opacity:.85}',
+    '.th-grad-A{color:#2fbf8f}.th-grad-B{color:#8b94ad}.th-grad-C{color:#e0a33c}',
     '@media(max-width:420px){.th-ue{flex-wrap:wrap}}'
   ].join('\n');
 
@@ -708,7 +919,14 @@
 
     (t.abschnitte || []).forEach(function (a) {
       var s = el('div', 'th-abschnitt');
-      s.appendChild(el('h4', null, a.h));
+      var h4 = el('h4', null, a.h);
+      if (a.grad) {
+        var g = el('span', 'th-grad th-grad-' + a.grad, 'Evidenz ' + a.grad);
+        g.title = GRADE[a.grad] || '';
+        h4.appendChild(document.createTextNode(' '));
+        h4.appendChild(g);
+      }
+      s.appendChild(h4);
       if (a.p) s.appendChild(el('p', null, a.p));
       if (a.liste) {
         var ul = el('ul');
@@ -717,6 +935,10 @@
       }
       root.appendChild(s);
     });
+
+    if ((t.abschnitte || []).some(function (a) { return a.grad; })) {
+      root.appendChild(el('div', 'th-hinweis', 'Evidenz A: Meta-Analyse oder Leitlinie · B: kontrollierte Studien · C: Mechanismus, Erfahrung, Konsens'));
+    }
 
     if (t.quellen && t.quellen.length) {
       var q = el('div', 'th-abschnitt th-quellen');

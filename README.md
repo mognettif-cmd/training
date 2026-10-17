@@ -1,62 +1,55 @@
-# Training – PWA
+# Training – PWA (Version 4)
 
-Plan, Journal (Trainingstagebuch), Krafteinheiten, Statistik und Theorie. Alles läuft lokal im Gerät,
-ohne Konto und ohne Server.
+Plan, Heute-Ansicht, Journal, Krafteinheiten mit Pausentimer, Skill-Leitern, Testbatterie, Statistik und Theorie.
+Alles läuft lokal im Gerät, ohne Konto und ohne Server. Farben und Aufbau wie Version 3, Inhalt nach dem Vorbild HippoFit.
+
+## Neu in Version 4
+- **Wochenstruktur:** Mo Kraft B (Beine explosiv und Spagat), Mi Lauf, Fr Kraft A (Oberkörper und Sehnen), Sa langer Lauf.
+  Di und So optional ein Sehnen-Snack (5–10 Min). Blöcke 1–6 und die Läufe aus V3 bleiben, nur die Tage sind verschoben.
+  In den Wettkampfwochen gibt es Ausnahmen (Vogellisi am Sonntag, Thuner Stadtlauf am Samstag).
+- **Krafteinheiten** in Kurz- (~30 Min) und Normalversion (~45 Min), mit Übungspaaren, um Pausen zu sparen:
+  - Kraft A: Klimmzug mit Zusatzlast, L-Sitz, Liegestütz-Stufe, OAP-Skill, einarmige Negative, Sehnen-Finisher, kurz Handstand
+  - Kraft B: Plyometrie (Pogos, Bounds, Drop Jumps), Bulgarian Split Squat, Wadenheben schwer, einbeiniges Kreuzheben, Querspagat, Längsspagat
+- **Heute:** die Einheit des Tages mit Start-Knopf (Kurz/Normal), Wochenübersicht, Skill-Stand, nächster Test.
+- **Durchführung:** Sätze vorausgefüllt, ✓ startet den Pausentimer (Vibration), der Bildschirm bleibt an, die Dauer wird gemessen.
+  Pro Übung «leicht / passend / hart» – daraus kommt der Vorschlag fürs nächste Mal (+2,5 kg, +1 Wdh, +3 s).
+- **Skill-Leitern** für OAP (6 Stufen), L-Sitz (5) und Liegestütz (6). Die App meldet «bereit für die nächste Stufe»,
+  wenn das Ziel zweimal hintereinander in allen Sätzen erreicht wurde.
+- **Testbatterie alle 6 Wochen:** 10 Tests (Oberkörper, Sprungkraft, Querspagat, Längsspagat, 3 km) mit Spinnennetz-Diagramm.
+- **Theorie:** 4 neue Kapitel mit Evidenzgraden (A/B/C) und Quellen: Starke Sehnen · Einarmiger Klimmzug, L-Sitz, Liegestütz ·
+  Männer- und Frauenspagat · Zwei Krafteinheiten pro Woche. Die 7 Kapitel aus V3 bleiben unverändert.
 
 ## Dateien
 | Datei | Zweck |
 |---|---|
-| `index.html` | die App |
-| `theorie.js` | Theorie-Modul (7 Themen, je mit Trainingseinheit) |
+| `index.html` | die App (inkl. Saisonplan und Krafteinheiten) |
+| `theorie.js` | Theorie-Modul (11 Themen) |
 | `manifest.json`, `sw.js`, `icon-*.png` | Installierbarkeit und Offline-Betrieb |
 | `plan-hallwilersee-2026.json` | abgeschlossener Plan Hallwilerseelauf |
-| `plan-saison-2027.json` | aktueller Plan: ganze Saison 2026/27, alle Blöcke Woche für Woche |
+| `plan-saison-2027.json` | aktueller Plan (Version 4), dieselben Daten wie in `index.html` |
 
-## Online stellen (GitHub Pages)
-1. Alle Dateien ins Repository hochladen (Add file → Upload files → Commit).
-2. Settings → Pages → Source «Deploy from a branch», Branch `main`, Ordner `/ (root)`.
-3. Nach 1–2 Minuten erreichbar unter `https://DEINNAME.github.io/REPONAME/`.
+## Update auf GitHub (bestehendes Repository)
+1. **Vorher auf dem Handy:** Tab «Daten» → Backup exportieren.
+2. Im Repository auf GitHub: *Add file → Upload files*, alle Dateien aus diesem Ordner hineinziehen
+   (bestehende werden überschrieben) → *Commit changes*. Vorschlag für die Commit-Nachricht:
+   `Training V4: Wochenstruktur Mo/Mi/Fr/Sa, neue Krafteinheiten, Skill-Leitern, Tests, Theorie Sehnen/Spagat`
+3. Nach 1–2 Minuten die App auf dem Handy öffnen, schliessen und nochmals öffnen. Der neue Cache-Name
+   (`training-v6-2026-10-17` in `sw.js`) sorgt dafür, dass die neue Version geladen wird.
 
-## Auf dem Pixel installieren
-Chrome → Adresse öffnen → Menü ⋮ → «App installieren».
+Beim ersten Start ersetzt die App einmalig den Saisonplan und die Krafteinheiten im Gerät.
+**Journal, Läufe und Kraft-Logs bleiben erhalten.** Ein Backup aus Version 3 lässt sich jederzeit wieder einlesen.
 
-## Updates
-Neue Dateien hochladen **und in `sw.js` den Wert von `CACHE` hochzählen**
-(z. B. `training-v3-2026-10-20`). Ohne das behält das Handy die alte Version.
-Vorher im Tab «Daten» ein Backup exportieren.
+## Erste Schritte nach dem Update
+1. Tab «Heute» → «Stufen ändern»: pro Leiter die Stufe wählen, deren Ziel du noch nicht sicher schaffst.
+2. In der ersten Woche (ab Mo 19.10.) oder am Fr 23.10. den Ersttest machen («Test eintragen»).
 
-## Neue Vorbereitung ohne Codeänderung
-Der Plan ist reine Datenstruktur. Für den nächsten Wettkampf eine JSON-Datei nach dem
-Muster von `plan-hallwilersee-2026.json` anlegen und im Tab «Daten» unter
-«Plan importieren» laden. Mehrere Pläne können nebeneinander liegen; der aktive wird
-im Tab «Plan» oder «Daten» umgeschaltet. Aufbau:
+## Pflege
+- **Krafteinheiten ändern:** in `index.html` `DEFAULT_SESSIONS` anpassen und `SESSIONS_VERSION` hochzählen.
+  Pro Übung: `dosis`, optional `kurzDosis`, `pause` (Sekunden), `kurz:false` (nur in der Normalversion), `leiter` (Skill-Leiter).
+- **Skill-Leitern / Tests:** `LEITERN` und `TESTS` in `index.html`.
+- **Plan ändern:** `plan-saison-2027.json` bearbeiten, `version` hochzählen und den Plan in `index.html` (`PLAN_SAISON_2027`) ersetzen
+  oder die Datei im Tab «Daten» importieren.
+- Nach jeder Änderung `CACHE` in `sw.js` hochzählen.
 
-```
-{ id, name, wettkampf:{name,datum,distanz}, ziel, tempi:{...}, regeln:[...],
-  wochen:[ { nr, start:"YYYY-MM-DD", fokus,
-             tage:[ {typ:"lauf|kraft|velo|frei", titel, detail, km, session} x7 ] } ] }
-```
-`tage[0]` ist Montag. `km` speist die Soll-Kilometer im Tab «Fortschritt».
-Optional `bloecke:[{name,von,bis,schwerpunkt,erhaltung,wettkampf}]` zeigt im Tab «Plan» die Saisonübersicht.
-
-## Krafteinheiten ändern
-In `index.html` `DEFAULT_SESSIONS` anpassen und `SESSIONS_VERSION` hochzählen.
-Dann ersetzt die App die Einheiten im Gerät einmalig; der Kraft-Log bleibt erhalten.
-
-## Journal
-Ein Eintrag pro Training, drei Arten:
-- **Lauf**: Distanz, Dauer, Höhenmeter, Ø Puls, RPE (Pace wird berechnet)
-- **Kraft**: Sätze pro Übung (vorbelegt mit den Werten vom letzten Mal, abhaken), Dauer, RPE
-- **Beweglichkeit**: Dauer, RPE
-
-Bestehende Läufe und Kraft-Logs werden beim ersten Start einmalig ins Journal übernommen.
-
-## Statistik
-Zeitraum umschaltbar (4 Wochen, Block, Saison). Laufkilometer mit Plan-Soll, Belastung (sRPE = Minuten × RPE,
-nach Foster) mit Monotonie, Intensitätsverteilung nach RPE, Laufeffizienz (Meter pro Herzschlag, 100 Hm ≈ 1 km),
-Höhenmeter, Kraftverlauf pro Übung (geschätztes Maximum nach Epley bzw. Wiederholungen oder Haltezeit),
-Konsistenz-Kalender und automatische Hinweise.
-
-## Daten
-Über den Knopf «Daten» oben rechts. Backup → Exportieren (enthält Pläne, Journal, Krafteinheiten, Theorie).
-Alte Backups (Version 2 mit Läufen und Kraft-Log) lassen sich weiterhin importieren.
+## Lokal testen
+`py -m http.server 8082 --directory "Training V4"` im Projektordner, dann http://localhost:8082 öffnen.
