@@ -1,0 +1,2257 @@
+{
+ "id": "saison-2027",
+ "name": "Saison 2026/27 – Vogellisi und Thuner Stadtlauf",
+ "wettkampf": {
+  "name": "Vogellisi-Berglauf",
+  "datum": "2027-07-11",
+  "distanz": 13
+ },
+ "ziel": "Hybrid: OAP, L-Sitz, Liegestütz und starke Sehnen · Explosivkraft fürs Laufen · Spagat · Laufen blockweise",
+ "tempi": {
+  "locker / Plaudertempo": "7:15–7:45",
+  "Schwelle (Startwert aus HM)": "ca. 6:15",
+  "10-km-Tempo (Startwert)": "ca. 6:05",
+  "Bergauf": "nach RPE, nicht nach Pace"
+ },
+ "regeln": [
+  "Laufen nur Mittwoch und Samstag. Ein ausgefallener Lauf wird nicht verschoben.",
+  "Beide Läufe überwiegend locker, ausser es steht Qualität im Plan.",
+  "Der lange Lauf steigt höchstens 1–2 km pro Woche.",
+  "Kraft B nie am Tag vor dem langen Lauf.",
+  "Höchstens zwei Krafteinheiten pro Woche: Kraft B (Beine, explosiv) am Montag, Kraft A (Oberkörper) am Freitag. Jede Einheit 30–45 Min – bei Zeitnot die Kurzversion.",
+  "Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.",
+  "Bergsprints und Hügelintervalle nur ausgeruht. Bei unsauberem Laufstil abbrechen.",
+  "Tempi nach jedem Block mit den Journaldaten überprüfen.",
+  "Sobald das Datum des Thuner Stadtlaufs feststeht, Block 6 darauf ausrichten.",
+  "Sehnen passen sich über Monate an: eine Skill-Stufe erst wechseln, wenn das Ziel zweimal sauber erreicht wurde.",
+  "Sehnen-Snacks (Di, So) sind freiwillig und kurz. Bei gereizten Ellbogen oder Fingern auslassen.",
+  "Testbatterie alle 6 Wochen, idealerweise in der Entlastungswoche (Freitag statt Kraft A)."
+ ],
+ "bloecke": [
+  {
+   "name": "Erholung",
+   "von": "2026-10-12",
+   "bis": "2026-10-18",
+   "schwerpunkt": "Regeneration nach dem Halbmarathon",
+   "erhaltung": "Velo und Spazieren in Zone 1",
+   "warum": "Muskeln, Sehnen und Herz brauchen nach einem Halbmarathon am Limit rund eine Woche. Wer zu früh wieder läuft, startet den Aufbau müde."
+  },
+  {
+   "name": "Block 1: Grundlage und Kraft",
+   "von": "2026-10-19",
+   "bis": "2026-12-13",
+   "schwerpunkt": "Kraft: OAP, L-Sitz, Liegestütz, Explosivkraft Beine, Spagat",
+   "erhaltung": "2 lockere Läufe, Bergsprints ab Woche 5, Beweglichkeit",
+   "warum": "Der Wettkampf ist 9 Monate weg: Jetzt stört Kraft das Laufen am wenigsten. Beinkraft und belastbare Sehnen sind die Basis für alles, was später bergauf kommt."
+  },
+  {
+   "name": "Block 2: Laufgrundlage",
+   "von": "2026-12-14",
+   "bis": "2027-02-07",
+   "schwerpunkt": "Laufumfang in Zone 2, langer Lauf bis 18 km",
+   "erhaltung": "Kraft A und B mit 2 Sätzen",
+   "warum": "Erst Umfang, dann Intensität. Im Winter sind lange, lockere Läufe einfacher als Bergtempo, und die Feiertage fallen in die Entlastungswoche."
+  },
+  {
+   "name": "Block 3: Bergkraft",
+   "von": "2027-02-08",
+   "bis": "2027-04-04",
+   "schwerpunkt": "Kraft B schwer, Bergsprints und Hügelintervalle",
+   "erhaltung": "Kraft A, Laufumfang",
+   "warum": "Die Grundlage steht, jetzt wird die Kraft in Bergkraft umgesetzt: schwere Beine im Kraftraum, kurze harte Anstiege draussen. Liegt bewusst gut 4 Monate vor dem Vogellisi."
+  },
+  {
+   "name": "Block 4: Bergausdauer",
+   "von": "2027-04-05",
+   "bis": "2027-06-06",
+   "schwerpunkt": "Lange Anstiege, im langen Lauf bis 900 Hm",
+   "erhaltung": "Kraft A (Oberkörper) jede Woche am Freitag, Kraft B alle 2 Wochen am Montag",
+   "warum": "Im Frühling werden die Wege in tieferen Lagen schneefrei. Aus kurzer Bergkraft wird lange Bergausdauer; Kraft geht auf Erhaltung, damit die Beine für die Höhenmeter frisch bleiben."
+  },
+  {
+   "name": "Block 5: Vogellisi spezifisch",
+   "von": "2027-06-07",
+   "bis": "2027-07-11",
+   "schwerpunkt": "Wettkampfnahe Bergläufe, Generalprobe, Taper",
+   "erhaltung": "Kraft A am Freitag kurz, Kraft B alle 2 Wochen; in der Wettkampfwoche nur Oberkörper am Montag",
+   "wettkampf": "Vogellisi-Berglauf, So 11.07.2027, 13 km, ca. 860 Hm",
+   "wkDatum": "2027-07-11",
+   "wkName": "Vogellisi-Berglauf",
+   "warum": "Drei Wochen im Wettkampftempo bergauf, dann zwei Wochen Reduktion. Die Form ist da, der Taper macht sie abrufbar."
+  },
+  {
+   "name": "Erholung",
+   "von": "2027-07-12",
+   "bis": "2027-07-18",
+   "schwerpunkt": "Regeneration",
+   "erhaltung": "Velo Zone 1",
+   "warum": "Nach dem Berglauf eine Woche ohne Laufen, damit der letzte Block mit frischen Beinen startet."
+  },
+  {
+   "name": "Block 6: Tempo Stadtlauf",
+   "von": "2027-07-19",
+   "bis": "2027-08-21",
+   "schwerpunkt": "Schwelle und 10-km-Tempo, Taper",
+   "erhaltung": "Kraft A jede Woche am Freitag, Kraft B alle 2 Wochen",
+   "wettkampf": "Thuner Stadtlauf, Ende August 2027 (Datum noch offen; 2026: 22.08.)",
+   "wkDatum": "2027-08-21",
+   "wkName": "Thuner Stadtlauf",
+   "warum": "Die Bergkraft trägt jetzt aufs flache Tempo über. Fünf Wochen reichen, um Schwelle und 10-km-Tempo zu schärfen; ein längerer Block würde nach dem Berglauf überladen."
+  }
+ ],
+ "wochen": [
+  {
+   "nr": 1,
+   "start": "2026-10-12",
+   "fokus": "Erholung nach dem Hallwilerseelauf – keine Läufe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang 30–45 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Leicht: 2 Sätze, kein Muskelversagen, keine Beine",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang oder Velo locker, Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Ruhepuls und HRV prüfen: zurück auf Normalniveau?"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2026-10-19",
+   "fokus": "Wieder einlaufen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Leicht: 2 Sätze, Gewichte tief einsteigen",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "25–30 Min im Plaudertempo",
+     "km": 4.5
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "50 Min flach bis wellig",
+     "km": 8
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2026-10-26",
+   "fokus": "Grundlage aufbauen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellige Strecke",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2026-11-02",
+   "fokus": "Hügel einbauen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "45 Min locker, plus 4 Steigerungsläufe à 20 s",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Anstiege locker mit kurzen Schritten",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2026-11-09",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach bis wellig",
+     "km": 9
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2026-11-16",
+   "fokus": "Bergsprints starten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 6 × 10 s steil bergauf, volle Erholung",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2026-11-23",
+   "fokus": "Bergsprints steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 12 s steil bergauf, volle Erholung",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2026-11-30",
+   "fokus": "Höchster Umfang im Block",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 15 s steil bergauf, volle Erholung",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, letzte 15 Min ruhig auslaufen",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2026-12-07",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2026-12-14",
+   "fokus": "Umfang hochfahren",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, Plaudertempo",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2026-12-21",
+   "fokus": "Umfang halten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe à 20 s",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 15
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2026-12-28",
+   "fokus": "Entlastung über die Feiertage",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-01-04",
+   "fokus": "Langer Lauf wächst",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-01-11",
+   "fokus": "Bergkraft wachhalten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 6 × 15 s steil bergauf",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-01-18",
+   "fokus": "Höchster Umfang",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig, Verpflegung üben",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-01-25",
+   "fokus": "Umfang halten, Tempo antippen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, letzte 10 Min zügig (RPE 5)",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-02-01",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-02-08",
+   "fokus": "Bergkraft starten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 15 s steil bergauf",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 300 Hm",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-02-15",
+   "fokus": "Hügelintervalle",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "6 × 1 Min bergauf RPE 7–8, zurücktraben; 15 Min ein- und auslaufen",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 350 Hm",
+     "km": 15
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-02-22",
+   "fokus": "Hügelintervalle steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "8 × 1 Min bergauf RPE 7–8, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 400 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-03-01",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker, plus 6 × 10 s Bergsprints",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 11
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-03-08",
+   "fokus": "Längere Anstiege",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "5 × 2 Min bergauf RPE 7, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 450 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-03-15",
+   "fokus": "Längere Anstiege steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "6 × 2 Min bergauf RPE 7, zurücktraben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 500 Hm",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-03-22",
+   "fokus": "Schwelle bergauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 4 Min bergauf RPE 7, 2 Min zurücktraben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 550 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-03-29",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-04-05",
+   "fokus": "Lange Anstiege",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 6 Min bergauf RPE 7, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, Anstiege im Sprechtest · ca. 600 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-04-12",
+   "fokus": "Anstiege verlängern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 8 Min bergauf RPE 7",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 650 Hm",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-04-19",
+   "fokus": "Mehr Höhenmeter",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 6 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 700 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-04-26",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wenig Höhe · ca. 400 Hm",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-05-03",
+   "fokus": "Bergausdauer aufbauen",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 8 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 750 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-05-10",
+   "fokus": "Bergausdauer steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 10 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, steile Passagen zügig gehen erlaubt · ca. 800 Hm",
+     "km": 19
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-05-17",
+   "fokus": "Höchste Bergbelastung",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 10 Min bergauf RPE 7",
+     "km": 12
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, Verpflegung wie im Wettkampf · ca. 850 Hm",
+     "km": 20
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-05-24",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "45 Min locker",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker · ca. 450 Hm",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 9,
+   "start": "2027-05-31",
+   "fokus": "Blockabschluss",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "2 × 15 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 900 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-06-07",
+   "fokus": "Wettkampfnah bergauf",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "3 × 10 Min bergauf im geplanten Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Ruhig, Streckenprofil ähnlich Vogellisi · ca. 800 Hm",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-06-14",
+   "fokus": "Wettkampfnah bergauf, länger",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "2 × 15 Min bergauf im Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Ruhig · ca. 900 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-06-21",
+   "fokus": "Generalprobe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "3 × 12 Min bergauf im Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Generalprobe",
+     "detail": "13 km mit ca. 860 Hm: erste Hälfte ruhig, zweite im Wettkampftempo; Schuhe und Verpflegung testen",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-06-28",
+   "fokus": "Reduktion – Umfang runter, Intensität kurz halten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Kurz: 2 Sätze, leicht, keine schweren Beine",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Anstiegen",
+     "detail": "4 × 4 Min bergauf im Wettkampftempo",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker · ca. 400 Hm",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-07-05",
+   "fokus": "Wettkampfwoche Vogellisi",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurz: nur Oberkörper, 2 Sätze, kein Muskelversagen",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz mit Anstiegen",
+     "detail": "30 Min locker, darin 3 × 2 Min bergauf im Wettkampftempo",
+     "km": 6
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei – Beine hoch, Kohlenhydrate hochfahren"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz und locker",
+     "detail": "15–20 Min plus 4 Steigerungsläufe (Vorbelastung)",
+     "km": 3
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Berglauf",
+     "detail": "Adelboden–Silleren, 13 km, ca. 860 Hm · ruhig starten, ab der zweiten Hälfte steigern",
+     "km": 13,
+     "wk": true
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-07-12",
+   "fokus": "Erholung nach dem Vogellisi – keine Läufe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Leicht: 2 Sätze, keine Beine",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang oder Velo locker"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Ruhepuls und HRV prüfen"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-07-19",
+   "fokus": "Zurück ins Tempo",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Schwelle",
+     "detail": "3 × 8 Min an der Schwelle (ca. 6:15), 2 Min traben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-07-26",
+   "fokus": "10-km-Tempo kennenlernen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "10-km-Tempo",
+     "detail": "5 × 1 km im 10-km-Tempo (ca. 6:05), 2 Min traben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-08-02",
+   "fokus": "Tempo verlängern",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Schwelle",
+     "detail": "3 × 10 Min an der Schwelle, 2 Min traben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, letzte 3 km im 10-km-Tempo",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-08-09",
+   "fokus": "Letzter harter Reiz",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Kurz: 2 Sätze, leicht",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "10-km-Tempo",
+     "detail": "3 × 2 km im 10-km-Tempo, 3 Min traben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-08-16",
+   "fokus": "Wettkampfwoche Thuner Stadtlauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurz: nur Oberkörper, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz mit Tempo",
+     "detail": "Locker, darin 3 × 1 km im 10-km-Tempo",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1, ganz locker"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei – Beine hoch"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Thuner Stadtlauf",
+     "detail": "10 km (Datum noch offen, 2026 war es der 22.08.) · erste 2 km kontrolliert, ab km 7 steigern",
+     "km": 10,
+     "wk": true
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  }
+ ],
+ "version": 4
+}

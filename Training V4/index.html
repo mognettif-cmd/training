@@ -1,0 +1,4113 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Training</title>
+<meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Training">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<style>
+:root{
+  --bg:#0b0d12; --surface:#141822; --card:#1b2030; --line:#2a3044;
+  --text:#e7ebf3; --muted:#8b94ad; --accent:#2fbf8f; --on-accent:#06251b;
+  --warn:#e0a33c; --bad:#e0645c; --nav:rgba(11,13,18,.96);
+  --c-lauf:#5aa6e8; --c-kraft:#a990ec; --c-beweg:#e08bb0; --c-hm:#7fb8a4;
+  --c-locker:#2fbf8f; --c-mittel:#e0a33c; --c-hart:#e0645c;
+  --t-lauf:#8fc3f0; --t-lauf-b:#2d5f8a; --t-kraft:#c3aef5; --t-kraft-b:#5e4a86;
+  --t-beweg:#f0b4cd; --t-beweg-b:#7d4560; --t-velo:#8fd6b4; --t-velo-b:#3f5a4a;
+  --r:12px; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#eef1f5; --surface:#f7f9fb; --card:#ffffff; --line:#d7dde6;
+    --text:#151a24; --muted:#5b6476; --accent:#14845f; --on-accent:#ffffff;
+    --warn:#a8680c; --bad:#b83a32; --nav:rgba(255,255,255,.96);
+    --c-lauf:#2f7fc4; --c-kraft:#7b5fd0; --c-beweg:#c2547f; --c-hm:#3f8f74;
+    --c-locker:#1c9a6e; --c-mittel:#d08a1c; --c-hart:#c9463d;
+    --t-lauf:#1f5f99; --t-lauf-b:#9cc4e6; --t-kraft:#5b3fb0; --t-kraft-b:#c5b6ee;
+    --t-beweg:#9a3561; --t-beweg-b:#e8b5ca; --t-velo:#2d6f52; --t-velo-b:#a9d7c1;
+    color-scheme:light;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+body{padding-bottom:78px;padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+body.sheet-offen{overflow:hidden}
+.wrap{max-width:720px;margin:0 auto;padding:16px}
+header{padding:18px 16px 10px;max-width:720px;margin:0 auto;position:relative}
+.kopfbtn{position:absolute;right:12px;top:14px;background:var(--card);border:1px solid var(--line);
+  color:var(--muted);border-radius:10px;padding:6px 11px;font-size:.8rem;cursor:pointer}
+.kopfbtn.on{color:var(--accent);border-color:var(--accent)}
+.eyebrow{font-size:.78rem;color:var(--muted)}
+h1{font-size:1.5rem;margin:2px 0 2px;font-weight:650}
+.sub{color:var(--muted);font-size:.88rem;margin:0;padding-right:70px}
+h2{font-size:1.15rem;margin:0;font-weight:650}
+h3{font-size:1rem;margin:0 0 6px;font-weight:650}
+h3.bt{font-size:.82rem;color:var(--muted);font-weight:600;margin:16px 0 4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.card.now{border-color:var(--accent)}
+.between{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.muted{color:var(--muted)} .akz{color:var(--accent)}
+.small{font-size:.85rem} .tiny{font-size:.76rem} .d-block{display:block}
+.tag{display:inline-block;font-size:.68rem;padding:1px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted);vertical-align:1px}
+.tag.lauf{border-color:var(--t-lauf-b);color:var(--t-lauf)}
+.tag.kraft{border-color:var(--t-kraft-b);color:var(--t-kraft)}
+.tag.beweg{border-color:var(--t-beweg-b);color:var(--t-beweg)}
+.tag.velo{border-color:var(--t-velo-b);color:var(--t-velo)}
+.tag.wk{border-color:var(--accent);color:var(--accent)}
+.tag.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.day{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.day:first-of-type{border-top:0}
+.dw{flex:0 0 46px;color:var(--muted);font-size:.8rem;padding-top:2px}
+.day.heute .dw{color:var(--accent);font-weight:700}
+.tt{font-weight:600}
+.blk{padding:8px 0 8px 10px;border-left:3px solid var(--line);margin-top:8px}
+.blk.jetzt{border-left-color:var(--accent)}
+.blk.vorbei{opacity:.5}
+.check{margin-left:auto;flex:0 0 auto;color:var(--accent);font-size:1rem}
+button,select,input,textarea{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 13px;font-size:.88rem;cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn.prim{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600}
+.btn.gefahr{border-color:var(--bad);color:var(--bad)}
+.btn.sm{padding:5px 9px;font-size:.78rem}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.link{background:none;border:0;color:var(--accent);font-size:.82rem;padding:4px 0;cursor:pointer}
+label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:3px}
+input,select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--nav);border-top:1px solid var(--line);display:flex;z-index:20;
+  padding-bottom:env(safe-area-inset-bottom);backdrop-filter:blur(8px)}
+nav button{flex:1;background:none;border:0;color:var(--muted);padding:9px 2px 11px;font-size:.7rem;cursor:pointer}
+nav button .ic{display:block;font-size:1.15rem;line-height:1.3}
+nav button.on{color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:.76rem}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:var(--accent);color:var(--on-accent);
+  padding:10px 16px;border-radius:99px;font-size:.86rem;font-weight:600;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.ue{padding:8px 0;border-top:1px dotted var(--line)}
+.hint{color:var(--muted);font-size:.84rem;margin-top:6px}
+/* Journal */
+.addrow{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;margin-bottom:12px}
+.addrow .btn{padding:12px 6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:6px 12px;font-size:.82rem;cursor:pointer}
+.chip.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+.chip:disabled{opacity:.45}
+.wkopf{margin-bottom:2px}
+.eintrag{display:flex;gap:10px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:10px 0;cursor:pointer}
+.wkopf + .eintrag{border-top:0}
+/* Bogen */
+.sheet{position:fixed;inset:0;background:var(--bg);z-index:40;overflow:auto;-webkit-overflow-scrolling:touch}
+.sheet-in{max-width:720px;margin:0 auto;padding:16px 16px 120px}
+.sheet-kopf{position:sticky;top:0;background:var(--bg);padding:6px 0 12px;z-index:2;display:flex;justify-content:space-between;align-items:center}
+.rpe{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+.rpe button{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 0;font-size:.9rem;cursor:pointer;font-variant-numeric:tabular-nums}
+.rpe button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
+.rpe-leg{margin:5px 0 12px}
+.ueb{border-top:1px solid var(--line);padding:10px 0 4px}
+.satz{display:grid;grid-template-columns:18px 1fr 30px 1fr 34px 44px;gap:5px;align-items:center;margin-top:6px}
+.satz input{margin:0;padding:8px;text-align:right;font-variant-numeric:tabular-nums}
+.satz .nr{color:var(--muted);font-size:.78rem}
+.satz .u{color:var(--muted);font-size:.74rem}
+.satz .leer{grid-column:span 2}
+.ok{height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:1rem;cursor:pointer}
+.ok.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+/* Statistik */
+.blockwochen{margin-bottom:12px}
+.blockwochen > summary{padding:10px 2px;font-size:.95rem;color:var(--text)}
+.warum summary{font-size:.76rem;margin:4px 0 2px;color:var(--accent)}
+.chart{width:100%;height:auto;display:block;margin-top:4px}
+.chart text{fill:var(--muted);font-size:9px}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.chart .ref{stroke:var(--text);stroke-width:2;opacity:.7}
+.chart .lin{fill:none;stroke-width:2}
+.chart .trend{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 3}
+.legende{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.legende span{font-size:.76rem;color:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:99px;margin-right:5px}
+.stack{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--surface);margin-top:4px}
+.stack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.72rem;color:#fff;font-weight:600}
+.hw{margin:0;padding-left:1.1em;font-size:.86rem}
+.hw li{margin-bottom:6px}
+.kal{display:grid;gap:3px}
+.kal i{aspect-ratio:1;border-radius:3px;background:var(--surface);max-height:22px}
+.kal i.zukunft{opacity:.35}
+.kal-wt{font-size:.66rem;color:var(--muted);line-height:1}
+details summary{cursor:pointer;color:var(--muted);font-size:.85rem;margin-bottom:8px}
+/* V4: Durchführung, Skills, Tests */
+.ueb.skip{padding-bottom:8px}
+.ueb [data-alle]{white-space:nowrap;flex:0 0 auto}
+.vors{color:var(--accent);margin-top:3px}
+.bew{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.bew button{background:none;border:0;color:var(--muted);font-size:.74rem;padding:5px 10px;cursor:pointer}
+.bew button + button{border-left:1px solid var(--line)}
+.bew button.on{background:var(--accent);color:var(--on-accent);font-weight:600}
+.pausebar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;
+  display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--accent);border-radius:99px;padding:8px 10px 8px 18px;
+  box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.pausebar span{color:var(--muted);font-size:.8rem}
+.pausebar b{font-size:1.6rem;font-variant-numeric:tabular-nums;min-width:3.2ch;text-align:center;color:var(--accent)}
+.fort{height:6px;border-radius:99px;background:var(--surface);overflow:hidden;margin:5px 0 3px}
+.fort i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.wahl{display:flex;gap:10px;align-items:flex-start;color:var(--text);font-size:.88rem;padding:8px 0;border-top:1px solid var(--line);margin:0;cursor:pointer}
+.wahl input{width:18px;height:18px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--accent)}
+.radar{width:100%;max-width:380px;height:auto;display:block;margin:6px auto 0}
+.radar text{fill:var(--muted);font-size:10px}
+.radar .ring{fill:none;stroke:var(--line)}
+.radar .ax{stroke:var(--line)}
+@media (prefers-reduced-motion: reduce){ .toast{transition:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow" id="hEyebrow">Training</div>
+  <h1 id="hTitel">Training</h1>
+  <p class="sub" id="hSub"></p>
+  <button class="kopfbtn" id="datenBtn">Daten</button>
+</header>
+
+<div class="wrap">
+  <section id="t-heute"></section>
+  <section id="t-plan" hidden></section>
+  <section id="t-journal" hidden></section>
+  <section id="t-kraft" hidden></section>
+  <section id="t-statistik" hidden></section>
+  <section id="t-theorie" hidden></section>
+  <section id="t-daten" hidden></section>
+</div>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shT">
+  <div class="sheet-in">
+    <div class="sheet-kopf"><h2 id="shT"></h2><button class="btn sm" id="shX">Schliessen</button></div>
+    <div id="shB"></div>
+  </div>
+</div>
+
+<nav>
+  <button data-tab="heute"><span class="ic">●</span>Heute</button>
+  <button data-tab="plan"><span class="ic">▤</span>Plan</button>
+  <button data-tab="journal"><span class="ic">✎</span>Journal</button>
+  <button data-tab="kraft"><span class="ic">▦</span>Kraft</button>
+  <button data-tab="statistik"><span class="ic">◈</span>Statistik</button>
+  <button data-tab="theorie"><span class="ic">✦</span>Theorie</button>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="./theorie.js"></script>
+<script>
+/* ════════════════ Speicher ════════════════ */
+var K = {
+  plaene:'tp_plaene_v1', aktiv:'tp_plan_aktiv_v1', runs:'tp_runs_v1',
+  kraftlog:'tp_kraftlog_v1', sessions:'tp_sessions_v1', sessver:'tp_sessions_ver',
+  journal:'tp_journal_v1', tab:'tp_tab', zr:'tp_stat_zeitraum', filter:'tp_journal_filter', uebung:'tp_stat_uebung',
+  stufen:'tp_stufen_v1', tests:'tp_tests_v1', variante:'tp_variante'
+};
+var ram = {};
+function load(k, fb){
+  try { var r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; }
+  catch(e){ return (k in ram) ? ram[k] : fb; }
+}
+function save(k, v){
+  ram[k] = v;
+  try { localStorage.setItem(k, JSON.stringify(v)); }
+  catch(e){ toast('Speichern lokal blockiert'); }
+}
+
+/* ════════════════ Pläne und Krafteinheiten (Daten) ════════════════
+   Plan: { id, name, wettkampf:{name,datum,distanz}, ziel, tempi:{...}, regeln:[...],
+     bloecke:[{name,von,bis,schwerpunkt,erhaltung,wettkampf}],   (optional)
+     wochen:[ {nr, start:'YYYY-MM-DD', fokus, tage:[ {typ, titel, detail, km, session} × 7 ] } ] }
+   tage[0] = Montag.
+   Übung: art = kg (Gewicht + Wdh) · bw (Zusatzgewicht optional + Wdh) · sek · min · kgm (kg + Meter) · skip (nicht erfassen)
+════════════════════════════════════════════════════════════════ */
+var PLAN_HALLWILERSEE = {
+  id: 'hallwilersee-2026',
+  name: 'Hallwilerseelauf 2026 – Wiedereinstieg',
+  wettkampf: { name: 'Hallwilerseelauf', datum: '2026-10-10', distanz: 21.1 },
+  ziel: '2:28–2:32 · realistisch nach über einer Woche Ausfall',
+  tempi: {
+    'locker': '7:30–7:50',
+    'Zieltempo': '6:55–7:05',
+    'Schwelle': '6:20–6:30',
+    'Wettkampf Start': '7:10'
+  },
+  regeln: [
+    'Erste Woche ohne jede Intensität. Erst wenn zwei lockere Läufe problemlos sitzen, wird wieder hart gelaufen.',
+    'Velo-Pendeln bleibt Zone 1. Das ist die Bedingung dafür, dass die Läufe Qualität haben.',
+    'Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.',
+    'Letzte plyometrische Einheit: 30. September.'
+  ],
+  wochen: [
+    { nr: 1, start: '2026-09-14', fokus: 'Zurückkommen, nichts beweisen',
+      tage: [
+        { typ:'kraft', titel:'Kraft B leicht', detail:'Oberkörper, keine Beine, 2 statt 3 Sätze', session:'kraft-b' },
+        { typ:'lauf', titel:'Lockerer Lauf', detail:'30 Min bei 7:30–7:50, Sprechtest', km:4 },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'lauf', titel:'Lockerer Lauf', detail:'35 Min locker, letzte 5 Min zügiger', km:4.5 },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'lauf', titel:'Ruhiger langer Lauf', detail:'60–70 Min durchgehend locker, keine Tempoabschnitte', km:9 },
+        { typ:'frei', titel:'Frei', detail:'' }
+      ] },
+    { nr: 2, start: '2026-09-21', fokus: 'Tempo wieder anfassen',
+      tage: [
+        { typ:'kraft', titel:'Kraft A mit Power', detail:'Power-Block nach dem Aufwärmen, dann Kraft', session:'kraft-a' },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'lauf', titel:'Qualität: 5 × 5 Min Zieltempo', detail:'6:55–7:05, je 2 Min traben; 12 Min ein- und auslaufen', km:11 },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'kraft', titel:'Kraft B', detail:'Oberkörper und OAP, keine Beine', session:'kraft-b' },
+        { typ:'lauf', titel:'Langer Lauf 14 km', detail:'Locker, letzte 4 km im Zieltempo', km:14 },
+        { typ:'frei', titel:'Frei', detail:'' }
+      ] },
+    { nr: 3, start: '2026-09-28', fokus: 'Generalprobe',
+      tage: [
+        { typ:'kraft', titel:'Kraft A mit Power', detail:'Letzte plyometrische Einheit am Mittwoch – heute normal', session:'kraft-a' },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'lauf', titel:'Qualität: 3 × 8 Min Schwelle', detail:'6:20–6:30, je 2:30 traben. Letzte Plyo-Einheit heute im Warm-up', km:11 },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'kraft', titel:'Kraft B', detail:'Oberkörper, keine Beine', session:'kraft-b' },
+        { typ:'lauf', titel:'Generalprobe 17 km', detail:'Letzte 6 km im Zieltempo, Wettkampfschuhe, Gel bei km 7 und 13', km:17 },
+        { typ:'frei', titel:'Frei', detail:'' }
+      ] },
+    { nr: 4, start: '2026-10-05', fokus: 'Tapering – Umfang runter, Intensität kurz halten',
+      tage: [
+        { typ:'kraft', titel:'Kraft B kurz', detail:'Nur Oberkörper, 2 Sätze, kein Muskelversagen', session:'kraft-b' },
+        { typ:'lauf', titel:'Lockerer Lauf mit Tempoabschnitten', detail:'30 Min locker mit 3 × 3 Min im Zieltempo', km:5 },
+        { typ:'velo', titel:'Velo-Pendeln', detail:'Zone 1' },
+        { typ:'lauf', titel:'Kurz und locker', detail:'20 Min plus 4 Steigerungsläufe à 20 s', km:3.5 },
+        { typ:'frei', titel:'Frei – Beine hoch', detail:'Kohlenhydrate hochfahren, früh ins Bett' },
+        { typ:'lauf', titel:'Hallwilerseelauf', detail:'km 0–5 bei 7:10 · km 5–15 bei 7:00 · Gel km 7 und 13 · ab km 15 Rest geben', km:21.1 },
+        { typ:'frei', titel:'Frei', detail:'' }
+      ] }
+  ]
+};
+
+/* Saisonplan 2026/27: alle Blöcke bis zum Thuner Stadtlauf */
+var PLAN_SAISON_2027 = {
+ "id": "saison-2027",
+ "name": "Saison 2026/27 – Vogellisi und Thuner Stadtlauf",
+ "wettkampf": {
+  "name": "Vogellisi-Berglauf",
+  "datum": "2027-07-11",
+  "distanz": 13
+ },
+ "ziel": "Hybrid: OAP, L-Sitz, Liegestütz und starke Sehnen · Explosivkraft fürs Laufen · Spagat · Laufen blockweise",
+ "tempi": {
+  "locker / Plaudertempo": "7:15–7:45",
+  "Schwelle (Startwert aus HM)": "ca. 6:15",
+  "10-km-Tempo (Startwert)": "ca. 6:05",
+  "Bergauf": "nach RPE, nicht nach Pace"
+ },
+ "regeln": [
+  "Laufen nur Mittwoch und Samstag. Ein ausgefallener Lauf wird nicht verschoben.",
+  "Beide Läufe überwiegend locker, ausser es steht Qualität im Plan.",
+  "Der lange Lauf steigt höchstens 1–2 km pro Woche.",
+  "Kraft B nie am Tag vor dem langen Lauf.",
+  "Höchstens zwei Krafteinheiten pro Woche: Kraft B (Beine, explosiv) am Montag, Kraft A (Oberkörper) am Freitag. Jede Einheit 30–45 Min – bei Zeitnot die Kurzversion.",
+  "Ein ausgefallener Lauf wird nicht nachgeholt, sondern gestrichen.",
+  "Bergsprints und Hügelintervalle nur ausgeruht. Bei unsauberem Laufstil abbrechen.",
+  "Tempi nach jedem Block mit den Journaldaten überprüfen.",
+  "Sobald das Datum des Thuner Stadtlaufs feststeht, Block 6 darauf ausrichten.",
+  "Sehnen passen sich über Monate an: eine Skill-Stufe erst wechseln, wenn das Ziel zweimal sauber erreicht wurde.",
+  "Sehnen-Snacks (Di, So) sind freiwillig und kurz. Bei gereizten Ellbogen oder Fingern auslassen.",
+  "Testbatterie alle 6 Wochen, idealerweise in der Entlastungswoche (Freitag statt Kraft A)."
+ ],
+ "bloecke": [
+  {
+   "name": "Erholung",
+   "von": "2026-10-12",
+   "bis": "2026-10-18",
+   "schwerpunkt": "Regeneration nach dem Halbmarathon",
+   "erhaltung": "Velo und Spazieren in Zone 1",
+   "warum": "Muskeln, Sehnen und Herz brauchen nach einem Halbmarathon am Limit rund eine Woche. Wer zu früh wieder läuft, startet den Aufbau müde."
+  },
+  {
+   "name": "Block 1: Grundlage und Kraft",
+   "von": "2026-10-19",
+   "bis": "2026-12-13",
+   "schwerpunkt": "Kraft: OAP, L-Sitz, Liegestütz, Explosivkraft Beine, Spagat",
+   "erhaltung": "2 lockere Läufe, Bergsprints ab Woche 5, Beweglichkeit",
+   "warum": "Der Wettkampf ist 9 Monate weg: Jetzt stört Kraft das Laufen am wenigsten. Beinkraft und belastbare Sehnen sind die Basis für alles, was später bergauf kommt."
+  },
+  {
+   "name": "Block 2: Laufgrundlage",
+   "von": "2026-12-14",
+   "bis": "2027-02-07",
+   "schwerpunkt": "Laufumfang in Zone 2, langer Lauf bis 18 km",
+   "erhaltung": "Kraft A und B mit 2 Sätzen",
+   "warum": "Erst Umfang, dann Intensität. Im Winter sind lange, lockere Läufe einfacher als Bergtempo, und die Feiertage fallen in die Entlastungswoche."
+  },
+  {
+   "name": "Block 3: Bergkraft",
+   "von": "2027-02-08",
+   "bis": "2027-04-04",
+   "schwerpunkt": "Kraft B schwer, Bergsprints und Hügelintervalle",
+   "erhaltung": "Kraft A, Laufumfang",
+   "warum": "Die Grundlage steht, jetzt wird die Kraft in Bergkraft umgesetzt: schwere Beine im Kraftraum, kurze harte Anstiege draussen. Liegt bewusst gut 4 Monate vor dem Vogellisi."
+  },
+  {
+   "name": "Block 4: Bergausdauer",
+   "von": "2027-04-05",
+   "bis": "2027-06-06",
+   "schwerpunkt": "Lange Anstiege, im langen Lauf bis 900 Hm",
+   "erhaltung": "Kraft A (Oberkörper) jede Woche am Freitag, Kraft B alle 2 Wochen am Montag",
+   "warum": "Im Frühling werden die Wege in tieferen Lagen schneefrei. Aus kurzer Bergkraft wird lange Bergausdauer; Kraft geht auf Erhaltung, damit die Beine für die Höhenmeter frisch bleiben."
+  },
+  {
+   "name": "Block 5: Vogellisi spezifisch",
+   "von": "2027-06-07",
+   "bis": "2027-07-11",
+   "schwerpunkt": "Wettkampfnahe Bergläufe, Generalprobe, Taper",
+   "erhaltung": "Kraft A am Freitag kurz, Kraft B alle 2 Wochen; in der Wettkampfwoche nur Oberkörper am Montag",
+   "wettkampf": "Vogellisi-Berglauf, So 11.07.2027, 13 km, ca. 860 Hm",
+   "wkDatum": "2027-07-11",
+   "wkName": "Vogellisi-Berglauf",
+   "warum": "Drei Wochen im Wettkampftempo bergauf, dann zwei Wochen Reduktion. Die Form ist da, der Taper macht sie abrufbar."
+  },
+  {
+   "name": "Erholung",
+   "von": "2027-07-12",
+   "bis": "2027-07-18",
+   "schwerpunkt": "Regeneration",
+   "erhaltung": "Velo Zone 1",
+   "warum": "Nach dem Berglauf eine Woche ohne Laufen, damit der letzte Block mit frischen Beinen startet."
+  },
+  {
+   "name": "Block 6: Tempo Stadtlauf",
+   "von": "2027-07-19",
+   "bis": "2027-08-21",
+   "schwerpunkt": "Schwelle und 10-km-Tempo, Taper",
+   "erhaltung": "Kraft A jede Woche am Freitag, Kraft B alle 2 Wochen",
+   "wettkampf": "Thuner Stadtlauf, Ende August 2027 (Datum noch offen; 2026: 22.08.)",
+   "wkDatum": "2027-08-21",
+   "wkName": "Thuner Stadtlauf",
+   "warum": "Die Bergkraft trägt jetzt aufs flache Tempo über. Fünf Wochen reichen, um Schwelle und 10-km-Tempo zu schärfen; ein längerer Block würde nach dem Berglauf überladen."
+  }
+ ],
+ "wochen": [
+  {
+   "nr": 1,
+   "start": "2026-10-12",
+   "fokus": "Erholung nach dem Hallwilerseelauf – keine Läufe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang 30–45 Min"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Leicht: 2 Sätze, kein Muskelversagen, keine Beine",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang oder Velo locker, Zone 1"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Ruhepuls und HRV prüfen: zurück auf Normalniveau?"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2026-10-19",
+   "fokus": "Wieder einlaufen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Leicht: 2 Sätze, Gewichte tief einsteigen",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "25–30 Min im Plaudertempo",
+     "km": 4.5
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "50 Min flach bis wellig",
+     "km": 8
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2026-10-26",
+   "fokus": "Grundlage aufbauen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellige Strecke",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2026-11-02",
+   "fokus": "Hügel einbauen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "45 Min locker, plus 4 Steigerungsläufe à 20 s",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Anstiege locker mit kurzen Schritten",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2026-11-09",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach bis wellig",
+     "km": 9
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2026-11-16",
+   "fokus": "Bergsprints starten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 6 × 10 s steil bergauf, volle Erholung",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2026-11-23",
+   "fokus": "Bergsprints steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 12 s steil bergauf, volle Erholung",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2026-11-30",
+   "fokus": "Höchster Umfang im Block",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Plyometrie, Beine einbeinig, Spagat · 3 Sätze",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 15 s steil bergauf, volle Erholung",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "OAP, L-Sitz, Liegestütz, Sehnen · 3 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, letzte 15 Min ruhig auslaufen",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2026-12-07",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze statt 3",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2026-12-14",
+   "fokus": "Umfang hochfahren",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, Plaudertempo",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2026-12-21",
+   "fokus": "Umfang halten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe à 20 s",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 15
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2026-12-28",
+   "fokus": "Entlastung über die Feiertage",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, flach",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-01-04",
+   "fokus": "Langer Lauf wächst",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-01-11",
+   "fokus": "Bergkraft wachhalten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 6 × 15 s steil bergauf",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-01-18",
+   "fokus": "Höchster Umfang",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wellig, Verpflegung üben",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-01-25",
+   "fokus": "Umfang halten, Tempo antippen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, letzte 10 Min zügig (RPE 5)",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze, Gewichte halten",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker, Anstiege im Sprechtest",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-02-01",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Entlastung: 2 Sätze, leichter",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-02-08",
+   "fokus": "Bergkraft starten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Bergsprints",
+     "detail": "Locker, darin 8 × 15 s steil bergauf",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 300 Hm",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-02-15",
+   "fokus": "Hügelintervalle",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "6 × 1 Min bergauf RPE 7–8, zurücktraben; 15 Min ein- und auslaufen",
+     "km": 9
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 350 Hm",
+     "km": 15
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-02-22",
+   "fokus": "Hügelintervalle steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "8 × 1 Min bergauf RPE 7–8, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 400 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-03-01",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker, plus 6 × 10 s Bergsprints",
+     "km": 6
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 11
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-03-08",
+   "fokus": "Längere Anstiege",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "5 × 2 Min bergauf RPE 7, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 450 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-03-15",
+   "fokus": "Längere Anstiege steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Hügelintervalle",
+     "detail": "6 × 2 Min bergauf RPE 7, zurücktraben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 500 Hm",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-03-22",
+   "fokus": "Schwelle bergauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Schwer: Beine 4 × 5–6, die letzten 2 Wdh hart; Plyometrie und Spagat normal",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 4 Min bergauf RPE 7, 2 Min zurücktraben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf hügelig",
+     "detail": "Locker · ca. 550 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-03-29",
+   "fokus": "Entlastung und Blockabschluss",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Entlastung: 2 Sätze, mittlere Last",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-04-05",
+   "fokus": "Lange Anstiege",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 6 Min bergauf RPE 7, zurücktraben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, Anstiege im Sprechtest · ca. 600 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-04-12",
+   "fokus": "Anstiege verlängern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 8 Min bergauf RPE 7",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 650 Hm",
+     "km": 17
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-04-19",
+   "fokus": "Mehr Höhenmeter",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 6 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 700 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-04-26",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "40 Min locker",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, wenig Höhe · ca. 400 Hm",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-05-03",
+   "fokus": "Bergausdauer aufbauen",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 8 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 750 Hm",
+     "km": 18
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 6,
+   "start": "2027-05-10",
+   "fokus": "Bergausdauer steigern",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "3 × 10 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, steile Passagen zügig gehen erlaubt · ca. 800 Hm",
+     "km": 19
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 7,
+   "start": "2027-05-17",
+   "fokus": "Höchste Bergbelastung",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "4 × 10 Min bergauf RPE 7",
+     "km": 12
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker, Verpflegung wie im Wettkampf · ca. 850 Hm",
+     "km": 20
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 8,
+   "start": "2027-05-24",
+   "fokus": "Entlastung",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "45 Min locker",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker · ca. 450 Hm",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 9,
+   "start": "2027-05-31",
+   "fokus": "Blockabschluss",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Bergauf-Schwelle",
+     "detail": "2 × 15 Min bergauf RPE 7",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Locker · ca. 900 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-06-07",
+   "fokus": "Wettkampfnah bergauf",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "3 × 10 Min bergauf im geplanten Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Ruhig, Streckenprofil ähnlich Vogellisi · ca. 800 Hm",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-06-14",
+   "fokus": "Wettkampfnah bergauf, länger",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "2 × 15 Min bergauf im Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Berglauf",
+     "detail": "Ruhig · ca. 900 Hm",
+     "km": 16
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-06-21",
+   "fokus": "Generalprobe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Tempo bergauf",
+     "detail": "3 × 12 Min bergauf im Wettkampftempo",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Generalprobe",
+     "detail": "13 km mit ca. 860 Hm: erste Hälfte ruhig, zweite im Wettkampftempo; Schuhe und Verpflegung testen",
+     "km": 13
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-06-28",
+   "fokus": "Reduktion – Umfang runter, Intensität kurz halten",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Kurz: 2 Sätze, leicht, keine schweren Beine",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lauf mit Anstiegen",
+     "detail": "4 × 4 Min bergauf im Wettkampftempo",
+     "km": 8
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker · ca. 400 Hm",
+     "km": 10
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-07-05",
+   "fokus": "Wettkampfwoche Vogellisi",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurz: nur Oberkörper, 2 Sätze, kein Muskelversagen",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz mit Anstiegen",
+     "detail": "30 Min locker, darin 3 × 2 Min bergauf im Wettkampftempo",
+     "km": 6
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei – Beine hoch, Kohlenhydrate hochfahren"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz und locker",
+     "detail": "15–20 Min plus 4 Steigerungsläufe (Vorbelastung)",
+     "km": 3
+    },
+    {
+     "typ": "lauf",
+     "titel": "Vogellisi-Berglauf",
+     "detail": "Adelboden–Silleren, 13 km, ca. 860 Hm · ruhig starten, ab der zweiten Hälfte steigern",
+     "km": 13,
+     "wk": true
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-07-12",
+   "fokus": "Erholung nach dem Vogellisi – keine Läufe",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Leicht: 2 Sätze, keine Beine",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Spaziergang oder Velo locker"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Ruhepuls und HRV prüfen"
+    }
+   ]
+  },
+  {
+   "nr": 1,
+   "start": "2027-07-19",
+   "fokus": "Zurück ins Tempo",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Schwelle",
+     "detail": "3 × 8 Min an der Schwelle (ca. 6:15), 2 Min traben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung 1× pro Woche: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker, plus 4 Steigerungsläufe",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 2,
+   "start": "2027-07-26",
+   "fokus": "10-km-Tempo kennenlernen",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Erhaltung: 2 Sätze, nicht schwer",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "10-km-Tempo",
+     "detail": "5 × 1 km im 10-km-Tempo (ca. 6:05), 2 Min traben",
+     "km": 10
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 3,
+   "start": "2027-08-02",
+   "fokus": "Tempo verlängern",
+   "tage": [
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack (5–10 Min) oder Velo Zone 1",
+     "extra": "snack"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Schwelle",
+     "detail": "3 × 10 Min an der Schwelle, 2 Min traben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Erhaltung: 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Langer Lauf",
+     "detail": "Locker, letzte 3 km im 10-km-Tempo",
+     "km": 14
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 4,
+   "start": "2027-08-09",
+   "fokus": "Letzter harter Reiz",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft B",
+     "detail": "Kurz: 2 Sätze, leicht",
+     "session": "kraft-b"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1 · optional Sehnen-Snack (5–10 Min)",
+     "extra": "snack"
+    },
+    {
+     "typ": "lauf",
+     "titel": "10-km-Tempo",
+     "detail": "3 × 2 km im 10-km-Tempo, 3 Min traben",
+     "km": 11
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurzversion (~30 Min): Oberkörper-Erhaltung, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Lockerer Lauf",
+     "detail": "Locker",
+     "km": 12
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  },
+  {
+   "nr": 5,
+   "start": "2027-08-16",
+   "fokus": "Wettkampfwoche Thuner Stadtlauf",
+   "tage": [
+    {
+     "typ": "kraft",
+     "titel": "Kraft A",
+     "detail": "Kurz: nur Oberkörper, 2 Sätze",
+     "session": "kraft-a"
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Kurz mit Tempo",
+     "detail": "Locker, darin 3 × 1 km im 10-km-Tempo",
+     "km": 7
+    },
+    {
+     "typ": "velo",
+     "titel": "Velo-Pendeln",
+     "detail": "Zone 1, ganz locker"
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Frei – Beine hoch"
+    },
+    {
+     "typ": "lauf",
+     "titel": "Thuner Stadtlauf",
+     "detail": "10 km (Datum noch offen, 2026 war es der 22.08.) · erste 2 km kontrolliert, ab km 7 steigern",
+     "km": 10,
+     "wk": true
+    },
+    {
+     "typ": "frei",
+     "titel": "Frei",
+     "detail": "Optional: Sehnen-Snack oder 15 Min Spagat (Quer- und Längsspagat)",
+     "extra": "snack"
+    }
+   ]
+  }
+ ],
+ "version": 4
+};
+
+/* SESSIONS_VERSION hochzählen, wenn sich die Standard-Einheiten ändern –
+   dann werden sie im Gerät einmalig ersetzt (Journal bleibt erhalten). */
+var SESSIONS_VERSION = 4;
+var DEFAULT_SESSIONS = [
+ {
+  "id": "kraft-b",
+  "name": "Kraft B – Beine explosiv und Spagat",
+  "tag": "Montag",
+  "dauer": {
+   "kurz": 30,
+   "normal": 45
+  },
+  "hinweis": "Plyometrie zuerst, solange die Beine frisch sind: Qualität vor Menge, Abbruch bei langen Bodenkontakten. Danach schwer und langsam ablassen, zum Schluss Spagat unter Last. Paare im Wechsel trainieren, das spart die Hälfte der Pausen.",
+  "bloecke": [
+   {
+    "titel": "Aufwärmen (5 Min)",
+    "uebungen": [
+     {
+      "id": "b2-w1",
+      "name": "Seilspringen oder Velo",
+      "dosis": "3 Min, letzte Minute zügig",
+      "art": "skip"
+     },
+     {
+      "id": "b4-w2",
+      "name": "Lauf-ABC und Beinpendel",
+      "dosis": "2 Min: Skippings, Anfersen, Beinpendel vor/seitlich",
+      "art": "skip"
+     }
+    ]
+   },
+   {
+    "titel": "Plyometrie (8 Min)",
+    "uebungen": [
+     {
+      "id": "b4-p1",
+      "name": "Pogo-Hops",
+      "dosis": "3 × 20 Kontakte, Pause 60 s",
+      "art": "bw",
+      "hinweis": "Steife Sprunggelenke, Ferse berührt nicht, so kurz wie möglich am Boden",
+      "pause": 60,
+      "kurzDosis": "2 × 20 Kontakte"
+     },
+     {
+      "id": "b4-p2",
+      "name": "Einbeinige Sprünge vorwärts (Bounds)",
+      "dosis": "3 × 5 pro Bein, Pause 90 s",
+      "art": "bw",
+      "hinweis": "Weit und flach, aktiv greifen statt bremsen. Ab Block 3: einbeinige Hops über Linie",
+      "pause": 90,
+      "kurzDosis": "2 × 5 pro Bein"
+     },
+     {
+      "id": "b4-p3",
+      "name": "Drop Jump (30–40 cm)",
+      "dosis": "3 × 4, Pause 90 s",
+      "art": "bw",
+      "hinweis": "Fallen lassen, sofort hoch: Bodenkontakt unter 0,25 s. Nur ausgeruht",
+      "pause": 90,
+      "kurz": false
+     }
+    ]
+   },
+   {
+    "titel": "Paar 1: einbeinige Kraft + Achillessehne",
+    "uebungen": [
+     {
+      "id": "b2-k1",
+      "name": "Bulgarian Split Squats",
+      "dosis": "3 × 5–8 pro Seite, Pause 90 s",
+      "art": "kg",
+      "hinweis": "Schwer, 3 s ablassen, explosiv hoch. Letzte 2 Wdh hart",
+      "pause": 90,
+      "kurzDosis": "3 × 5–8 pro Seite"
+     },
+     {
+      "id": "b2-k3",
+      "name": "Einbeiniges Wadenheben schwer (gestreckt)",
+      "dosis": "3 × 8 pro Seite, Pause 60 s",
+      "art": "bw",
+      "hinweis": "Mit Zusatzgewicht, 3 s runter, 1 s oben halten – Achillessehne steifer, Laufökonomie besser",
+      "pause": 60
+     }
+    ]
+   },
+   {
+    "titel": "Paar 2: hintere Kette + Soleus",
+    "uebungen": [
+     {
+      "id": "b2-k2",
+      "name": "Einbeiniges Kreuzheben",
+      "dosis": "3 × 6–8 pro Seite, Pause 60 s",
+      "art": "kg",
+      "hinweis": "Becken bleibt gerade, Bewegung aus der Hüfte",
+      "pause": 60,
+      "kurzDosis": "2 × 6–8 pro Seite"
+     },
+     {
+      "id": "b4-k4",
+      "name": "Wadenheben sitzend (Soleus)",
+      "dosis": "3 × 10, Pause 60 s",
+      "art": "kg",
+      "hinweis": "Kurzhantel auf dem Knie, Knie 90°, langsam",
+      "pause": 60,
+      "kurz": false
+     }
+    ]
+   },
+   {
+    "titel": "Spagat unter Last (8 Min)",
+    "uebungen": [
+     {
+      "id": "b4-m1",
+      "name": "Cossack Squat mit Kettlebell",
+      "dosis": "2 × 6 pro Seite, Pause 45 s",
+      "art": "kg",
+      "hinweis": "Männerspagat: Adduktoren in der Dehnung kräftigen, gestrecktes Bein Zehen hoch",
+      "pause": 45,
+      "kurzDosis": "1 × 6 pro Seite"
+     },
+     {
+      "id": "b4-m2",
+      "name": "Querspagat (Männerspagat) mit PNF",
+      "dosis": "2 × 60 s",
+      "art": "sek",
+      "hinweis": "Hineinsinken, 3 × (5 s Boden wegdrücken, entspannen, tiefer). Abstand Boden in die Notiz",
+      "pause": 30,
+      "kurzDosis": "1 × 60 s"
+     },
+     {
+      "id": "b2-m1",
+      "name": "Längsspagat (Frauenspagat) mit PNF",
+      "dosis": "2 × 60 s pro Seite",
+      "art": "sek",
+      "hinweis": "Becken gerade, hinteres Knie auf Kissen. 3 × (5 s vordere Ferse in den Boden, entspannen, tiefer)",
+      "pause": 30,
+      "kurzDosis": "1 × 60 s pro Seite"
+     },
+     {
+      "id": "b2-r2",
+      "name": "Copenhagen-Seitstütz",
+      "dosis": "2 × 20–30 s pro Seite",
+      "art": "sek",
+      "hinweis": "Adduktoren kräftig für Querspagat und Leiste",
+      "pause": 30,
+      "kurz": false
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "kraft-a",
+  "name": "Kraft A – Oberkörper und starke Sehnen",
+  "tag": "Freitag",
+  "dauer": {
+   "kurz": 30,
+   "normal": 45
+  },
+  "hinweis": "Schwer und langsam statt viel: Sehnen reagieren auf hohe Last und lange Spannung (3–5 s). Paare im Wechsel: Klimmzug ↔ L-Sitz, Liegestütz ↔ OAP-Skill. Stufen der Skill-Leitern erst wechseln, wenn das Ziel zweimal erreicht ist.",
+  "bloecke": [
+   {
+    "titel": "Aufwärmen (5 Min)",
+    "uebungen": [
+     {
+      "id": "a2-w1",
+      "name": "Handgelenke und Finger mobilisieren",
+      "dosis": "2 Min",
+      "art": "skip",
+      "hinweis": "Kreisen, im Vierfüssler vor und zurück schaukeln, Finger strecken"
+     },
+     {
+      "id": "a2-w2",
+      "name": "Scapula-Pull-ups und Scapula-Push-ups",
+      "dosis": "2 × 8",
+      "art": "skip",
+      "hinweis": "Schulterblätter zuerst, Arme gestreckt"
+     }
+    ]
+   },
+   {
+    "titel": "Handstand (Erhaltung)",
+    "uebungen": [
+     {
+      "id": "a2-h1",
+      "name": "Wandhandstand, Brust zur Wand",
+      "dosis": "2 × 30–45 s, Pause 60 s",
+      "art": "sek",
+      "hinweis": "Rippen rein, Schultern zu den Ohren",
+      "pause": 60,
+      "kurzDosis": "1 × 30–45 s"
+     }
+    ]
+   },
+   {
+    "titel": "Paar 1: schwer ziehen + L-Sitz",
+    "uebungen": [
+     {
+      "id": "a4-o1",
+      "name": "Klimmzug mit Zusatzlast",
+      "dosis": "4 × 3–5, Pause 2 Min",
+      "art": "bw",
+      "hinweis": "Volle Streckung unten, 2–3 s ablassen. 1–2 Wdh in Reserve",
+      "pause": 120,
+      "kurzDosis": "3 × 3–5"
+     },
+     {
+      "id": "a4-l1",
+      "name": "L-Sitz (Stufe)",
+      "dosis": "4 × Stufenziel, Pause 60 s",
+      "art": "sek",
+      "hinweis": "Schultern tief, Ellbogen gestreckt, Knie gestreckt sobald die Stufe es verlangt",
+      "pause": 60,
+      "kurzDosis": "3 × Stufenziel",
+      "leiter": "lsitz"
+     }
+    ]
+   },
+   {
+    "titel": "Paar 2: drücken + OAP-Skill",
+    "uebungen": [
+     {
+      "id": "a4-p1",
+      "name": "Liegestütz (Stufe)",
+      "dosis": "4 × Stufenziel, Pause 90 s",
+      "art": "bw",
+      "hinweis": "3 s ablassen, 1 s unten halten. Gewichtsweste möglich, wenn die Stufe sitzt",
+      "pause": 90,
+      "kurzDosis": "3 × Stufenziel",
+      "leiter": "liegestuetz"
+     },
+     {
+      "id": "a4-o2",
+      "name": "OAP-Skill (Stufe)",
+      "dosis": "3 × Stufenziel pro Seite, Pause 90 s",
+      "art": "sek",
+      "hinweis": "Einarmig: Schulter gepackt, Rumpf fest, kein Schwingen",
+      "pause": 90,
+      "leiter": "oap"
+     }
+    ]
+   },
+   {
+    "titel": "Exzentrik einarmig",
+    "uebungen": [
+     {
+      "id": "a2-o2",
+      "name": "Einarmig negativ ablassen",
+      "dosis": "3 × 2 pro Seite, 5 s Abwärtsphase, Pause 90 s",
+      "art": "bw",
+      "hinweis": "Mit beiden Armen hochziehen, einarmig ablassen. Abbrechen, sobald es unkontrolliert wird",
+      "pause": 90,
+      "kurz": false
+     }
+    ]
+   },
+   {
+    "titel": "Sehnen-Finisher (5 Min)",
+    "uebungen": [
+     {
+      "id": "a4-s1",
+      "name": "Dead Hang einarmig (Fingerhilfe nach Bedarf)",
+      "dosis": "3 × 10–15 s pro Seite, Pause 45 s",
+      "art": "sek",
+      "hinweis": "Schwer: so viel Hilfe, dass 15 s gerade gehen. Ellbogen- und Fingerbeuger-Sehnen",
+      "pause": 45,
+      "kurzDosis": "2 × 10–15 s pro Seite"
+     },
+     {
+      "id": "a4-s2",
+      "name": "Unterarm exzentrisch (Beuger und Strecker)",
+      "dosis": "2 × 8 je Richtung, 4 s ablassen",
+      "art": "kg",
+      "hinweis": "Kurzhantel, Unterarm auf dem Oberschenkel. Schützt die Ellbogen (Golfer-/Tennisarm)",
+      "pause": 30,
+      "kurz": false
+     },
+     {
+      "id": "a2-g3",
+      "name": "Farmer's Walk schwer",
+      "dosis": "2 × 40 m",
+      "art": "kgm",
+      "hinweis": "Ab und zu einseitig als Suitcase Carry, 24–32 kg",
+      "pause": 60,
+      "kurz": false
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "snack",
+  "name": "Sehnen-Snack (optional)",
+  "tag": "Di / So",
+  "dauer": {
+   "kurz": 5,
+   "normal": 10
+  },
+  "hinweis": "Freiwillig, zählt nicht als Krafteinheit. Kurze Reize mit mehreren Stunden Abstand reichen für die Sehne. Nicht bis zur Ermüdung, bei Reizung auslassen.",
+  "bloecke": [
+   {
+    "titel": "Sehnen",
+    "uebungen": [
+     {
+      "id": "sn-1",
+      "name": "Dead Hang beidarmig",
+      "dosis": "4 × 10–20 s, Pause 30 s",
+      "art": "sek",
+      "hinweis": "Mit Zusatzlast, wenn 30 s leicht gehen",
+      "pause": 30
+     },
+     {
+      "id": "sn-2",
+      "name": "Isometrischer Klimmzug-Halt, Ellbogen 90°",
+      "dosis": "3 × 8–10 s, Pause 45 s",
+      "art": "sek",
+      "hinweis": "Kräftig, aber nicht maximal",
+      "pause": 45,
+      "kurz": false
+     },
+     {
+      "id": "sn-3",
+      "name": "Wadenheben isometrisch einbeinig",
+      "dosis": "3 × 30 s pro Seite",
+      "art": "sek",
+      "hinweis": "Halbe Höhe halten, kräftig drücken",
+      "pause": 15,
+      "kurz": false
+     }
+    ]
+   },
+   {
+    "titel": "Spagat",
+    "uebungen": [
+     {
+      "id": "sn-4",
+      "name": "Spagat-PNF (Quer oder Längs, im Wechsel)",
+      "dosis": "2 × 60 s",
+      "art": "sek",
+      "hinweis": "Anspannen 5 s, entspannen, tiefer – Abstand in die Notiz",
+      "pause": 15
+     }
+    ]
+   }
+  ]
+ }
+];
+
+/* ════════════════ Hilfen ════════════════ */
+var WT = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+function pad(n){ return (n<10?'0':'')+n; }
+function iso(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function heute(){ return iso(new Date()); }
+function plusTage(isoStr, n){ var d = new Date(isoStr+'T12:00:00'); d.setDate(d.getDate()+n); return iso(d); }
+function montag(isoStr){ var d = new Date(isoStr+'T12:00:00'); var w = (d.getDay()+6)%7; d.setDate(d.getDate()-w); return iso(d); }
+function wtag(isoStr){ return (new Date(isoStr+'T12:00:00').getDay()+6)%7; }
+function deDatum(isoStr){ var p = String(isoStr).split('-'); return p.length===3 ? p[2]+'.'+p[1]+'.' : isoStr; }
+function tageBis(isoStr){
+  var a = new Date(heute()+'T12:00:00'), b = new Date(isoStr+'T12:00:00');
+  return Math.round((b-a)/86400000);
+}
+function zahl(txt){ var n = parseFloat(String(txt==null?'':txt).replace(',','.')); return isNaN(n) ? null : n; }
+function parseZeit(txt){
+  if (!txt) return null;
+  var p = String(txt).trim().split(':').map(function(x){ return parseFloat(x.replace(',','.'))||0; });
+  if (p.length===3) return p[0]*3600+p[1]*60+p[2];
+  if (p.length===2) return p[0]*60+p[1];
+  return p[0] ? p[0]*60 : null;          /* reine Zahl = Minuten */
+}
+function zeitStr(sek){
+  if (!sek) return '–';
+  sek = Math.round(sek);
+  var h = Math.floor(sek/3600), m = Math.floor(sek%3600/60), s = sek%60;
+  return h ? h+':'+pad(m)+':'+pad(s) : m+':'+pad(s);
+}
+function paceStr(sek, km){
+  if (!sek || !km) return '–';
+  var p = sek/km; return Math.floor(p/60)+':'+pad(Math.round(p%60)%60);
+}
+function f1(x){ return (Math.round(x*10)/10).toString(); }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function toast(txt){
+  var t = document.getElementById('toast'); t.textContent = txt; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+
+/* ════════════════ Zustand ════════════════ */
+var plaene = load(K.plaene, null);
+if (!plaene || !plaene.length) { plaene = [PLAN_HALLWILERSEE]; save(K.plaene, plaene); }
+var aktivId = load(K.aktiv, plaene[0].id);
+/* Einmalig: Saisonplan 2026/27 ergänzen, Vorversion «aufbau-2027» (nur Block 1) ersetzen */
+if (!plaene.some(function(p){ return p.id === PLAN_SAISON_2027.id; })){
+  plaene = plaene.filter(function(p){ return p.id !== 'aufbau-2027'; });
+  plaene.push(PLAN_SAISON_2027); save(K.plaene, plaene);
+  aktivId = PLAN_SAISON_2027.id; save(K.aktiv, aktivId);
+}
+/* V4: Saisonplan mit neuer Wochenstruktur (Mo Beine, Mi+Sa Lauf, Fr Oberkörper) ersetzt die alte Fassung im Gerät */
+if (plaene.some(function(p){ return p.id === PLAN_SAISON_2027.id && (p.version||0) < PLAN_SAISON_2027.version; })){
+  plaene = plaene.map(function(p){ return p.id === PLAN_SAISON_2027.id ? PLAN_SAISON_2027 : p; });
+  save(K.plaene, plaene);
+}
+var sessions = load(K.sessions, null);
+if (!sessions || !sessions.length || load(K.sessver, 1) < SESSIONS_VERSION) {
+  sessions = DEFAULT_SESSIONS; save(K.sessions, sessions); save(K.sessver, SESSIONS_VERSION);
+}
+
+/* Journal: ein Eintrag pro Training.
+   { id, datum, typ:'lauf'|'kraft'|'beweg', sek, rpe, notiz,
+     lauf:  km, hm, hf
+     kraft: session, titel, uebungen:[{id,name,art,saetze:[{kg,n}]}] } */
+function ausAltdaten(runs, logs){
+  var j = [];
+  (runs||[]).forEach(function(r){
+    if (!r || !r.datum) return;
+    j.push({ id:r.id||uid(), datum:r.datum, typ:'lauf', km:r.km||null, sek:r.zeit||null,
+      hm:r.hm||null, hf:r.hf||null, rpe:null, notiz:r.notiz||'' });
+  });
+  (logs||[]).forEach(function(l){
+    if (!l || !l.datum) return;
+    j.push({ id:l.id||uid(), datum:l.datum, typ:'kraft', session:l.session, titel:l.name,
+      sek:null, rpe:null, uebungen:[],
+      notiz:[l.notiz, l.total ? l.erledigt+'/'+l.total+' Übungen' : ''].filter(Boolean).join(' · ') });
+  });
+  return j;
+}
+var journal = load(K.journal, null);
+if (!journal){ journal = ausAltdaten(load(K.runs, []), load(K.kraftlog, [])); save(K.journal, journal); }
+
+function plan(){ return plaene.filter(function(p){return p.id===aktivId;})[0] || plaene[0]; }
+function belastung(e){ return (e.rpe!=null && e.sek) ? e.rpe * e.sek/60 : 0; }
+function sessionVon(id){ return sessions.filter(function(s){ return s.id===id; })[0]; }
+function alleUebungen(s){ var a=[]; (s?s.bloecke:[]).forEach(function(b){ b.uebungen.forEach(function(u){ a.push(u); }); }); return a; }
+var TYPNAME = { lauf:'Lauf', kraft:'Kraft', beweg:'Beweglichkeit' };
+var EINHEIT = { kg:['kg','Wdh'], bw:['+kg','Wdh'], sek:[null,'s'], min:[null,'Min'], kgm:['kg','m'] };
+
+/* ════════════════ Skill-Leitern ════════════════
+   Stufe wechseln, wenn das Ziel (n pro Satz, alle Sätze) in zwei Einheiten
+   hintereinander erreicht wurde und die Bewertung nicht «hart» war. */
+var LEITERN = [
+  { id:'oap', name:'Einarmiger Klimmzug (OAP)', stufen:[
+    { name:'Einarmig aktiv hängen', art:'sek', n:15, ziel:'15 s pro Seite', hinweis:'Schulter gepackt, kein Durchhängen im Gelenk' },
+    { name:'Archer-Klimmzug', art:'bw', n:4, ziel:'4 Wdh pro Seite', hinweis:'Der Hilfsarm bleibt so gestreckt wie möglich' },
+    { name:'Einarmig oben halten', art:'sek', n:8, ziel:'8 s pro Seite', hinweis:'Kinn über der Stange, mit beiden Armen hochziehen' },
+    { name:'Einarmig 90° halten', art:'sek', n:8, ziel:'8 s pro Seite', hinweis:'Die schwächste Stelle der Bewegung' },
+    { name:'Einarmig mit Fingerhilfe (Handtuch)', art:'bw', n:3, ziel:'3 Wdh pro Seite', hinweis:'Hilfshand am Handtuch so tief wie möglich' },
+    { name:'Einarmiger Klimmzug', art:'bw', n:1, ziel:'1–2 Wdh pro Seite', hinweis:'Aus voller Streckung, kein Schwung' } ] },
+  { id:'lsitz', name:'L-Sitz', stufen:[
+    { name:'Tuck-L-Sitz (Barren, Stühle)', art:'sek', n:20, ziel:'20 s', hinweis:'Knie zur Brust, Schultern weg von den Ohren' },
+    { name:'Einbein-L-Sitz, Bein wechseln', art:'sek', n:20, ziel:'20 s', hinweis:'Pro Satz Seite wechseln' },
+    { name:'L-Sitz an Parallettes', art:'sek', n:15, ziel:'15 s', hinweis:'Knie gestreckt, Zehen gestreckt' },
+    { name:'L-Sitz am Boden', art:'sek', n:20, ziel:'20 s', hinweis:'Braucht Kompression: Beine aktiv hochziehen' },
+    { name:'L-Sitz am Boden, lang', art:'sek', n:30, ziel:'30 s', hinweis:'Danach: V-Sitz-Ansätze' } ] },
+  { id:'liegestuetz', name:'Liegestütz', stufen:[
+    { name:'Liegestütz langsam (3 s ab)', art:'bw', n:15, ziel:'15 Wdh', hinweis:'Körper wie ein Brett, Ellbogen 45°' },
+    { name:'Ring-Liegestütz', art:'bw', n:12, ziel:'12 Wdh', hinweis:'Oben Ringe nach aussen drehen' },
+    { name:'Archer-Liegestütz', art:'bw', n:6, ziel:'6 Wdh pro Seite', hinweis:'Der gestreckte Arm hilft nur wenig' },
+    { name:'Pseudo-Planche-Liegestütz', art:'bw', n:8, ziel:'8 Wdh', hinweis:'Hände auf Hüfthöhe, Schultern vor die Hände' },
+    { name:'Einarmiger Liegestütz erhöht', art:'bw', n:5, ziel:'5 Wdh pro Seite', hinweis:'Hand auf Bank oder Box, Füsse breit' },
+    { name:'Einarmiger Liegestütz am Boden', art:'bw', n:3, ziel:'3 Wdh pro Seite', hinweis:'Becken bleibt parallel zum Boden' } ] }
+];
+var stufen = load(K.stufen, {});
+function leiter(id){ return LEITERN.filter(function(l){ return l.id===id; })[0]; }
+function stufeNr(id){ var l = leiter(id), s = stufen[id] || 1; return Math.max(1, Math.min(s, l.stufen.length)); }
+function stufeVon(id){ return leiter(id).stufen[stufeNr(id)-1]; }
+/* Eintrags-ID pro Stufe, damit der Kraftverlauf die Stufen nicht vermischt */
+function uebId(u){ return u.leiter ? u.id+'@'+stufeNr(u.leiter) : u.id; }
+function uebName(u){ return u.leiter ? u.name.replace(' (Stufe)','')+': '+stufeVon(u.leiter).name : u.name; }
+function uebArt(u){ return u.leiter ? stufeVon(u.leiter).art : u.art; }
+function uebDosis(u, variante){
+  var d = (variante==='kurz' && u.kurzDosis) ? u.kurzDosis : u.dosis;
+  return u.leiter ? d.replace('Stufenziel', stufeVon(u.leiter).ziel) : d;
+}
+/* Bereit für die nächste Stufe? Zwei Einheiten in Folge mit allen Sätzen ≥ Ziel */
+function leiterBereit(id){
+  var l = leiter(id), nr = stufeNr(id), st = l.stufen[nr-1];
+  if (nr >= l.stufen.length) return false;
+  var treffer = [];
+  journal.filter(function(e){ return e.typ==='kraft'; }).sort(function(a,b){ return a.datum < b.datum ? 1 : -1; })
+    .forEach(function(e){ (e.uebungen||[]).forEach(function(u){ if (u.leiter===id) treffer.push({ e:e, u:u }); }); });
+  if (treffer.length < 2) return false;
+  return treffer.slice(0,2).every(function(t){
+    return t.u.stufe===nr && t.u.saetze.length >= 2 && t.u.bew!=='hart' &&
+      t.u.saetze.every(function(s){ return (s.n||0) >= st.n; });
+  });
+}
+
+/* ════════════════ Testbatterie (alle 6 Wochen) ════════════════ */
+var TESTS = [
+  { id:'t-klimm', name:'Klimmzug, Zusatzlast für 3 Wdh', kurz:'Klimmzug +kg', einheit:'kg', besser:'hoch' },
+  { id:'t-oaph', name:'Einarmig oben halten, schwächere Seite', kurz:'OAP-Halt', einheit:'s', besser:'hoch' },
+  { id:'t-hang', name:'Dead Hang einarmig, schwächere Seite', kurz:'Hang 1-armig', einheit:'s', besser:'hoch' },
+  { id:'t-lsitz', name:'L-Sitz maximal (aktuelle Stufe)', kurz:'L-Sitz', einheit:'s', besser:'hoch' },
+  { id:'t-push', name:'Ring-Liegestütz maximal', kurz:'Ring-LS', einheit:'Wdh', besser:'hoch' },
+  { id:'t-weit', name:'Standweitsprung, bester von 3', kurz:'Weitsprung', einheit:'cm', besser:'hoch' },
+  { id:'t-drei', name:'Dreisprung einbeinig, schwächere Seite', kurz:'Dreisprung', einheit:'cm', besser:'hoch' },
+  { id:'t-quer', name:'Querspagat (Männerspagat): Schambein–Boden', kurz:'Querspagat', einheit:'cm', besser:'tief' },
+  { id:'t-laengs', name:'Längsspagat (Frauenspagat): Leiste–Boden, schlechtere Seite', kurz:'Längsspagat', einheit:'cm', besser:'tief' },
+  { id:'t-3km', name:'3-km-Testlauf', kurz:'3 km', einheit:'Zeit', besser:'tief' }
+];
+var tests = load(K.tests, []);
+function testWert(t, v){ return v==null ? '–' : (t.einheit==='Zeit' ? zeitStr(v) : f1(v)+' '+t.einheit); }
+function letzterTest(){ return tests.slice().sort(function(a,b){ return a.datum < b.datum ? -1 : 1; }).slice(-1)[0] || null; }
+function naechsterTest(){ var l = letzterTest(); return l ? plusTage(l.datum, 42) : heute(); }
+
+/* ════════════════ Navigation ════════════════ */
+var TABS = ['heute','plan','journal','kraft','statistik','theorie','daten'];
+function zeige(tab){
+  if (tab==='laeufe') tab = 'journal';
+  if (tab==='fortschritt') tab = 'statistik';
+  if (TABS.indexOf(tab) < 0) tab = 'heute';
+  TABS.forEach(function(t){ document.getElementById('t-'+t).hidden = (t!==tab); });
+  document.querySelectorAll('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.tab===tab); });
+  document.getElementById('datenBtn').classList.toggle('on', tab==='daten');
+  save(K.tab, tab);
+  if (tab==='heute') renderHeute();
+  if (tab==='plan') renderPlan();
+  if (tab==='journal') renderJournal();
+  if (tab==='kraft') renderKraft();
+  if (tab==='statistik') renderStatistik();
+  if (tab==='theorie' && window.Theorie) Theorie.mount('t-theorie');
+  if (tab==='daten') renderDaten();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(function(b){ b.onclick = function(){ zeige(b.dataset.tab); }; });
+document.getElementById('datenBtn').onclick = function(){ zeige('daten'); };
+
+/* ════════════════ Kopf ════════════════ */
+function renderKopf(){
+  var p = plan(), wk = { name:p.wettkampf.name, datum:p.wettkampf.datum };
+  /* Bei Saisonplänen: nächster Wettkampf aus den Blöcken */
+  (p.bloecke||[]).filter(function(b){ return b.wkDatum && b.wkDatum >= heute(); })
+    .sort(function(a,b){ return a.wkDatum < b.wkDatum ? -1 : 1; }).slice(0,1)
+    .forEach(function(b){ wk = { name:b.wkName||b.name, datum:b.wkDatum }; });
+  var d = tageBis(wk.datum);
+  document.getElementById('hEyebrow').textContent =
+    wk.name + ', ' + deDatum(wk.datum) + String(wk.datum).slice(0,4);
+  document.getElementById('hTitel').textContent =
+    d > 0 ? 'Noch ' + d + ' Tage' : (d === 0 ? 'Heute ist Wettkampf' : 'Wettkampf vorbei');
+  document.getElementById('hSub').textContent = p.ziel || '';
+}
+
+/* ════════════════ Tab Plan ════════════════ */
+function erledigtAm(datum, typ){
+  return journal.some(function(e){ return e.datum===datum && e.typ===typ; });
+}
+function planTag(datum){
+  var p = plan(), treffer = null;
+  (p.wochen||[]).forEach(function(w){
+    var i = Math.round((new Date(datum+'T12:00:00') - new Date(w.start+'T12:00:00'))/86400000);
+    if (i>=0 && i<7 && w.tage && w.tage[i]) treffer = w.tage[i];
+  });
+  return treffer;
+}
+function renderPlan(){
+  var p = plan(), h = '';
+  if (plaene.length > 1){
+    h += '<div class="card"><label for="planWahl">Aktiver Plan</label><select id="planWahl" style="margin:0">';
+    plaene.forEach(function(x){
+      h += '<option value="'+esc(x.id)+'"'+(x.id===p.id?' selected':'')+'>'+esc(x.name)+'</option>';
+    });
+    h += '</select></div>';
+  }
+  if (p.bloecke && p.bloecke.length){
+    h += '<div class="card"><h3>Saison</h3>';
+    p.bloecke.forEach(function(b){
+      var jetzt = heute() >= b.von && heute() <= b.bis, vorbei = heute() > b.bis;
+      h += '<div class="blk'+(jetzt?' jetzt':'')+(vorbei?' vorbei':'')+'">'+
+           '<div class="between"><strong class="small">'+esc(b.name)+(jetzt?' (jetzt)':'')+'</strong>'+
+           '<span class="tiny muted">'+deDatum(b.von)+String(b.von).slice(2,4)+'–'+deDatum(b.bis)+String(b.bis).slice(2,4)+'</span></div>'+
+           '<div class="small">Schwerpunkt: '+esc(b.schwerpunkt||'')+'</div>'+
+           (b.erhaltung ? '<div class="tiny muted">Erhaltung: '+esc(b.erhaltung)+'</div>' : '')+
+           (b.wettkampf ? '<div class="tiny akz">Wettkampf: '+esc(b.wettkampf)+'</div>' : '')+
+           (b.warum ? '<details class="warum"><summary>Warum jetzt?</summary><div class="small">'+esc(b.warum)+'</div></details>' : '')+'</div>';
+    });
+    h += '</div>';
+  }
+  h += '<div class="card"><div class="between"><h3>Tempi</h3><span class="tiny muted">min/km</span></div><table>';
+  Object.keys(p.tempi || {}).forEach(function(k){
+    h += '<tr><td>'+esc(k)+'</td><td class="num">'+esc(p.tempi[k])+'</td></tr>';
+  });
+  h += '</table></div>';
+  var gruppen = [];
+  if (p.bloecke && p.bloecke.length){
+    p.bloecke.forEach(function(b){ gruppen.push({ b:b, w:(p.wochen||[]).filter(function(w){ return w.start >= b.von && w.start <= b.bis; }) }); });
+  } else gruppen.push({ b:null, w:p.wochen||[] });
+  /* Offen: laufender Block; vor Saisonstart der erste */
+  var offenIdx = gruppen.map(function(g){ return g.b && g.b.von <= heute() && g.b.bis >= heute(); }).indexOf(true);
+  if (offenIdx < 0) offenIdx = gruppen.map(function(g){ return !g.b || g.b.von > heute(); }).indexOf(true);
+  gruppen.forEach(function(g, gi){
+    if (!g.w.length) return;
+    if (g.b) h += '<details class="blockwochen"'+(gi===offenIdx?' open':'')+'><summary><strong>'+esc(g.b.name)+'</strong> <span class="tiny muted">'+
+      deDatum(g.b.von)+'–'+deDatum(g.b.bis)+' · '+g.w.length+' Wochen</span></summary>';
+    g.w.forEach(wocheKarte);
+    if (g.b) h += '</details>';
+  });
+  function wocheKarte(w){
+    var ende = plusTage(w.start, 6), jetzt = heute() >= w.start && heute() <= ende;
+    h += '<div class="card'+(jetzt?' now':'')+'">';
+    h += '<div class="between"><h3>Woche '+w.nr+(jetzt?' (jetzt)':'')+'</h3>'+
+         '<span class="tiny muted">'+deDatum(w.start)+'–'+deDatum(ende)+'</span></div>';
+    if (w.fokus) h += '<p class="small muted" style="margin:0 0 8px">'+esc(w.fokus)+'</p>';
+    (w.tage || []).forEach(function(t, i){
+      var datum = plusTage(w.start, i), ist = datum === heute();
+      var ok = erledigtAm(datum, t.typ), wk = t.wk || (t.km && t.km > 20);
+      h += '<div class="day'+(ist?' heute':'')+'">';
+      h += '<div class="dw">'+WT[i]+' '+deDatum(datum).slice(0,3)+'</div><div style="flex:1">';
+      h += '<div class="tt">'+esc(t.titel)+' <span class="tag '+(wk?'wk':t.typ)+'">'+(wk?'Wettkampf':t.typ)+'</span></div>';
+      if (t.detail) h += '<div class="small muted">'+esc(t.detail)+'</div>';
+      if (t.km) h += '<div class="tiny muted">ca. '+t.km+' km</div>';
+      h += '</div>';
+      if (ok) h += '<div class="check" aria-label="erledigt">✓</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+  if (p.regeln && p.regeln.length){
+    h += '<div class="card"><h3>Regeln</h3><ul class="small" style="margin:0;padding-left:1.1em">';
+    p.regeln.forEach(function(r){ h += '<li style="margin-bottom:5px">'+esc(r)+'</li>'; });
+    h += '</ul></div>';
+  }
+  document.getElementById('t-plan').innerHTML = h;
+  var sel = document.getElementById('planWahl');
+  if (sel) sel.onchange = function(){ aktivId = sel.value; save(K.aktiv, aktivId); renderKopf(); renderPlan(); };
+  renderKopf();
+}
+
+/* ════════════════ Tab Journal ════════════════ */
+function eintragZeile(e){
+  var t = '', s = [];
+  if (e.typ==='lauf'){
+    t = (e.km ? f1(e.km)+' km' : 'Lauf');
+    if (e.sek) s.push(zeitStr(e.sek));
+    if (e.sek && e.km) s.push(paceStr(e.sek, e.km)+'/km');
+    if (e.hm) s.push(e.hm+' Hm');
+    if (e.hf) s.push('HF '+e.hf);
+  } else if (e.typ==='kraft'){
+    var se = sessionVon(e.session);
+    t = e.titel || (se ? se.name : 'Kraft');
+    var n = (e.uebungen||[]).reduce(function(a,u){ return a + u.saetze.length; }, 0);
+    if (n) s.push(n+' Sätze');
+    if (e.sek) s.push(Math.round(e.sek/60)+' Min');
+  } else {
+    t = 'Beweglichkeit';
+    if (e.sek) s.push(Math.round(e.sek/60)+' Min');
+  }
+  if (e.rpe!=null) s.push('RPE '+e.rpe);
+  return { titel:t, sub:s.join(' · ') };
+}
+function renderJournal(){
+  var f = load(K.filter, 'alle');
+  var h = '<div class="addrow">'+
+    '<button class="btn prim" data-neu="lauf">+ Lauf</button>'+
+    '<button class="btn prim" data-neu="kraft">+ Kraft</button>'+
+    '<button class="btn prim" data-neu="beweg">+ Beweglichkeit</button></div>';
+  h += '<div class="chips" role="group" aria-label="Filter">';
+  [['alle','Alle'],['lauf','Lauf'],['kraft','Kraft'],['beweg','Beweglichkeit']].forEach(function(c){
+    h += '<button class="chip'+(f===c[0]?' on':'')+'" data-f="'+c[0]+'">'+c[1]+'</button>';
+  });
+  h += '</div>';
+  var liste = journal.filter(function(e){ return f==='alle' || e.typ===f; })
+    .slice().sort(function(a,b){ return a.datum < b.datum ? 1 : a.datum > b.datum ? -1 : 0; });
+  if (!liste.length){
+    h += '<div class="card"><p class="small muted" style="margin:0">Noch keine Einträge. Trag dein erstes Training über die Knöpfe oben ein.</p></div>';
+  }
+  var woche = null;
+  liste.forEach(function(e){
+    var m = montag(e.datum);
+    if (m !== woche){
+      if (woche) h += '</div>';
+      woche = m;
+      var wl = journal.filter(function(x){ return montag(x.datum)===m; });
+      var km = wl.reduce(function(a,x){ return a + (x.typ==='lauf' ? (x.km||0) : 0); }, 0);
+      var hm = wl.reduce(function(a,x){ return a + (x.typ==='lauf' ? (x.hm||0) : 0); }, 0);
+      var bl = wl.reduce(function(a,x){ return a + belastung(x); }, 0);
+      h += '<div class="card"><div class="between wkopf"><h3>Woche ab '+deDatum(m)+'</h3>'+
+           '<span class="tiny muted">'+f1(km)+' km · '+Math.round(hm)+' Hm · Last '+Math.round(bl)+'</span></div>';
+    }
+    var z = eintragZeile(e);
+    h += '<button class="eintrag" data-edit="'+esc(e.id)+'">'+
+         '<span class="dw">'+WT[wtag(e.datum)]+' '+deDatum(e.datum).slice(0,3)+'</span>'+
+         '<span style="flex:1;min-width:0"><span class="tt">'+esc(z.titel)+'</span> <span class="tag '+e.typ+'">'+TYPNAME[e.typ]+'</span>'+
+         '<span class="small muted d-block">'+esc(z.sub)+'</span>'+
+         (e.notiz ? '<span class="tiny muted d-block">'+esc(e.notiz)+'</span>' : '')+'</span></button>';
+  });
+  if (woche) h += '</div>';
+  var el = document.getElementById('t-journal');
+  el.innerHTML = h;
+  el.querySelectorAll('[data-neu]').forEach(function(b){ b.onclick = function(){ oeffneForm(b.dataset.neu, null); }; });
+  el.querySelectorAll('[data-f]').forEach(function(b){ b.onclick = function(){ save(K.filter, b.dataset.f); renderJournal(); }; });
+  el.querySelectorAll('[data-edit]').forEach(function(b){
+    b.onclick = function(){ var e = journal.filter(function(x){ return x.id===b.dataset.edit; })[0]; if (e) oeffneForm(e.typ, e); };
+  });
+}
+
+/* ── Formular-Bogen ── */
+function bogen(titel, html){
+  document.getElementById('shT').textContent = titel;
+  document.getElementById('shB').innerHTML = html;
+  var s = document.getElementById('sheet'); s.hidden = false; s.scrollTop = 0;
+  document.body.classList.add('sheet-offen');
+}
+function bogenZu(){
+  document.getElementById('sheet').hidden = true;
+  document.body.classList.remove('sheet-offen');
+  wachHalten(false); pauseStop();
+  var tab = load(K.tab, 'journal'); zeige(tab);
+}
+document.getElementById('shX').onclick = bogenZu;
+
+function rpeHtml(wert){
+  var h = '<label>Anstrengung (RPE 0–10)</label><div class="rpe" role="group" aria-label="RPE">';
+  for (var i=0;i<=10;i++) h += '<button type="button" data-r="'+i+'"'+(wert===i?' class="on"':'')+'>'+i+'</button>';
+  h += '</div><div class="tiny muted rpe-leg">0–2 sehr leicht · 3–4 locker · 5–6 mittel · 7–8 hart · 9–10 maximal</div>';
+  return h;
+}
+function rpeLesen(box){ var b = box.querySelector('.rpe .on'); return b ? parseInt(b.dataset.r,10) : null; }
+function rpeBinden(box){
+  box.querySelectorAll('.rpe button').forEach(function(b){
+    b.onclick = function(){
+      var war = b.classList.contains('on');
+      box.querySelectorAll('.rpe button').forEach(function(x){ x.classList.remove('on'); });
+      if (!war) b.classList.add('on');
+    };
+  });
+}
+function kopfFelder(e){
+  return '<label for="fD">Datum</label><input type="date" id="fD" value="'+esc(e ? e.datum : heute())+'">';
+}
+function fussFelder(e){
+  return '<label for="fN">Notiz (optional)</label><input type="text" id="fN" value="'+esc(e ? e.notiz||'' : '')+'" placeholder="Gefühl, Strecke, Besonderes">'+
+    '<div class="btns"><button class="btn prim" id="fSave">Speichern</button>'+
+    (e ? '<button class="btn gefahr" id="fDel">Eintrag löschen</button>' : '')+'</div>';
+}
+function speichern(e){
+  var i = journal.map(function(x){ return x.id; }).indexOf(e.id);
+  if (i >= 0) journal[i] = e; else journal.push(e);
+  save(K.journal, journal); bogenZu(); toast('Gespeichert');
+}
+function loeschenBinden(e){
+  var b = document.getElementById('fDel'); if (!b) return;
+  b.onclick = function(){
+    if (b.dataset.sicher !== '1'){ b.dataset.sicher = '1'; b.textContent = 'Wirklich löschen?'; return; }
+    journal = journal.filter(function(x){ return x.id !== e.id; });
+    save(K.journal, journal); bogenZu(); toast('Gelöscht');
+  };
+}
+function oeffneForm(typ, e, sid){
+  if (typ==='lauf') formLauf(e);
+  else if (typ==='kraft') formKraft(e, sid);
+  else formBeweg(e);
+}
+
+function formLauf(e){
+  var h = kopfFelder(e) +
+    '<div class="grid2">'+
+    '<div><label for="fK">Distanz (km)</label><input id="fK" inputmode="decimal" value="'+(e&&e.km!=null?e.km:'')+'" placeholder="10,2"></div>'+
+    '<div><label for="fZ">Dauer</label><input id="fZ" inputmode="numeric" value="'+(e&&e.sek?zeitStr(e.sek):'')+'" placeholder="1:05:30 oder 65"></div>'+
+    '<div><label for="fH">Höhenmeter</label><input id="fH" inputmode="numeric" value="'+(e&&e.hm!=null?e.hm:'')+'" placeholder="180"></div>'+
+    '<div><label for="fP">Ø Puls</label><input id="fP" inputmode="numeric" value="'+(e&&e.hf!=null?e.hf:'')+'" placeholder="145"></div></div>'+
+    '<p class="small" id="fPace" style="margin:-2px 0 10px"></p>'+
+    rpeHtml(e ? e.rpe : null) + fussFelder(e);
+  bogen(e ? 'Lauf bearbeiten' : 'Lauf eintragen', h);
+  var box = document.getElementById('shB');
+  rpeBinden(box);
+  function pace(){
+    var km = zahl(document.getElementById('fK').value), s = parseZeit(document.getElementById('fZ').value);
+    document.getElementById('fPace').textContent = (km && s) ? 'Pace '+paceStr(s, km)+' /km' : '';
+  }
+  ['fK','fZ'].forEach(function(id){ document.getElementById(id).oninput = pace; }); pace();
+  document.getElementById('fSave').onclick = function(){
+    var km = zahl(document.getElementById('fK').value), s = parseZeit(document.getElementById('fZ').value);
+    if (!km && !s){ toast('Distanz oder Dauer fehlt'); return; }
+    speichern({ id:e?e.id:uid(), typ:'lauf', datum:document.getElementById('fD').value||heute(),
+      km:km, sek:s, hm:zahl(document.getElementById('fH').value), hf:zahl(document.getElementById('fP').value),
+      rpe:rpeLesen(box), notiz:document.getElementById('fN').value.trim() });
+  };
+  loeschenBinden(e);
+}
+
+function formBeweg(e){
+  var h = kopfFelder(e) +
+    '<label for="fM">Dauer (Min)</label><input id="fM" inputmode="numeric" value="'+(e&&e.sek?Math.round(e.sek/60):'')+'" placeholder="20">'+
+    rpeHtml(e ? e.rpe : null) + fussFelder(e);
+  bogen(e ? 'Beweglichkeit bearbeiten' : 'Beweglichkeit eintragen', h);
+  var box = document.getElementById('shB'); rpeBinden(box);
+  document.getElementById('fSave').onclick = function(){
+    var m = zahl(document.getElementById('fM').value);
+    if (!m){ toast('Dauer fehlt'); return; }
+    speichern({ id:e?e.id:uid(), typ:'beweg', datum:document.getElementById('fD').value||heute(),
+      sek:m*60, rpe:rpeLesen(box), notiz:document.getElementById('fN').value.trim() });
+  };
+  loeschenBinden(e);
+}
+
+/* Letzte Einträge einer Übung (für Vorbelegung und Progressionsvorschlag) */
+function letzteUebung(uid_, ausser){
+  var best = null;
+  journal.forEach(function(x){
+    if (x.typ!=='kraft' || x.id===ausser) return;
+    (x.uebungen||[]).forEach(function(u){
+      if (u.id===uid_ && u.saetze.length && (!best || x.datum > best.d)) best = { d:x.datum, u:u };
+    });
+  });
+  return best;
+}
+function letzteSaetze(uid_, ausser){ var b = letzteUebung(uid_, ausser); return b ? b.u.saetze : null; }
+function satzZahl(dosis){ var m = /^(\d+)\s*×/.exec(dosis||''); return m ? parseInt(m[1],10) : 1; }
+
+/* Progression nach der Bewertung vom letzten Mal (Autoregulation, vgl. Hickmott et al. 2022) */
+function vorschlag(u, art, letzte){
+  if (!letzte || !letzte.u.bew) return { text:'', saetze:null };
+  var bew = letzte.u.bew, alt = letzte.u.saetze, mitKg = alt.some(function(s){ return s.kg; });
+  var plus = (art==='kg' || (art==='bw' && mitKg) || art==='kgm');
+  var neu = alt.map(function(s){ return { kg:s.kg, n:s.n }; });
+  var text;
+  if (bew==='leicht'){
+    if (plus){ neu.forEach(function(s){ if (s.kg!=null) s.kg = Math.round((s.kg + 2.5)*10)/10; }); text = 'Letztes Mal leicht → heute +2,5 kg.'; }
+    else if (art==='sek'){ neu.forEach(function(s){ if (s.n!=null) s.n += 3; }); text = 'Letztes Mal leicht → heute +3 s.'; }
+    else { neu.forEach(function(s){ if (s.n!=null) s.n += 1; }); text = 'Letztes Mal leicht → heute +1 Wdh.'; }
+  } else if (bew==='passend'){ text = 'Letztes Mal passend → gleiche Werte, saubere Ausführung.'; }
+  else { text = 'Letztes Mal hart → Last halten, erst steigern, wenn es passend wird.'; }
+  return { text:text, saetze:neu };
+}
+
+/* ── Pausentimer und Einheiten-Uhr ── */
+var kraftStart = null, pauseH = null, wakeLock = null;
+function wachHalten(an){
+  try {
+    if (an && 'wakeLock' in navigator && !wakeLock) navigator.wakeLock.request('screen').then(function(w){ wakeLock = w; }).catch(function(){});
+    if (!an && wakeLock){ wakeLock.release().catch(function(){}); wakeLock = null; }
+  } catch(e){}
+}
+function pauseStart(sek){
+  var bar = document.getElementById('pauseBar'); if (!bar || !sek) return;
+  clearInterval(pauseH);
+  var ende = Date.now() + sek*1000;
+  bar.hidden = false;
+  function tick(){
+    var rest = Math.round((ende - Date.now())/1000);
+    if (rest <= 0){
+      clearInterval(pauseH); bar.querySelector('b').textContent = 'Los!';
+      try { navigator.vibrate && navigator.vibrate([200,100,200]); } catch(e){}
+      setTimeout(function(){ bar.hidden = true; }, 2500); return;
+    }
+    if (rest === 10){ try { navigator.vibrate && navigator.vibrate(80); } catch(e){} }
+    bar.querySelector('b').textContent = Math.floor(rest/60)+':'+pad(rest%60);
+  }
+  tick(); pauseH = setInterval(tick, 250);
+}
+function pauseStop(){ clearInterval(pauseH); var bar = document.getElementById('pauseBar'); if (bar) bar.hidden = true; }
+
+function formKraft(e, sidVorgabe, varVorgabe){
+  var sid = e ? e.session : (sidVorgabe || naechsteSession());
+  var s = sessionVon(sid) || sessions[0];
+  var variante = e ? (e.variante||'normal') : (varVorgabe || load(K.variante, 'normal'));
+  if (kraftStart && Date.now()-kraftStart > 3*3600000) kraftStart = null;
+  if (!e && !kraftStart) kraftStart = Date.now();
+  var h = kopfFelder(e);
+  h += '<label>Einheit</label><div class="chips" style="margin-bottom:8px">';
+  sessions.forEach(function(x){
+    h += '<button type="button" class="chip'+(x.id===s.id?' on':'')+'" data-ses="'+esc(x.id)+'"'+(e?' disabled':'')+'>'+esc(x.name.split(' – ')[0])+'</button>';
+  });
+  h += '</div><label>Version</label><div class="chips" style="margin-bottom:10px">';
+  [['kurz','Kurz'],['normal','Normal']].forEach(function(v){
+    var min = s.dauer ? s.dauer[v[0]] : null;
+    h += '<button type="button" class="chip'+(variante===v[0]?' on':'')+'" data-var="'+v[0]+'"'+(e?' disabled':'')+'>'+v[1]+(min?' ~'+min+'′':'')+'</button>';
+  });
+  h += '</div>';
+  if (s.hinweis) h += '<p class="tiny muted" style="margin:-4px 0 10px">'+esc(s.hinweis)+'</p>';
+  h += '<p class="tiny muted" style="margin:0 0 10px">Vorbelegt mit dem Vorschlag aus dem letzten Mal. ✓ startet die Pause. Pro Übung kurz bewerten: daraus kommt der nächste Vorschlag.</p>';
+  s.bloecke.forEach(function(b){
+    var alle = b.uebungen.filter(function(u){ return variante==='normal' || u.kurz!==false; });
+    if (!alle.length) return;
+    h += '<h3 class="bt">'+esc(b.titel)+'</h3>';
+    alle.forEach(function(u){
+      if (u.art==='skip'){
+        h += '<div class="ueb skip"><strong class="small">'+esc(u.name)+'</strong><div class="tiny muted">'+esc(uebDosis(u, variante))+(u.hinweis?' · '+esc(u.hinweis):'')+'</div></div>';
+        return;
+      }
+      var id = uebId(u), art = uebArt(u);
+      var gespeichert = e ? (e.uebungen||[]).filter(function(x){ return x.id===id || (u.leiter && x.leiter===u.leiter); })[0] : null;
+      if (gespeichert){ id = gespeichert.id; art = gespeichert.art; }
+      var saetze, done, bew = gespeichert ? gespeichert.bew : null, vtext = '';
+      if (gespeichert){ saetze = gespeichert.saetze; done = true; }
+      else {
+        var letzte = letzteUebung(id, e?e.id:null), vs = vorschlag(u, art, letzte);
+        vtext = vs.text;
+        saetze = vs.saetze || (letzte ? letzte.u.saetze : []);
+        var soll = satzZahl(uebDosis(u, variante));
+        saetze = saetze.slice(0, soll);
+        while (saetze.length < soll) saetze.push(saetze.length ? { kg:saetze[saetze.length-1].kg, n:saetze[saetze.length-1].n } : {kg:null,n:null});
+        done = false;
+      }
+      var ein = EINHEIT[art] || ['kg','Wdh'];
+      var st = u.leiter ? stufeVon(u.leiter) : null;
+      var nameU = gespeichert ? gespeichert.name : uebName(u);
+      var stufeU = gespeichert && gespeichert.stufe ? gespeichert.stufe : (u.leiter ? stufeNr(u.leiter) : null);
+      h += '<div class="ueb" data-u="'+esc(id)+'" data-name="'+esc(nameU)+'" data-art="'+esc(art)+'" data-p="'+(u.pause||0)+'"'+
+           (u.leiter ? ' data-leiter="'+esc(u.leiter)+'" data-stufe="'+stufeU+'"' : '')+'>'+
+           '<div class="between"><strong class="small">'+esc(nameU)+'</strong>'+
+           '<button type="button" class="btn sm" data-alle>alle ✓</button></div>'+
+           '<div class="tiny muted">'+esc(uebDosis(u, variante))+(u.hinweis?' · '+esc(u.hinweis):'')+'</div>';
+      if (st) h += '<div class="tiny akz">Stufe '+stufeNr(u.leiter)+'/'+leiter(u.leiter).stufen.length+' · Ziel '+esc(st.ziel)+(st.hinweis?' · '+esc(st.hinweis):'')+
+                   (leiterBereit(u.leiter) ? ' · <strong>bereit für die nächste Stufe</strong>' : '')+'</div>';
+      if (vtext) h += '<div class="tiny vors">'+esc(vtext)+'</div>';
+      h += '<div class="saetze">';
+      saetze.forEach(function(x, i){ h += satzHtml(i+1, x, ein, done); });
+      h += '</div><div class="between" style="margin-top:6px"><button type="button" class="link" data-plus>+ Satz</button>'+
+           '<span class="bew" role="group" aria-label="Bewertung">'+
+           [['leicht','leicht'],['passend','passend'],['hart','hart']].map(function(b){
+             return '<button type="button" data-bew="'+b[0]+'"'+(bew===b[0]?' class="on"':'')+'>'+b[1]+'</button>'; }).join('')+
+           '</span></div></div>';
+    });
+  });
+  var dauerVor = e && e.sek ? Math.round(e.sek/60) : '';
+  h += '<label for="fM" style="margin-top:14px">Dauer gesamt (Min)</label><input id="fM" inputmode="numeric" value="'+dauerVor+'" placeholder="'+(e?'':'leer lassen: wird gemessen')+'">';
+  if (!e) h += '<p class="tiny muted" id="fUhr" style="margin:-6px 0 10px"></p>';
+  h += rpeHtml(e ? e.rpe : null) + fussFelder(e);
+  h += '<div class="pausebar" id="pauseBar" hidden><span>Pause</span><b>0:00</b><button type="button" class="btn sm" id="pauseX">Überspringen</button></div>';
+  bogen(e ? 'Krafteinheit bearbeiten' : s.name.split(' – ')[0]+' · '+(variante==='kurz'?'Kurz':'Normal'), h);
+  wachHalten(true);
+  var box = document.getElementById('shB'); rpeBinden(box);
+  document.getElementById('pauseX').onclick = pauseStop;
+  var uhr = document.getElementById('fUhr');
+  if (uhr){ var uTick = function(){ if (!document.body.contains(uhr)) return; uhr.textContent = 'Läuft seit '+Math.round((Date.now()-kraftStart)/60000)+' Min'; setTimeout(uTick, 30000); }; uTick(); }
+  box.querySelectorAll('[data-ses]').forEach(function(b){ b.onclick = function(){ formKraft(null, b.dataset.ses, variante); }; });
+  box.querySelectorAll('[data-var]').forEach(function(b){ b.onclick = function(){ save(K.variante, b.dataset.var); formKraft(null, s.id, b.dataset.var); }; });
+  box.querySelectorAll('.bew').forEach(function(g){
+    g.querySelectorAll('button').forEach(function(b){ b.onclick = function(){
+      var war = b.classList.contains('on'); g.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
+      if (!war) b.classList.add('on'); }; });
+  });
+  function satzBinden(root){
+    root.querySelectorAll('.ok').forEach(function(b){ b.onclick = function(){
+      b.classList.toggle('on'); b.setAttribute('aria-pressed', b.classList.contains('on'));
+      if (b.classList.contains('on')) pauseStart(parseInt(b.closest('.ueb').dataset.p,10)||0);
+    }; });
+  }
+  satzBinden(box);
+  box.querySelectorAll('[data-alle]').forEach(function(b){
+    b.onclick = function(){ b.closest('.ueb').querySelectorAll('.ok').forEach(function(o){ o.classList.add('on'); o.setAttribute('aria-pressed','true'); }); };
+  });
+  box.querySelectorAll('[data-plus]').forEach(function(b){
+    b.onclick = function(){
+      var u = b.closest('.ueb'), wrap = u.querySelector('.saetze');
+      var rows = wrap.querySelectorAll('.satz'), last = rows[rows.length-1];
+      var st = last ? { kg:zahl(last.querySelector('.kg') ? last.querySelector('.kg').value : null), n:zahl(last.querySelector('.n').value) } : {kg:null,n:null};
+      var tmp = document.createElement('div');
+      tmp.innerHTML = satzHtml(rows.length+1, st, EINHEIT[u.dataset.art]||['kg','Wdh'], false);
+      wrap.appendChild(tmp.firstChild); satzBinden(wrap);
+    };
+  });
+  document.getElementById('fSave').onclick = function(){
+    var ues = [];
+    box.querySelectorAll('.ueb[data-u]').forEach(function(u){
+      var saetze = [];
+      u.querySelectorAll('.satz').forEach(function(r){
+        if (!r.querySelector('.ok').classList.contains('on')) return;
+        var kgEl = r.querySelector('.kg');
+        saetze.push({ kg: kgEl ? zahl(kgEl.value) : null, n: zahl(r.querySelector('.n').value) });
+      });
+      var bw = u.querySelector('.bew .on');
+      if (saetze.length){
+        var x = { id:u.dataset.u, name:u.dataset.name, art:u.dataset.art, saetze:saetze };
+        if (bw) x.bew = bw.dataset.bew;
+        if (u.dataset.leiter){ x.leiter = u.dataset.leiter; x.stufe = parseInt(u.dataset.stufe,10); }
+        ues.push(x);
+      }
+    });
+    var m = zahl(document.getElementById('fM').value);
+    if (!m && !e && kraftStart){ var gem = Math.round((Date.now()-kraftStart)/60000); if (gem >= 5) m = gem; }
+    var bereitVorher = LEITERN.filter(function(l){ return leiterBereit(l.id); }).map(function(l){ return l.id; });
+    kraftStart = null; pauseStop();
+    speichern({ id:e?e.id:uid(), typ:'kraft', datum:document.getElementById('fD').value||heute(),
+      session:s.id, titel:s.name, variante:variante, sek:m ? m*60 : null, rpe:rpeLesen(box), uebungen:ues,
+      notiz:document.getElementById('fN').value.trim() });
+    var neu = LEITERN.filter(function(l){ return leiterBereit(l.id) && bereitVorher.indexOf(l.id) < 0; });
+    if (neu.length) setTimeout(function(){ toast(neu[0].name+': bereit für die nächste Stufe'); }, 1900);
+  };
+  loeschenBinden(e);
+}
+function satzHtml(nr, st, ein, done){
+  return '<div class="satz"><span class="nr">'+nr+'</span>'+
+    (ein[0] ? '<input class="kg" inputmode="decimal" value="'+(st.kg!=null?st.kg:'')+'" aria-label="'+ein[0]+'"><span class="u">'+ein[0]+'</span>' : '<span class="leer"></span>')+
+    '<input class="n" inputmode="decimal" value="'+(st.n!=null?st.n:'')+'" aria-label="'+ein[1]+'"><span class="u">'+ein[1]+'</span>'+
+    '<button type="button" class="ok'+(done?' on':'')+'" aria-pressed="'+(done?'true':'false')+'" aria-label="Satz erledigt">✓</button></div>';
+}
+function naechsteSession(){
+  var t = planTag(heute());
+  if (t && t.session) return t.session;
+  var rot = sessions.filter(function(s){ return s.id!=='snack'; });
+  var l = journal.filter(function(x){ return x.typ==='kraft' && x.session!=='snack'; }).sort(function(a,b){ return a.datum < b.datum ? 1 : -1; })[0];
+  if (l && rot.length > 1){ var i = rot.map(function(s){return s.id;}).indexOf(l.session); return rot[(i+1)%rot.length].id; }
+  return rot[0].id;
+}
+function varianteFuer(tag){ return tag && /kurz/i.test((tag.titel||'')+' '+(tag.detail||'')) ? 'kurz' : load(K.variante, 'normal'); }
+
+/* ════════════════ Tab Heute ════════════════ */
+function renderHeute(){
+  var t = heute(), p = plan(), tag = planTag(t), h = '';
+  var b = (p.bloecke||[]).filter(function(x){ return x.von <= t && x.bis >= t; })[0];
+  if (b) h += '<p class="tiny muted" style="margin:0 0 10px">'+esc(b.name)+' · '+esc(b.schwerpunkt||'')+'</p>';
+  h += '<div class="card now"><div class="eyebrow">'+WT[wtag(t)]+' '+deDatum(t)+'</div>';
+  if (!tag){
+    h += '<h2>Kein Plan für heute</h2><p class="small muted">Der aktive Plan deckt heute nicht ab.</p>';
+  } else {
+    var ok = erledigtAm(t, tag.typ==='velo'||tag.typ==='frei' ? '-' : tag.typ);
+    h += '<h2>'+esc(tag.titel)+(ok?' <span class="akz">✓</span>':'')+'</h2>';
+    if (tag.detail) h += '<p class="small muted" style="margin:4px 0 0">'+esc(tag.detail)+'</p>';
+    if (tag.km) h += '<p class="tiny muted" style="margin:2px 0 0">ca. '+tag.km+' km</p>';
+    h += '<div class="btns">';
+    if (tag.typ==='kraft'){
+      var s = sessionVon(tag.session), v = varianteFuer(tag);
+      ['kurz','normal'].forEach(function(x){
+        h += '<button class="btn'+(x===v?' prim':'')+'" data-go="'+esc(tag.session)+'" data-v="'+x+'">'+(x==='kurz'?'Kurz':'Normal')+(s&&s.dauer?' ~'+s.dauer[x]+'′':'')+' starten</button>';
+      });
+    }
+    if (tag.typ==='lauf') h += '<button class="btn prim" data-lauf>Lauf eintragen</button>';
+    if (tag.extra==='snack') h += '<button class="btn" data-go="snack" data-v="normal">Sehnen-Snack starten</button>';
+    if (tag.typ==='frei' || tag.typ==='velo') h += '<button class="btn" data-beweg>Beweglichkeit eintragen</button>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  /* Woche */
+  var m = montag(t);
+  h += '<div class="card"><h3>Diese Woche</h3>';
+  for (var i=0;i<7;i++){
+    var d = plusTage(m,i), pt = planTag(d);
+    if (!pt) continue;
+    var erl = (pt.typ==='lauf'||pt.typ==='kraft') && erledigtAm(d, pt.typ);
+    h += '<div class="day'+(d===t?' heute':'')+'"><div class="dw">'+WT[i]+'</div><div style="flex:1"><span class="small">'+esc(pt.titel)+'</span> <span class="tag '+pt.typ+'">'+pt.typ+'</span></div>'+(erl?'<div class="check">✓</div>':'')+'</div>';
+  }
+  h += '</div>';
+
+  /* Skills */
+  h += '<div class="card"><div class="between"><h3>Skill-Leitern</h3><button class="link" data-stufen>Stufen ändern</button></div>';
+  LEITERN.forEach(function(l){
+    var nr = stufeNr(l.id), st = l.stufen[nr-1], pc = Math.round(nr/l.stufen.length*100);
+    h += '<div style="margin-top:10px"><div class="between"><strong class="small">'+esc(l.name)+'</strong><span class="tiny muted">Stufe '+nr+'/'+l.stufen.length+'</span></div>'+
+         '<div class="fort"><i style="width:'+pc+'%"></i></div>'+
+         '<div class="tiny muted">'+esc(st.name)+' · Ziel '+esc(st.ziel)+(leiterBereit(l.id)?' · <span class="akz">bereit für Stufe '+(nr+1)+'</span>':'')+'</div></div>';
+  });
+  h += '</div>';
+
+  /* Test */
+  var nt = naechsterTest(), lt = letzterTest(), bis = tageBis(nt);
+  h += '<div class="card"><h3>Testbatterie</h3><p class="small" style="margin:0">'+
+       (lt ? 'Letzter Test '+deDatum(lt.datum)+String(lt.datum).slice(2,4)+'. '+(bis > 0 ? 'Nächster in '+bis+' Tagen ('+deDatum(nt)+').' : '<strong class="akz">Jetzt fällig.</strong>')
+           : 'Noch kein Test. Der Ersttest zeigt, auf welcher Stufe du startest.')+
+       '</p><p class="tiny muted" style="margin:4px 0 0">Alle 6 Wochen, am besten am Freitag einer Entlastungswoche statt Kraft A. Dauer ca. 40 Min.</p>'+
+       '<div class="btns"><button class="btn'+(bis<=0?' prim':'')+'" data-test>Test eintragen</button></div></div>';
+
+  var el = document.getElementById('t-heute');
+  el.innerHTML = h;
+  el.querySelectorAll('[data-go]').forEach(function(x){ x.onclick = function(){ formKraft(null, x.dataset.go, x.dataset.v); }; });
+  el.querySelectorAll('[data-lauf]').forEach(function(x){ x.onclick = function(){ formLauf(null); }; });
+  el.querySelectorAll('[data-beweg]').forEach(function(x){ x.onclick = function(){ formBeweg(null); }; });
+  el.querySelectorAll('[data-stufen]').forEach(function(x){ x.onclick = formStufen; });
+  el.querySelectorAll('[data-test]').forEach(function(x){ x.onclick = function(){ formTest(null); }; });
+  renderKopf();
+}
+
+/* ── Stufen wählen ── */
+function formStufen(){
+  var h = '<p class="small muted">Wähle die Stufe, deren Ziel du noch nicht sicher schaffst. Die App schlägt den Wechsel vor, sobald das Ziel zweimal erreicht ist.</p>';
+  LEITERN.forEach(function(l){
+    h += '<h3 class="bt">'+esc(l.name)+'</h3>';
+    l.stufen.forEach(function(st, i){
+      var id = 'st-'+l.id+'-'+i;
+      h += '<label class="wahl" for="'+id+'"><input type="radio" name="st-'+l.id+'" id="'+id+'" value="'+(i+1)+'"'+(stufeNr(l.id)===i+1?' checked':'')+'>'+
+           '<span><strong>'+(i+1)+'. '+esc(st.name)+'</strong><span class="tiny muted d-block">Ziel '+esc(st.ziel)+' · '+esc(st.hinweis||'')+'</span></span></label>';
+    });
+  });
+  h += '<div class="btns"><button class="btn prim" id="fSave">Speichern</button></div>';
+  bogen('Skill-Stufen', h);
+  document.getElementById('fSave').onclick = function(){
+    LEITERN.forEach(function(l){ var r = document.querySelector('input[name="st-'+l.id+'"]:checked'); if (r) stufen[l.id] = parseInt(r.value,10); });
+    save(K.stufen, stufen); bogenZu(); toast('Stufen gespeichert');
+  };
+}
+
+/* ── Test eintragen ── */
+function formTest(tst){
+  var h = kopfFelder(tst) + '<p class="tiny muted" style="margin:-4px 0 10px">Ausgeruht, gleiche Reihenfolge, gleiche Tageszeit. Felder leer lassen, wenn ein Test ausfällt. Spagat: 0 cm = ganz unten.</p>';
+  TESTS.forEach(function(t){
+    var v = tst && tst.werte ? tst.werte[t.id] : null;
+    h += '<label for="'+t.id+'">'+esc(t.name)+' ('+(t.einheit==='Zeit'?'mm:ss':t.einheit)+')</label>'+
+         '<input id="'+t.id+'" inputmode="'+(t.einheit==='Zeit'?'numeric':'decimal')+'" value="'+(v==null?'':(t.einheit==='Zeit'?zeitStr(v):v))+'">';
+  });
+  h += '<label for="fN">Notiz (optional)</label><input type="text" id="fN" value="'+esc(tst ? tst.notiz||'' : '')+'">'+
+       '<div class="btns"><button class="btn prim" id="fSave">Speichern</button>'+(tst?'<button class="btn gefahr" id="fDel">Test löschen</button>':'')+'</div>';
+  bogen(tst ? 'Test bearbeiten' : 'Testbatterie', h);
+  document.getElementById('fSave').onclick = function(){
+    var w = {}, n = 0;
+    TESTS.forEach(function(t){ var raw = document.getElementById(t.id).value.trim(); if (!raw) return;
+      var v = t.einheit==='Zeit' ? parseZeit(raw) : zahl(raw); if (v!=null){ w[t.id] = v; n++; } });
+    if (!n){ toast('Mindestens ein Wert fehlt'); return; }
+    var x = { id: tst ? tst.id : uid(), datum: document.getElementById('fD').value || heute(), werte:w, notiz:document.getElementById('fN').value.trim() };
+    tests = tests.filter(function(y){ return y.id !== x.id; }).concat([x]);
+    save(K.tests, tests); bogenZu(); toast('Test gespeichert');
+  };
+  var d = document.getElementById('fDel');
+  if (d) d.onclick = function(){
+    if (d.dataset.sicher !== '1'){ d.dataset.sicher = '1'; d.textContent = 'Wirklich löschen?'; return; }
+    tests = tests.filter(function(y){ return y.id !== tst.id; }); save(K.tests, tests); bogenZu(); toast('Gelöscht');
+  };
+}
+
+/* ════════════════ Tab Kraft (Übersicht der Einheiten) ════════════════ */
+function renderKraft(){
+  var h = '';
+  sessions.forEach(function(s){
+    h += '<div class="card"><div class="between"><h3>'+esc(s.name)+'</h3><span class="tag">'+esc(s.tag||'')+'</span></div>';
+    if (s.dauer) h += '<p class="tiny muted" style="margin:0">Kurz ~'+s.dauer.kurz+' Min · Normal ~'+s.dauer.normal+' Min</p>';
+    if (s.hinweis) h += '<p class="small muted" style="margin:2px 0 6px">'+esc(s.hinweis)+'</p>';
+    s.bloecke.forEach(function(b){
+      h += '<div style="margin-top:10px"><strong class="small">'+esc(b.titel)+'</strong>';
+      b.uebungen.forEach(function(u){
+        h += '<div class="ue"><div><div class="tt">'+esc(uebName(u))+(u.kurz===false?' <span class="tag">nur Normal</span>':'')+'</div><div class="small">'+esc(uebDosis(u,'normal'))+
+             (u.kurzDosis ? ' <span class="tiny muted">· kurz: '+esc(uebDosis(u,'kurz'))+'</span>' : '')+'</div>'+
+             (u.hinweis ? '<div class="tiny muted">'+esc(u.hinweis)+'</div>' : '')+'</div></div>';
+      });
+      h += '</div>';
+    });
+    h += '<div class="btns"><button class="btn" data-start="'+esc(s.id)+'" data-v="kurz">Kurz starten</button><button class="btn prim" data-start="'+esc(s.id)+'" data-v="normal">Normal starten</button></div></div>';
+  });
+  var el = document.getElementById('t-kraft');
+  el.innerHTML = h;
+  el.querySelectorAll('[data-start]').forEach(function(b){ b.onclick = function(){ formKraft(null, b.dataset.start, b.dataset.v); }; });
+}
+
+/* ════════════════ Tab Statistik ════════════════ */
+var FARBE = { lauf:'var(--c-lauf)', kraft:'var(--c-kraft)', beweg:'var(--c-beweg)' };
+
+function zeitraum(){
+  var art = load(K.zr, 'block'), p = plan(), t = heute(), von, bis = t, name, notiz = '';
+  if (art === 'block' && p.bloecke && p.bloecke.length){
+    var b = p.bloecke.filter(function(x){ return x.von <= t && x.bis >= t; })[0] ||
+            p.bloecke.filter(function(x){ return x.von <= t; }).slice(-1)[0];
+    if (b){ von = b.von; bis = b.bis < t ? b.bis : t; name = b.name; }
+    else notiz = 'Der erste Block hat noch nicht begonnen – gezeigt werden die letzten 4 Wochen.';
+  }
+  if (art === 'saison'){
+    var erste = journal.reduce(function(a,e){ return !a || e.datum < a ? e.datum : a; }, null);
+    var bs = p.bloecke && p.bloecke.length ? p.bloecke[0].von : null;
+    von = [erste, bs].filter(function(x){ return x && x <= t; }).sort()[0];
+    name = 'Saison';
+    if (!von){ von = null; notiz = 'Noch keine Daten in der Saison – gezeigt werden die letzten 4 Wochen.'; }
+  }
+  if (!von){ von = plusTage(montag(t), -21); name = 'Letzte 4 Wochen'; art = art==='4w' ? '4w' : art; }
+  var wochen = [];
+  for (var m = montag(von); m <= bis; m = plusTage(m, 7)) wochen.push(m);
+  return { art:art, von:von, bis:bis, name:name, wochen:wochen, notiz:notiz };
+}
+function imZeitraum(z){ return journal.filter(function(e){ return e.datum >= z.von && e.datum <= z.bis; }); }
+function proWoche(z, fn){ return z.wochen.map(function(m){ var e = plusTage(m,6);
+  return fn(journal.filter(function(x){ return x.datum >= m && x.datum <= e && x.datum >= z.von && x.datum <= z.bis; }), m); }); }
+
+/* Monotonie nach Foster: Mittel der 7 Tageslasten / Standardabweichung */
+function monotonie(montagIso){
+  var tage = []; for (var i=0;i<7;i++){ var d = plusTage(montagIso,i);
+    tage.push(journal.filter(function(e){ return e.datum===d; }).reduce(function(a,e){ return a+belastung(e); },0)); }
+  var mw = tage.reduce(function(a,b){return a+b;},0)/7;
+  var sd = Math.sqrt(tage.reduce(function(a,b){ return a+(b-mw)*(b-mw); },0)/7);
+  return { wert: sd ? mw/sd : null, last: mw*7 };
+}
+/* Laufeffizienz: Meter pro Herzschlag, Höhenmeter als Leistungs-km (100 Hm ≈ 1 km) */
+function effizienz(e){
+  if (e.typ!=='lauf' || !e.km || !e.sek || !e.hf) return null;
+  var lkm = e.km + (e.hm||0)/100;
+  return (lkm*1000/(e.sek/60)) / e.hf;
+}
+/* Kraft-Kennzahl pro Einheit */
+function kraftWert(u){
+  var s = u.saetze.filter(function(x){ return x.n; });
+  if (!s.length) return null;
+  if (u.art==='kg'){
+    var best = 0;
+    s.forEach(function(x){ if (x.kg && x.n <= 12) best = Math.max(best, x.kg*(1+x.n/30)); });
+    if (best) return { v:best, lab:'geschätztes Maximum (kg, Epley)' };
+    return { v:Math.max.apply(null, s.map(function(x){ return (x.kg||0)*x.n; })), lab:'beste Serie (kg × Wdh)' };
+  }
+  if (u.art==='bw'){
+    var zus = s.some(function(x){ return x.kg; });
+    if (zus) return { v:Math.max.apply(null, s.map(function(x){ return (x.kg||0)*(1+x.n/30); })), lab:'Zusatzlast-Maximum (kg, Epley)' };
+    return { v:Math.max.apply(null, s.map(function(x){ return x.n; })), lab:'beste Serie (Wdh)' };
+  }
+  if (u.art==='sek') return { v:Math.max.apply(null, s.map(function(x){ return x.n; })), lab:'längste Haltezeit (s)' };
+  if (u.art==='min') return { v:s.reduce(function(a,x){ return a+x.n; },0), lab:'Übungszeit (Min)' };
+  if (u.art==='kgm') return { v:s.reduce(function(a,x){ return a+(x.kg||0)*x.n; },0), lab:'Gesamtlast (kg × m)' };
+  return null;
+}
+
+/* ── SVG-Diagramme ── */
+var CW = 340, CH = 150, PL = 30, PB = 18, PT = 8;
+function skala(max){ if (max <= 0) return 1; var p = Math.pow(10, Math.floor(Math.log10(max))); var n = max/p;
+  return (n<=1?1:n<=2?2:n<=5?5:10)*p; }
+function achsen(max, einheit){
+  var h = '', w = CW-PL;
+  for (var i=0;i<=2;i++){ var v = max*i/2, y = PT+(CH-PT-PB)*(1-i/2);
+    h += '<line x1="'+PL+'" x2="'+CW+'" y1="'+y+'" y2="'+y+'" class="gl"/>'+
+         '<text x="'+(PL-4)+'" y="'+(y+3)+'" text-anchor="end">'+(Math.round(v*10)/10)+'</text>'; }
+  if (einheit) h += '<text x="'+PL+'" y="'+(PT-1)+'">'+esc(einheit)+'</text>';
+  return h;
+}
+function xLabels(labels, x){
+  var h = '', n = labels.length, step = Math.ceil(n/7);
+  labels.forEach(function(l,i){
+    if (!(i%step===0 || i===n-1)) return;
+    if (i===n-1 && i%step!==0 && i-Math.floor(i/step)*step < step/2) return;   /* Überlappung vermeiden */
+    var anc = (n>1 && i===0 && x(i) < PL+14) ? 'start' : (n>1 && i===n-1 && x(i) > CW-14) ? 'end' : 'middle';
+    h += '<text x="'+x(i)+'" y="'+(CH-4)+'" text-anchor="'+anc+'">'+esc(l)+'</text>'; });
+  return h;
+}
+function balken(labels, serien, opt){
+  opt = opt || {};
+  var n = labels.length; if (!n) return '';
+  var summen = labels.map(function(_,i){ return serien.reduce(function(a,s){ return a+(s.werte[i]||0); },0); });
+  var max = skala(Math.max.apply(null, summen.concat(opt.ref ? opt.ref.map(function(x){return x||0;}) : [0]).concat([0.0001])));
+  var bw = (CW-PL)/n, hgt = CH-PT-PB;
+  var x = function(i){ return PL + bw*i + bw/2; };
+  var h = '<svg viewBox="0 0 '+CW+' '+CH+'" class="chart" role="img" aria-label="'+esc(opt.titel||'')+'">'+achsen(max, opt.einheit);
+  labels.forEach(function(_,i){
+    var y0 = PT+hgt;
+    serien.forEach(function(s){
+      var v = s.werte[i]||0; if (!v) return;
+      var hh = hgt*v/max; y0 -= hh;
+      h += '<rect x="'+(PL+bw*i+bw*0.18)+'" y="'+y0+'" width="'+(bw*0.64)+'" height="'+hh+'" rx="2" style="fill:'+s.farbe+'"><title>'+esc(labels[i]+': '+f1(v))+'</title></rect>';
+    });
+    if (opt.ref && opt.ref[i]){ var yr = PT+hgt*(1-opt.ref[i]/max);
+      h += '<line x1="'+(PL+bw*i+bw*0.08)+'" x2="'+(PL+bw*i+bw*0.92)+'" y1="'+yr+'" y2="'+yr+'" class="ref"/>'; }
+  });
+  return h + xLabels(labels, x) + '</svg>';
+}
+function linie(labels, werte, opt){
+  opt = opt || {};
+  var pts = werte.map(function(v,i){ return v==null ? null : [i,v]; }).filter(Boolean);
+  if (!pts.length) return '';
+  var vals = pts.map(function(p){return p[1];});
+  var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  if (hi===lo){ hi += 1; lo = Math.max(0, lo-1); }
+  var pad_ = (hi-lo)*0.15; lo -= pad_; hi += pad_;
+  var n = labels.length, hgt = CH-PT-PB;
+  var x = function(i){ return n<2 ? PL+(CW-PL)/2 : PL + (CW-PL-8)*i/(n-1) + 4; };
+  var y = function(v){ return PT + hgt*(1-(v-lo)/(hi-lo)); };
+  var h = '<svg viewBox="0 0 '+CW+' '+CH+'" class="chart" role="img" aria-label="'+esc(opt.titel||'')+'">';
+  for (var g=0; g<=2; g++){ var v = lo+(hi-lo)*g/2, yy = y(v);
+    h += '<line x1="'+PL+'" x2="'+CW+'" y1="'+yy+'" y2="'+yy+'" class="gl"/><text x="'+(PL-4)+'" y="'+(yy+3)+'" text-anchor="end">'+(opt.fmt?opt.fmt(v):f1(v))+'</text>'; }
+  if (opt.einheit) h += '<text x="'+PL+'" y="'+(PT-1)+'">'+esc(opt.einheit)+'</text>';
+  if (opt.mittel && pts.length >= 3){
+    var m = pts.map(function(p,k){ var a = pts.slice(Math.max(0,k-2), k+1); return [p[0], a.reduce(function(s,q){return s+q[1];},0)/a.length]; });
+    h += '<polyline class="trend" points="'+m.map(function(p){ return x(p[0])+','+y(p[1]); }).join(' ')+'"/>';
+  }
+  h += '<polyline class="lin" style="stroke:'+(opt.farbe||'var(--accent)')+'" points="'+pts.map(function(p){ return x(p[0])+','+y(p[1]); }).join(' ')+'"/>';
+  pts.forEach(function(p){ h += '<circle cx="'+x(p[0])+'" cy="'+y(p[1])+'" r="2.6" style="fill:'+(opt.farbe||'var(--accent)')+'"><title>'+esc(labels[p[0]]+': '+(opt.fmt?opt.fmt(p[1]):f1(p[1])))+'</title></circle>'; });
+  return h + xLabels(labels, x) + '</svg>';
+}
+function legende(items){
+  return '<div class="legende">'+items.map(function(i){ return '<span><i class="dot" style="background:'+i[1]+'"></i>'+esc(i[0])+'</span>'; }).join('')+'</div>';
+}
+
+function hinweise(z, liste){
+  var h = [], p = plan();
+  var mono = monotonie(montag(heute()));
+  if (mono.wert && mono.wert > 2) h.push('Monotonie diese Woche '+f1(mono.wert)+': die Tage sind sehr gleichförmig belastet. Ein echter Ruhetag oder ein klar leichter Tag senkt sie.');
+  var zuHart = liste.filter(function(e){ if (e.typ!=='lauf' || e.rpe==null || e.rpe < 6) return false;
+    var t = planTag(e.datum); return t && t.typ==='lauf' && /locker|langer lauf/i.test(t.titel+' '+t.detail) && !/bergsprint|qualität|schwelle|zieltempo|wettkampf/i.test(t.titel+' '+t.detail); });
+  if (zuHart.length) h.push(zuHart.length+' als locker geplante'+(zuHart.length>1?' Läufe hatten':'r Lauf hatte')+' RPE 6 oder mehr ('+zuHart.map(function(e){return deDatum(e.datum);}).join(', ')+'). Locker heisst Plaudertempo.');
+  var maxKm = proWoche(z, function(l){ return l.filter(function(e){return e.typ==='lauf';}).reduce(function(a,e){ return Math.max(a, e.km||0); },0); });
+  for (var i=1;i<maxKm.length;i++){ if (maxKm[i-1] && maxKm[i] - maxKm[i-1] > 2.5)
+    h.push('Längster Lauf in der Woche ab '+deDatum(z.wochen[i])+' ist '+f1(maxKm[i]-maxKm[i-1])+' km länger als in der Vorwoche. Richtwert: höchstens 1–2 km pro Woche.'); }
+  liste.filter(function(e){ return e.typ==='kraft' && e.session==='kraft-b'; }).forEach(function(e){
+    var morgen = plusTage(e.datum, 1);
+    var lang = journal.filter(function(x){ return x.typ==='lauf' && x.datum===morgen && (x.km||0) >= 10; })[0];
+    if (lang) h.push('Kraft B am '+deDatum(e.datum)+' lag direkt vor dem langen Lauf ('+f1(lang.km)+' km).');
+  });
+  var lauf = liste.filter(function(e){ return e.typ==='lauf' && e.rpe!=null && e.sek; });
+  var mHart = lauf.reduce(function(a,e){ return a + (e.rpe>=5 ? e.sek : 0); },0), mAll = lauf.reduce(function(a,e){ return a+e.sek; },0);
+  if (mAll && lauf.length >= 4 && mHart/mAll > 0.3) h.push(Math.round(mHart/mAll*100)+' % der Laufzeit lag bei RPE 5 oder höher. Für Grundausdauer ist das viel; Orientierung sind rund 20 %.');
+  var eff = liste.filter(function(e){ return effizienz(e)!=null; }).sort(function(a,b){ return a.datum<b.datum?-1:1; });
+  if (eff.length >= 6){
+    var dr = Math.floor(eff.length/3), a = eff.slice(0,dr), b = eff.slice(-dr);
+    var ma = a.reduce(function(s,e){return s+effizienz(e);},0)/a.length, mb = b.reduce(function(s,e){return s+effizienz(e);},0)/b.length;
+    var d = (mb-ma)/ma*100;
+    if (Math.abs(d) >= 3) h.push('Laufeffizienz '+(d>0?'+':'')+Math.round(d)+' % (letztes Drittel gegenüber erstem Drittel im Zeitraum)'+(d>0?': die Grundausdauer wächst.':'. Möglich sind Ermüdung, Hitze oder Krankheit.'));
+  }
+  var ohne = liste.filter(function(e){ return e.rpe==null || !e.sek; }).length;
+  if (ohne) h.push(ohne+' Einträge ohne RPE oder Dauer fliessen nicht in die Belastung ein.');
+  return h;
+}
+
+/* ── Spinnennetz: jede Achse relativ zum besten je erreichten Wert (1 = Bestwert) ── */
+function radar(achsen, serien){
+  var W = 380, H = 300, cx = W/2, cy = 150, r = 100, n = achsen.length, h = '';
+  function pt(i, v){ var a = -Math.PI/2 + 2*Math.PI*i/n; return [cx + Math.cos(a)*r*v, cy + Math.sin(a)*r*v]; }
+  h += '<svg viewBox="0 0 '+W+' '+H+'" class="radar" role="img" aria-label="Testbatterie">';
+  [0.25,0.5,0.75,1].forEach(function(k){ h += '<polygon class="ring" points="'+achsen.map(function(_,i){ return pt(i,k).join(','); }).join(' ')+'"/>'; });
+  achsen.forEach(function(a, i){
+    var p = pt(i,1), l = pt(i,1.17), anc = Math.abs(l[0]-cx) < 8 ? 'middle' : (l[0] < cx ? 'end' : 'start');
+    h += '<line class="ax" x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'"/>'+
+         '<text x="'+l[0]+'" y="'+(l[1]+3)+'" text-anchor="'+anc+'">'+esc(a)+'</text>';
+  });
+  serien.forEach(function(s){
+    h += '<polygon points="'+s.werte.map(function(v,i){ return pt(i, v==null?0:Math.max(0.04,v)).join(','); }).join(' ')+'" style="fill:'+s.farbe+';fill-opacity:'+(s.fill||0.18)+';stroke:'+s.farbe+';stroke-width:2'+(s.dash?';stroke-dasharray:4 3':'')+'"/>';
+  });
+  return h + '</svg>';
+}
+function testKarte(){
+  var liste = tests.slice().sort(function(a,b){ return a.datum < b.datum ? -1 : 1; });
+  var h = '<div class="card"><div class="between"><h3>Testbatterie</h3><button class="btn sm" data-test>+ Test</button></div>';
+  if (!liste.length) return h + '<p class="small muted" style="margin:0">Noch kein Test eingetragen. Alle 6 Wochen testen: Oberkörper, Sprungkraft, Spagat und 3 km.</p></div>';
+  var akt = liste[liste.length-1], vor = liste.length > 1 ? liste[liste.length-2] : null;
+  var achsen = TESTS.filter(function(t){ return liste.some(function(x){ return x.werte[t.id]!=null; }); });
+  function norm(t, v){
+    if (v==null) return null;
+    var alle = liste.map(function(x){ return x.werte[t.id]; }).filter(function(x){ return x!=null; });
+    if (t.besser==='hoch'){ var mx = Math.max.apply(null, alle); return mx > 0 ? v/mx : 1; }
+    var mn = Math.min.apply(null, alle);           /* tiefer ist besser: Spagat in cm, Laufzeit */
+    if (t.einheit==='cm'){ var mxc = Math.max.apply(null, alle) + 5; return (mxc - v)/(mxc - mn || 1); }
+    return v > 0 ? mn/v : 1;
+  }
+  if (achsen.length >= 3){
+    var ser = [];
+    if (vor) ser.push({ werte:achsen.map(function(t){ return norm(t, vor.werte[t.id]); }), farbe:'var(--muted)', fill:0.06, dash:true });
+    ser.push({ werte:achsen.map(function(t){ return norm(t, akt.werte[t.id]); }), farbe:'var(--accent)' });
+    h += radar(achsen.map(function(t){ return t.kurz; }), ser) +
+         legende([['Test '+deDatum(akt.datum), 'var(--accent)']].concat(vor ? [['Test '+deDatum(vor.datum), 'var(--muted)']] : []))+
+         '<p class="tiny muted" style="margin:4px 0 0">Aussen = bester je gemessener Wert. Beim Spagat zählt jeder cm näher am Boden.</p>';
+  }
+  h += '<table style="margin-top:8px"><tr><th>Test</th>'+liste.slice(-3).map(function(x){ return '<th class="num"><button class="link" data-tedit="'+esc(x.id)+'">'+deDatum(x.datum)+'</button></th>'; }).join('')+'</tr>';
+  achsen.forEach(function(t){
+    h += '<tr><td class="small">'+esc(t.kurz)+'</td>'+liste.slice(-3).map(function(x){ return '<td class="num small">'+testWert(t, x.werte[t.id])+'</td>'; }).join('')+'</tr>';
+  });
+  return h + '</table></div>';
+}
+
+function renderStatistik(){
+  var z = zeitraum(), liste = imZeitraum(z), p = plan();
+  var lab = z.wochen.map(function(m){ return deDatum(m); });
+  var h = '<div class="chips" role="group" aria-label="Zeitraum">';
+  [['4w','4 Wochen'],['block','Block'],['saison','Saison']].forEach(function(c){
+    h += '<button class="chip'+(load(K.zr,'block')===c[0]?' on':'')+'" data-zr="'+c[0]+'">'+c[1]+'</button>';
+  });
+  h += '</div><p class="tiny muted" style="margin:-4px 0 12px">'+esc(z.name)+': '+deDatum(z.von)+String(z.von).slice(2,4)+'–'+deDatum(z.bis)+String(z.bis).slice(2,4)+(z.notiz?' · '+esc(z.notiz):'')+'</p>';
+
+  /* Überblick */
+  var lauf = liste.filter(function(e){return e.typ==='lauf';});
+  var km = lauf.reduce(function(a,e){return a+(e.km||0);},0), hm = lauf.reduce(function(a,e){return a+(e.hm||0);},0);
+  var std = liste.reduce(function(a,e){return a+(e.sek||0);},0)/3600;
+  var rp = liste.filter(function(e){return e.rpe!=null;});
+  h += '<div class="card"><h3>Überblick</h3><table>'+
+    '<tr><td>Einheiten</td><td class="num">'+liste.length+' <span class="muted tiny">('+lauf.length+' Lauf · '+liste.filter(function(e){return e.typ==='kraft';}).length+' Kraft · '+liste.filter(function(e){return e.typ==='beweg';}).length+' Beweglichkeit)</span></td></tr>'+
+    '<tr><td>Laufkilometer</td><td class="num">'+f1(km)+' km</td></tr>'+
+    '<tr><td>Höhenmeter</td><td class="num">'+Math.round(hm)+' Hm</td></tr>'+
+    '<tr><td>Trainingszeit</td><td class="num">'+f1(std)+' h</td></tr>'+
+    '<tr><td>Ø RPE</td><td class="num">'+(rp.length ? f1(rp.reduce(function(a,e){return a+e.rpe;},0)/rp.length) : '–')+'</td></tr></table></div>';
+
+  /* Hinweise */
+  var hw = hinweise(z, liste);
+  h += '<div class="card"><h3>Hinweise</h3>'+(hw.length ? '<ul class="hw">'+hw.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul>' : '<p class="small muted" style="margin:0">Keine Auffälligkeiten im Zeitraum.</p>')+'</div>';
+
+  if (!liste.length){
+    h += '<div class="card"><p class="small muted" style="margin:0">Für die Graphen braucht es Einträge im Journal.</p></div>';
+  } else {
+    /* 1 Kilometer */
+    var istKm = proWoche(z, function(l){ return l.filter(function(e){return e.typ==='lauf';}).reduce(function(a,e){return a+(e.km||0);},0); });
+    var soll = z.wochen.map(function(m){ var w = (p.wochen||[]).filter(function(x){ return x.start===m; })[0];
+      return w ? w.tage.reduce(function(a,t){ return a+(t.typ==='lauf'?(t.km||0):0); },0) : null; });
+    h += '<div class="card"><h3>Laufkilometer pro Woche</h3>'+balken(lab, [{werte:istKm, farbe:FARBE.lauf}], {ref:soll, einheit:'km', titel:'Laufkilometer pro Woche'})+
+         legende([['gelaufen', FARBE.lauf],['Soll laut Plan','var(--text)']])+'</div>';
+
+    /* 2 Belastung */
+    var ser = ['lauf','kraft','beweg'].map(function(t){ return { werte:proWoche(z, function(l){ return l.filter(function(e){return e.typ===t;}).reduce(function(a,e){return a+belastung(e);},0); }), farbe:FARBE[t] }; });
+    var mo = z.wochen.map(function(m){ return monotonie(m).wert; });
+    var moAkt = mo[mo.length-1];
+    h += '<div class="card"><h3>Belastung pro Woche</h3><p class="tiny muted" style="margin:0 0 6px">Minuten × RPE (sRPE nach Foster). Macht Lauf, Kraft und Beweglichkeit vergleichbar.</p>'+
+         balken(lab, ser, {einheit:'Last', titel:'Belastung pro Woche'})+
+         legende([['Lauf',FARBE.lauf],['Kraft',FARBE.kraft],['Beweglichkeit',FARBE.beweg]])+
+         '<p class="small" style="margin:8px 0 0">Monotonie aktuelle Woche: <strong>'+(moAkt?f1(moAkt):'–')+'</strong> <span class="muted tiny">(über 2,0 = gleichförmig belastet)</span></p></div>';
+
+    /* 3 Intensität */
+    var bk = [['locker (0–4)',0,4,'var(--c-locker)'],['mittel (5–6)',5,6,'var(--c-mittel)'],['hart (7–10)',7,10,'var(--c-hart)']];
+    function vert(l){ var tot = l.reduce(function(a,e){return a+(e.rpe!=null&&e.sek?e.sek:0);},0);
+      return { tot:tot, teile: bk.map(function(b){ return l.reduce(function(a,e){ return a+(e.rpe!=null&&e.sek&&e.rpe>=b[1]&&e.rpe<=b[2]?e.sek:0); },0); }) }; }
+    function streifen(titel, v){
+      if (!v.tot) return '<p class="tiny muted">'+titel+': keine Einträge mit RPE und Dauer.</p>';
+      return '<div class="small" style="margin-top:8px">'+titel+'</div><div class="stack">'+v.teile.map(function(t,i){
+        var pc = t/v.tot*100; return pc ? '<i style="width:'+pc+'%;background:'+bk[i][3]+'" title="'+bk[i][0]+'">'+(pc>=12?Math.round(pc)+' %':'')+'</i>' : ''; }).join('')+'</div>';
+    }
+    h += '<div class="card"><h3>Intensitätsverteilung</h3><p class="tiny muted" style="margin:0">Anteil der Trainingszeit nach RPE der ganzen Einheit, eine grobe Annäherung an die Zeit in Zonen.</p>'+
+         streifen('Läufe', vert(lauf)) + streifen('Alle Einheiten', vert(liste)) +
+         legende(bk.map(function(b){ return [b[0], b[3]]; }))+'</div>';
+
+    /* 4 Laufeffizienz */
+    var effL = lauf.filter(function(e){ return effizienz(e)!=null; }).sort(function(a,b){ return a.datum<b.datum?-1:1; });
+    h += '<div class="card"><h3>Laufeffizienz</h3><p class="tiny muted" style="margin:0 0 6px">Meter pro Herzschlag; 100 Hm zählen als 1 km. Steigt die Linie, läufst du bei gleichem Puls schneller. Gestrichelt: gleitender Mittelwert über 3 Läufe.</p>'+
+         (effL.length >= 2 ? linie(effL.map(function(e){return deDatum(e.datum);}), effL.map(effizienz), {mittel:true, farbe:FARBE.lauf, einheit:'m/Schlag', fmt:function(v){return v.toFixed(2);}, titel:'Laufeffizienz'})
+                           : '<p class="small muted">Braucht mindestens 2 Läufe mit Distanz, Dauer und Puls.</p>')+'</div>';
+
+    /* 5 Höhenmeter */
+    var hmW = proWoche(z, function(l){ return l.filter(function(e){return e.typ==='lauf';}).reduce(function(a,e){return a+(e.hm||0);},0); });
+    h += '<div class="card"><h3>Höhenmeter pro Woche</h3>'+balken(lab, [{werte:hmW, farbe:'var(--c-hm)'}], {einheit:'Hm', titel:'Höhenmeter pro Woche'})+'</div>';
+
+    /* 6 Kraft */
+    var ueb = {};
+    journal.filter(function(e){ return e.typ==='kraft'; }).forEach(function(e){ (e.uebungen||[]).forEach(function(u){ ueb[u.id] = u.name; }); });
+    var ids = Object.keys(ueb);
+    h += '<div class="card"><h3>Kraftverlauf</h3>';
+    if (!ids.length) h += '<p class="small muted" style="margin:0">Erscheint, sobald Krafteinheiten mit Sätzen eingetragen sind.</p>';
+    else {
+      var wahl = load(K.uebung, ids[0]); if (!ueb[wahl]) wahl = ids[0];
+      h += '<select id="uWahl">'+ids.map(function(i){ return '<option value="'+esc(i)+'"'+(i===wahl?' selected':'')+'>'+esc(ueb[i])+'</option>'; }).join('')+'</select>';
+      var pk = []; journal.filter(function(e){ return e.typ==='kraft' && e.datum >= z.von && e.datum <= z.bis; })
+        .sort(function(a,b){ return a.datum<b.datum?-1:1; }).forEach(function(e){
+          (e.uebungen||[]).forEach(function(u){ if (u.id===wahl){ var w = kraftWert(u); if (w) pk.push({d:e.datum, w:w, u:u}); } }); });
+      if (!pk.length) h += '<p class="small muted">Keine Daten zu dieser Übung im Zeitraum.</p>';
+      else {
+        h += '<p class="tiny muted" style="margin:0 0 6px">'+esc(pk[0].w.lab)+'</p>';
+        h += pk.length >= 2 ? linie(pk.map(function(x){return deDatum(x.d);}), pk.map(function(x){return x.w.v;}), {farbe:FARBE.kraft, titel:'Kraftverlauf'}) : '';
+        h += '<table style="margin-top:6px"><tr><th>Datum</th><th>Sätze</th><th class="num">Wert</th></tr>';
+        pk.slice(-5).reverse().forEach(function(x){
+          var ein = EINHEIT[x.u.art]||['kg','Wdh'];
+          h += '<tr><td>'+deDatum(x.d)+'</td><td class="small">'+x.u.saetze.map(function(s){ return (s.kg?s.kg+' '+ein[0].replace('+','')+' × ':'')+(s.n!=null?s.n:'–'); }).join(', ')+'</td><td class="num">'+f1(x.w.v)+'</td></tr>';
+        });
+        h += '</table>';
+      }
+    }
+    h += '</div>';
+
+    /* 7 Konsistenz */
+    var maxL = 1; var tage = [];
+    z.wochen.forEach(function(m){ for (var i=0;i<7;i++){ var d = plusTage(m,i);
+      var l = journal.filter(function(e){ return e.datum===d; }); var b = l.reduce(function(a,e){return a+belastung(e);},0);
+      if (b > maxL) maxL = b; tage.push({d:d, n:l.length, b:b}); } });
+    h += '<div class="card"><h3>Konsistenz</h3><p class="tiny muted" style="margin:0 0 6px">Ein Feld pro Tag, Spalte = Woche. Je dunkler, desto höher die Tagesbelastung.</p><div class="kal" style="grid-template-columns:14px repeat('+z.wochen.length+',minmax(0,22px))">';
+    for (var r=0;r<7;r++){
+      h += '<span class="kal-wt">'+WT[r].charAt(0)+'</span>';
+      z.wochen.forEach(function(m, c){ var t = tage[c*7+r];
+        var st = t.d > heute() ? 'zukunft' : '';
+        var op = t.n ? (0.25 + 0.75*(t.b/maxL)) : 0;
+        h += '<i class="'+st+'" title="'+deDatum(t.d)+(t.n?': '+t.n+' Einheit(en)':'')+'" style="'+(t.n?'background:var(--accent);opacity:'+op.toFixed(2):'')+'"></i>'; });
+    }
+    h += '</div></div>';
+  }
+
+  /* 8 Testbatterie */
+  h += testKarte();
+
+  h += '<p class="tiny muted">Quellen: sRPE und Monotonie nach Foster et al.; geschätztes Maximum nach Epley (nur bis 12 Wdh); 100 Hm ≈ 1 km als Faustregel. Bewusst nicht enthalten: Acute:Chronic Workload Ratio (keine belastbare Evidenz, Impellizzeri et al. 2020).</p>';
+
+  var el = document.getElementById('t-statistik');
+  el.innerHTML = h;
+  el.querySelectorAll('[data-zr]').forEach(function(b){ b.onclick = function(){ save(K.zr, b.dataset.zr); renderStatistik(); }; });
+  var uw = document.getElementById('uWahl'); if (uw) uw.onchange = function(){ save(K.uebung, uw.value); renderStatistik(); };
+  el.querySelectorAll('[data-test]').forEach(function(b){ b.onclick = function(){ formTest(null); }; });
+  el.querySelectorAll('[data-tedit]').forEach(function(b){ b.onclick = function(){ formTest(tests.filter(function(x){ return x.id===b.dataset.tedit; })[0]); }; });
+}
+
+/* ════════════════ Tab Daten ════════════════ */
+function alleDaten(){
+  return { version:4, exportiert:heute(), plaene:plaene, aktiv:aktivId, sessions:sessions, journal:journal,
+    stufen:stufen, tests:tests,
+    theorie: (window.Theorie ? Theorie.export() : null) };
+}
+function renderDaten(){
+  var h = '<div class="card"><h3>Backup</h3>'+
+    '<p class="small muted">Alles liegt lokal auf diesem Gerät. Der Export enthält Pläne, Journal, Krafteinheiten, Skill-Stufen, Tests und Theorie. Ein Backup aus Version 3 lässt sich hier einlesen.</p>'+
+    '<div class="btns"><button class="btn prim" id="dEx">Exportieren</button>'+
+    '<button class="btn" id="dImBtn">Importieren</button></div>'+
+    '<input type="file" id="dIm" accept=".json,application/json" hidden></div>';
+  h += '<div class="card"><h3>Plan importieren</h3>'+
+    '<p class="small muted">Eine einzelne Plan-Datei (JSON) laden. So kommt der nächste Block rein, ohne dass an der App etwas geändert werden muss.</p>'+
+    '<input type="file" id="pIm" accept=".json,application/json"></div>';
+  h += '<div class="card"><h3>Pläne</h3><table>';
+  plaene.forEach(function(p){
+    h += '<tr><td>'+esc(p.name)+'<div class="tiny muted">'+esc(p.wettkampf ? p.wettkampf.datum : '')+'</div></td>'+
+         '<td class="num">'+(p.id===aktivId?'<span class="tag on">aktiv</span>':'<button class="btn sm" data-akt="'+esc(p.id)+'">aktivieren</button>')+'</td>'+
+         '<td class="num"><button class="btn sm" data-pdel="'+esc(p.id)+'" aria-label="Plan löschen">✕</button></td></tr>';
+  });
+  h += '</table></div>';
+  var n = function(t){ return journal.filter(function(e){ return e.typ===t; }).length; };
+  h += '<div class="card"><h3>Speicher</h3><table>'+
+    '<tr><td>Journal: Läufe</td><td class="num">'+n('lauf')+'</td></tr>'+
+    '<tr><td>Journal: Krafteinheiten</td><td class="num">'+n('kraft')+'</td></tr>'+
+    '<tr><td>Journal: Beweglichkeit</td><td class="num">'+n('beweg')+'</td></tr>'+
+    '<tr><td>Tests</td><td class="num">'+tests.length+'</td></tr>'+
+    '<tr><td>Pläne</td><td class="num">'+plaene.length+'</td></tr>'+
+    '<tr><td>Theorie-Themen</td><td class="num">'+(window.Theorie ? Theorie.themen().length : 0)+'</td></tr>'+
+    '</table><p class="hint">Vor jedem Update der App ein Backup ziehen.</p></div>';
+  var el = document.getElementById('t-daten');
+  el.innerHTML = h;
+  document.getElementById('dEx').onclick = function(){
+    var blob = new Blob([JSON.stringify(alleDaten(), null, 2)], {type:'application/json'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'training-backup-' + heute() + '.json'; a.click(); URL.revokeObjectURL(a.href);
+  };
+  document.getElementById('dImBtn').onclick = function(){ document.getElementById('dIm').click(); };
+  document.getElementById('dIm').onchange = function(ev){
+    dateiLesen(ev, function(d){
+      if (d.plaene && d.plaene.length) plaene = d.plaene;
+      if (d.aktiv) aktivId = d.aktiv;
+      if (d.sessions && d.sessions.length && (d.version||0) >= 4) sessions = d.sessions;
+      if (d.stufen) stufen = d.stufen;
+      (d.tests||[]).forEach(function(t){ if (t && t.id && !tests.some(function(x){ return x.id===t.id; })) tests.push(t); });
+      /* Saisonplan aus einem V3-Backup nicht über die neue Wochenstruktur legen */
+      plaene = plaene.map(function(p){ return (p.id===PLAN_SAISON_2027.id && (p.version||0) < PLAN_SAISON_2027.version) ? PLAN_SAISON_2027 : p; });
+      var rein = (d.journal || []).concat(ausAltdaten(d.runs || d.laeufe, d.kraftlog || d.logs));
+      var neu = rein.filter(function(e){
+        return e && e.datum && !journal.some(function(x){ return x.id===e.id ||
+          (x.typ===e.typ && x.datum===e.datum && e.typ==='lauf' && Math.abs((x.km||0)-(e.km||0))<0.15); });
+      });
+      journal = journal.concat(neu);
+      if (d.theorie && window.Theorie) Theorie.import(d.theorie);
+      save(K.plaene, plaene); save(K.aktiv, aktivId); save(K.sessions, sessions); save(K.journal, journal);
+      save(K.stufen, stufen); save(K.tests, tests);
+      renderDaten(); renderKopf(); toast(neu.length + ' Einträge dazu');
+    });
+  };
+  document.getElementById('pIm').onchange = function(ev){
+    dateiLesen(ev, function(p){
+      if (!p.id || !p.wochen){ toast('Keine gültige Plan-Datei'); return; }
+      plaene = plaene.filter(function(x){ return x.id !== p.id; }).concat([p]); aktivId = p.id;
+      save(K.plaene, plaene); save(K.aktiv, aktivId); renderDaten(); renderKopf(); toast('Plan «'+p.name+'» aktiv');
+    });
+  };
+  el.querySelectorAll('[data-akt]').forEach(function(b){
+    b.onclick = function(){ aktivId = b.dataset.akt; save(K.aktiv, aktivId); renderDaten(); renderKopf(); };
+  });
+  el.querySelectorAll('[data-pdel]').forEach(function(b){
+    b.onclick = function(){
+      if (plaene.length < 2){ toast('Der letzte Plan bleibt'); return; }
+      plaene = plaene.filter(function(p){ return p.id !== b.dataset.pdel; });
+      if (aktivId === b.dataset.pdel) aktivId = plaene[0].id;
+      save(K.plaene, plaene); save(K.aktiv, aktivId); renderDaten(); renderKopf();
+    };
+  });
+}
+function dateiLesen(ev, cb){
+  var f = ev.target.files && ev.target.files[0]; if (!f) return;
+  var fr = new FileReader();
+  fr.onload = function(){ try { cb(JSON.parse(String(fr.result))); } catch(e){ toast('Datei nicht lesbar'); } ev.target.value = ''; };
+  fr.readAsText(f, 'utf-8');
+}
+
+/* ════════════════ Start ════════════════ */
+renderKopf();
+zeige(load(K.tab, 'heute'));
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(function(){});
+
+</script>
+</body>
+</html>
